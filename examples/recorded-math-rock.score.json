@@ -1,0 +1,2268 @@
+{
+  "schemaVersion": 2,
+  "generatorVersion": "0.3.0",
+  "ppq": 480,
+  "startBar": 0,
+  "bars": 8,
+  "startTick": 0,
+  "durationTicks": 12480,
+  "barMap": [
+    {
+      "bar": 0,
+      "startTick": 0,
+      "durationTicks": 1680,
+      "numerator": 7,
+      "denominator": 8,
+      "groups": [
+        2,
+        2,
+        3
+      ]
+    },
+    {
+      "bar": 1,
+      "startTick": 1680,
+      "durationTicks": 1200,
+      "numerator": 5,
+      "denominator": 8,
+      "groups": [
+        3,
+        2
+      ]
+    },
+    {
+      "bar": 2,
+      "startTick": 2880,
+      "durationTicks": 1920,
+      "numerator": 4,
+      "denominator": 4,
+      "groups": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "bar": 3,
+      "startTick": 4800,
+      "durationTicks": 1680,
+      "numerator": 7,
+      "denominator": 8,
+      "groups": [
+        2,
+        2,
+        3
+      ]
+    },
+    {
+      "bar": 4,
+      "startTick": 6480,
+      "durationTicks": 1200,
+      "numerator": 5,
+      "denominator": 8,
+      "groups": [
+        3,
+        2
+      ]
+    },
+    {
+      "bar": 5,
+      "startTick": 7680,
+      "durationTicks": 1920,
+      "numerator": 4,
+      "denominator": 4,
+      "groups": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "bar": 6,
+      "startTick": 9600,
+      "durationTicks": 1680,
+      "numerator": 7,
+      "denominator": 8,
+      "groups": [
+        2,
+        2,
+        3
+      ]
+    },
+    {
+      "bar": 7,
+      "startTick": 11280,
+      "durationTicks": 1200,
+      "numerator": 5,
+      "denominator": 8,
+      "groups": [
+        3,
+        2
+      ]
+    }
+  ],
+  "settings": {
+    "seed": "astral-arcana",
+    "scene": "explore",
+    "intensity": 0.35,
+    "tempo": 92,
+    "key": "D",
+    "muted": [],
+    "rhythm": "math-rock",
+    "meterCycle": [
+      {
+        "numerator": 7,
+        "denominator": 8,
+        "groups": [
+          2,
+          2,
+          3
+        ]
+      },
+      {
+        "numerator": 5,
+        "denominator": 8,
+        "groups": [
+          3,
+          2
+        ]
+      },
+      {
+        "numerator": 4,
+        "denominator": 4,
+        "groups": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "tracks": [
+    {
+      "id": "strings",
+      "name": "Strings",
+      "channel": 0,
+      "program": 48
+    },
+    {
+      "id": "harp",
+      "name": "Harp",
+      "channel": 1,
+      "program": 46
+    },
+    {
+      "id": "woodwind",
+      "name": "Woodwind",
+      "channel": 2,
+      "program": 73
+    },
+    {
+      "id": "horn",
+      "name": "Horn",
+      "channel": 3,
+      "program": 60
+    },
+    {
+      "id": "percussion",
+      "name": "Percussion",
+      "channel": 9,
+      "program": null
+    }
+  ],
+  "harmony": [
+    {
+      "bar": 0,
+      "rootMidi": 50,
+      "notes": [
+        62,
+        65,
+        69
+      ]
+    },
+    {
+      "bar": 1,
+      "rootMidi": 50,
+      "notes": [
+        62,
+        65,
+        69
+      ]
+    },
+    {
+      "bar": 2,
+      "rootMidi": 58,
+      "notes": [
+        62,
+        65,
+        70
+      ]
+    },
+    {
+      "bar": 3,
+      "rootMidi": 58,
+      "notes": [
+        62,
+        65,
+        70
+      ]
+    },
+    {
+      "bar": 4,
+      "rootMidi": 55,
+      "notes": [
+        62,
+        67,
+        70
+      ]
+    },
+    {
+      "bar": 5,
+      "rootMidi": 55,
+      "notes": [
+        62,
+        67,
+        70
+      ]
+    },
+    {
+      "bar": 6,
+      "rootMidi": 57,
+      "notes": [
+        61,
+        64,
+        69
+      ]
+    },
+    {
+      "bar": 7,
+      "rootMidi": 50,
+      "notes": [
+        62,
+        65,
+        69
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "0:harp:8",
+      "track": "harp",
+      "startTick": 0,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 54
+    },
+    {
+      "id": "0:horn:7",
+      "track": "horn",
+      "startTick": 0,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 48
+    },
+    {
+      "id": "0:percussion:10",
+      "track": "percussion",
+      "startTick": 0,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "0:percussion:11",
+      "track": "percussion",
+      "startTick": 0,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "0:strings:4",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 47
+    },
+    {
+      "id": "0:strings:5",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 47
+    },
+    {
+      "id": "0:strings:6",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 47
+    },
+    {
+      "id": "0:woodwind:0",
+      "track": "woodwind",
+      "startTick": 0,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "0:harp:9",
+      "track": "harp",
+      "startTick": 120,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 51
+    },
+    {
+      "id": "0:percussion:12",
+      "track": "percussion",
+      "startTick": 240,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "0:woodwind:1",
+      "track": "woodwind",
+      "startTick": 360,
+      "durationTicks": 96,
+      "midi": 64,
+      "velocity": 40
+    },
+    {
+      "id": "0:harp:17",
+      "track": "harp",
+      "startTick": 480,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 47
+    },
+    {
+      "id": "0:horn:16",
+      "track": "horn",
+      "startTick": 480,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 48
+    },
+    {
+      "id": "0:percussion:19",
+      "track": "percussion",
+      "startTick": 480,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "0:percussion:20",
+      "track": "percussion",
+      "startTick": 480,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "0:strings:13",
+      "track": "strings",
+      "startTick": 480,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 47
+    },
+    {
+      "id": "0:strings:14",
+      "track": "strings",
+      "startTick": 480,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 47
+    },
+    {
+      "id": "0:strings:15",
+      "track": "strings",
+      "startTick": 480,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 47
+    },
+    {
+      "id": "0:woodwind:2",
+      "track": "woodwind",
+      "startTick": 480,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 52
+    },
+    {
+      "id": "0:harp:18",
+      "track": "harp",
+      "startTick": 600,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 49
+    },
+    {
+      "id": "0:percussion:21",
+      "track": "percussion",
+      "startTick": 720,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "0:harp:26",
+      "track": "harp",
+      "startTick": 960,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 46
+    },
+    {
+      "id": "0:horn:25",
+      "track": "horn",
+      "startTick": 960,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 48
+    },
+    {
+      "id": "0:percussion:29",
+      "track": "percussion",
+      "startTick": 960,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "0:percussion:30",
+      "track": "percussion",
+      "startTick": 960,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "0:strings:22",
+      "track": "strings",
+      "startTick": 960,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 47
+    },
+    {
+      "id": "0:strings:23",
+      "track": "strings",
+      "startTick": 960,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 47
+    },
+    {
+      "id": "0:strings:24",
+      "track": "strings",
+      "startTick": 960,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 47
+    },
+    {
+      "id": "0:woodwind:3",
+      "track": "woodwind",
+      "startTick": 960,
+      "durationTicks": 346,
+      "midi": 62,
+      "velocity": 52
+    },
+    {
+      "id": "0:harp:27",
+      "track": "harp",
+      "startTick": 1080,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 55
+    },
+    {
+      "id": "0:percussion:31",
+      "track": "percussion",
+      "startTick": 1200,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "0:harp:28",
+      "track": "harp",
+      "startTick": 1440,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 55
+    },
+    {
+      "id": "0:percussion:32",
+      "track": "percussion",
+      "startTick": 1440,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "1:harp:7",
+      "track": "harp",
+      "startTick": 1680,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 58
+    },
+    {
+      "id": "1:horn:6",
+      "track": "horn",
+      "startTick": 1680,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 51
+    },
+    {
+      "id": "1:percussion:10",
+      "track": "percussion",
+      "startTick": 1680,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "1:percussion:11",
+      "track": "percussion",
+      "startTick": 1680,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "1:strings:3",
+      "track": "strings",
+      "startTick": 1680,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "1:strings:4",
+      "track": "strings",
+      "startTick": 1680,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 49
+    },
+    {
+      "id": "1:strings:5",
+      "track": "strings",
+      "startTick": 1680,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 49
+    },
+    {
+      "id": "1:woodwind:0",
+      "track": "woodwind",
+      "startTick": 1680,
+      "durationTicks": 346,
+      "midi": 65,
+      "velocity": 55
+    },
+    {
+      "id": "1:harp:8",
+      "track": "harp",
+      "startTick": 1800,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 57
+    },
+    {
+      "id": "1:percussion:12",
+      "track": "percussion",
+      "startTick": 1920,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "1:harp:9",
+      "track": "harp",
+      "startTick": 2160,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 50
+    },
+    {
+      "id": "1:percussion:13",
+      "track": "percussion",
+      "startTick": 2160,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "1:woodwind:1",
+      "track": "woodwind",
+      "startTick": 2280,
+      "durationTicks": 96,
+      "midi": 67,
+      "velocity": 39
+    },
+    {
+      "id": "1:harp:18",
+      "track": "harp",
+      "startTick": 2400,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 56
+    },
+    {
+      "id": "1:horn:17",
+      "track": "horn",
+      "startTick": 2400,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 51
+    },
+    {
+      "id": "1:percussion:20",
+      "track": "percussion",
+      "startTick": 2400,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "1:percussion:21",
+      "track": "percussion",
+      "startTick": 2400,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "1:strings:14",
+      "track": "strings",
+      "startTick": 2400,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "1:strings:15",
+      "track": "strings",
+      "startTick": 2400,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 49
+    },
+    {
+      "id": "1:strings:16",
+      "track": "strings",
+      "startTick": 2400,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 49
+    },
+    {
+      "id": "1:woodwind:2",
+      "track": "woodwind",
+      "startTick": 2400,
+      "durationTicks": 230,
+      "midi": 65,
+      "velocity": 55
+    },
+    {
+      "id": "1:harp:19",
+      "track": "harp",
+      "startTick": 2520,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 54
+    },
+    {
+      "id": "1:percussion:22",
+      "track": "percussion",
+      "startTick": 2640,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "2:harp:10",
+      "track": "harp",
+      "startTick": 2880,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 53
+    },
+    {
+      "id": "2:horn:9",
+      "track": "horn",
+      "startTick": 2880,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 51
+    },
+    {
+      "id": "2:percussion:12",
+      "track": "percussion",
+      "startTick": 2880,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "2:percussion:13",
+      "track": "percussion",
+      "startTick": 2880,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "2:strings:6",
+      "track": "strings",
+      "startTick": 2880,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:7",
+      "track": "strings",
+      "startTick": 2880,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:8",
+      "track": "strings",
+      "startTick": 2880,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 49
+    },
+    {
+      "id": "2:woodwind:0",
+      "track": "woodwind",
+      "startTick": 2880,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 55
+    },
+    {
+      "id": "2:harp:11",
+      "track": "harp",
+      "startTick": 3000,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 51
+    },
+    {
+      "id": "2:percussion:14",
+      "track": "percussion",
+      "startTick": 3120,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "2:woodwind:1",
+      "track": "woodwind",
+      "startTick": 3240,
+      "durationTicks": 96,
+      "midi": 64,
+      "velocity": 41
+    },
+    {
+      "id": "2:harp:19",
+      "track": "harp",
+      "startTick": 3360,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 51
+    },
+    {
+      "id": "2:horn:18",
+      "track": "horn",
+      "startTick": 3360,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 51
+    },
+    {
+      "id": "2:percussion:21",
+      "track": "percussion",
+      "startTick": 3360,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "2:percussion:22",
+      "track": "percussion",
+      "startTick": 3360,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "2:strings:15",
+      "track": "strings",
+      "startTick": 3360,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:16",
+      "track": "strings",
+      "startTick": 3360,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:17",
+      "track": "strings",
+      "startTick": 3360,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 49
+    },
+    {
+      "id": "2:woodwind:2",
+      "track": "woodwind",
+      "startTick": 3360,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 55
+    },
+    {
+      "id": "2:harp:20",
+      "track": "harp",
+      "startTick": 3480,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 54
+    },
+    {
+      "id": "2:percussion:23",
+      "track": "percussion",
+      "startTick": 3600,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "2:harp:28",
+      "track": "harp",
+      "startTick": 3840,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 51
+    },
+    {
+      "id": "2:horn:27",
+      "track": "horn",
+      "startTick": 3840,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 51
+    },
+    {
+      "id": "2:percussion:30",
+      "track": "percussion",
+      "startTick": 3840,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "2:percussion:31",
+      "track": "percussion",
+      "startTick": 3840,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "2:strings:24",
+      "track": "strings",
+      "startTick": 3840,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:25",
+      "track": "strings",
+      "startTick": 3840,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:26",
+      "track": "strings",
+      "startTick": 3840,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 49
+    },
+    {
+      "id": "2:woodwind:3",
+      "track": "woodwind",
+      "startTick": 3840,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 54
+    },
+    {
+      "id": "2:harp:29",
+      "track": "harp",
+      "startTick": 3960,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 48
+    },
+    {
+      "id": "2:percussion:32",
+      "track": "percussion",
+      "startTick": 4080,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "2:woodwind:4",
+      "track": "woodwind",
+      "startTick": 4200,
+      "durationTicks": 96,
+      "midi": 64,
+      "velocity": 42
+    },
+    {
+      "id": "2:harp:37",
+      "track": "harp",
+      "startTick": 4320,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 53
+    },
+    {
+      "id": "2:horn:36",
+      "track": "horn",
+      "startTick": 4320,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 51
+    },
+    {
+      "id": "2:percussion:39",
+      "track": "percussion",
+      "startTick": 4320,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "2:percussion:40",
+      "track": "percussion",
+      "startTick": 4320,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "2:strings:33",
+      "track": "strings",
+      "startTick": 4320,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:34",
+      "track": "strings",
+      "startTick": 4320,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 49
+    },
+    {
+      "id": "2:strings:35",
+      "track": "strings",
+      "startTick": 4320,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 49
+    },
+    {
+      "id": "2:woodwind:5",
+      "track": "woodwind",
+      "startTick": 4320,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 53
+    },
+    {
+      "id": "2:harp:38",
+      "track": "harp",
+      "startTick": 4440,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 56
+    },
+    {
+      "id": "2:percussion:41",
+      "track": "percussion",
+      "startTick": 4560,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "3:harp:9",
+      "track": "harp",
+      "startTick": 4800,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 54
+    },
+    {
+      "id": "3:horn:8",
+      "track": "horn",
+      "startTick": 4800,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 53
+    },
+    {
+      "id": "3:percussion:11",
+      "track": "percussion",
+      "startTick": 4800,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "3:percussion:12",
+      "track": "percussion",
+      "startTick": 4800,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "3:strings:5",
+      "track": "strings",
+      "startTick": 4800,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 51
+    },
+    {
+      "id": "3:strings:6",
+      "track": "strings",
+      "startTick": 4800,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 51
+    },
+    {
+      "id": "3:strings:7",
+      "track": "strings",
+      "startTick": 4800,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 51
+    },
+    {
+      "id": "3:woodwind:0",
+      "track": "woodwind",
+      "startTick": 4800,
+      "durationTicks": 230,
+      "midi": 65,
+      "velocity": 56
+    },
+    {
+      "id": "3:harp:10",
+      "track": "harp",
+      "startTick": 4920,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 54
+    },
+    {
+      "id": "3:percussion:13",
+      "track": "percussion",
+      "startTick": 5040,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "3:woodwind:1",
+      "track": "woodwind",
+      "startTick": 5160,
+      "durationTicks": 96,
+      "midi": 67,
+      "velocity": 42
+    },
+    {
+      "id": "3:harp:18",
+      "track": "harp",
+      "startTick": 5280,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 60
+    },
+    {
+      "id": "3:horn:17",
+      "track": "horn",
+      "startTick": 5280,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 53
+    },
+    {
+      "id": "3:percussion:20",
+      "track": "percussion",
+      "startTick": 5280,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "3:percussion:21",
+      "track": "percussion",
+      "startTick": 5280,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "3:strings:14",
+      "track": "strings",
+      "startTick": 5280,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 51
+    },
+    {
+      "id": "3:strings:15",
+      "track": "strings",
+      "startTick": 5280,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 51
+    },
+    {
+      "id": "3:strings:16",
+      "track": "strings",
+      "startTick": 5280,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 51
+    },
+    {
+      "id": "3:woodwind:2",
+      "track": "woodwind",
+      "startTick": 5280,
+      "durationTicks": 230,
+      "midi": 65,
+      "velocity": 58
+    },
+    {
+      "id": "3:harp:19",
+      "track": "harp",
+      "startTick": 5400,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 50
+    },
+    {
+      "id": "3:percussion:22",
+      "track": "percussion",
+      "startTick": 5520,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "3:woodwind:3",
+      "track": "woodwind",
+      "startTick": 5640,
+      "durationTicks": 96,
+      "midi": 64,
+      "velocity": 42
+    },
+    {
+      "id": "3:harp:27",
+      "track": "harp",
+      "startTick": 5760,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 59
+    },
+    {
+      "id": "3:horn:26",
+      "track": "horn",
+      "startTick": 5760,
+      "durationTicks": 182,
+      "midi": 46,
+      "velocity": 53
+    },
+    {
+      "id": "3:percussion:30",
+      "track": "percussion",
+      "startTick": 5760,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "3:percussion:31",
+      "track": "percussion",
+      "startTick": 5760,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "3:strings:23",
+      "track": "strings",
+      "startTick": 5760,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 51
+    },
+    {
+      "id": "3:strings:24",
+      "track": "strings",
+      "startTick": 5760,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 51
+    },
+    {
+      "id": "3:strings:25",
+      "track": "strings",
+      "startTick": 5760,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 51
+    },
+    {
+      "id": "3:woodwind:4",
+      "track": "woodwind",
+      "startTick": 5760,
+      "durationTicks": 346,
+      "midi": 65,
+      "velocity": 58
+    },
+    {
+      "id": "3:harp:28",
+      "track": "harp",
+      "startTick": 5880,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 50
+    },
+    {
+      "id": "3:percussion:32",
+      "track": "percussion",
+      "startTick": 6000,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "3:harp:29",
+      "track": "harp",
+      "startTick": 6240,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 56
+    },
+    {
+      "id": "3:percussion:33",
+      "track": "percussion",
+      "startTick": 6240,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "4:harp:7",
+      "track": "harp",
+      "startTick": 6480,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 56
+    },
+    {
+      "id": "4:horn:6",
+      "track": "horn",
+      "startTick": 6480,
+      "durationTicks": 182,
+      "midi": 43,
+      "velocity": 56
+    },
+    {
+      "id": "4:percussion:10",
+      "track": "percussion",
+      "startTick": 6480,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "4:percussion:11",
+      "track": "percussion",
+      "startTick": 6480,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "4:strings:3",
+      "track": "strings",
+      "startTick": 6480,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 55
+    },
+    {
+      "id": "4:strings:4",
+      "track": "strings",
+      "startTick": 6480,
+      "durationTicks": 134,
+      "midi": 67,
+      "velocity": 55
+    },
+    {
+      "id": "4:strings:5",
+      "track": "strings",
+      "startTick": 6480,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 55
+    },
+    {
+      "id": "4:woodwind:0",
+      "track": "woodwind",
+      "startTick": 6480,
+      "durationTicks": 346,
+      "midi": 62,
+      "velocity": 60
+    },
+    {
+      "id": "4:harp:8",
+      "track": "harp",
+      "startTick": 6600,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 54
+    },
+    {
+      "id": "4:percussion:12",
+      "track": "percussion",
+      "startTick": 6720,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "4:harp:9",
+      "track": "harp",
+      "startTick": 6960,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 59
+    },
+    {
+      "id": "4:percussion:13",
+      "track": "percussion",
+      "startTick": 6960,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "4:woodwind:1",
+      "track": "woodwind",
+      "startTick": 7080,
+      "durationTicks": 96,
+      "midi": 64,
+      "velocity": 45
+    },
+    {
+      "id": "4:harp:18",
+      "track": "harp",
+      "startTick": 7200,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 54
+    },
+    {
+      "id": "4:horn:17",
+      "track": "horn",
+      "startTick": 7200,
+      "durationTicks": 182,
+      "midi": 43,
+      "velocity": 56
+    },
+    {
+      "id": "4:percussion:20",
+      "track": "percussion",
+      "startTick": 7200,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "4:percussion:21",
+      "track": "percussion",
+      "startTick": 7200,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "4:strings:14",
+      "track": "strings",
+      "startTick": 7200,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 55
+    },
+    {
+      "id": "4:strings:15",
+      "track": "strings",
+      "startTick": 7200,
+      "durationTicks": 134,
+      "midi": 67,
+      "velocity": 55
+    },
+    {
+      "id": "4:strings:16",
+      "track": "strings",
+      "startTick": 7200,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 55
+    },
+    {
+      "id": "4:woodwind:2",
+      "track": "woodwind",
+      "startTick": 7200,
+      "durationTicks": 230,
+      "midi": 62,
+      "velocity": 59
+    },
+    {
+      "id": "4:harp:19",
+      "track": "harp",
+      "startTick": 7320,
+      "durationTicks": 96,
+      "midi": 79,
+      "velocity": 56
+    },
+    {
+      "id": "4:percussion:22",
+      "track": "percussion",
+      "startTick": 7440,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "5:harp:11",
+      "track": "harp",
+      "startTick": 7680,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 62
+    },
+    {
+      "id": "5:horn:10",
+      "track": "horn",
+      "startTick": 7680,
+      "durationTicks": 182,
+      "midi": 43,
+      "velocity": 60
+    },
+    {
+      "id": "5:percussion:13",
+      "track": "percussion",
+      "startTick": 7680,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "5:percussion:14",
+      "track": "percussion",
+      "startTick": 7680,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "5:strings:7",
+      "track": "strings",
+      "startTick": 7680,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:8",
+      "track": "strings",
+      "startTick": 7680,
+      "durationTicks": 134,
+      "midi": 67,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:9",
+      "track": "strings",
+      "startTick": 7680,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 58
+    },
+    {
+      "id": "5:woodwind:0",
+      "track": "woodwind",
+      "startTick": 7680,
+      "durationTicks": 230,
+      "midi": 67,
+      "velocity": 64
+    },
+    {
+      "id": "5:harp:12",
+      "track": "harp",
+      "startTick": 7800,
+      "durationTicks": 96,
+      "midi": 79,
+      "velocity": 57
+    },
+    {
+      "id": "5:percussion:15",
+      "track": "percussion",
+      "startTick": 7920,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "5:woodwind:1",
+      "track": "woodwind",
+      "startTick": 8040,
+      "durationTicks": 96,
+      "midi": 69,
+      "velocity": 49
+    },
+    {
+      "id": "5:harp:20",
+      "track": "harp",
+      "startTick": 8160,
+      "durationTicks": 96,
+      "midi": 79,
+      "velocity": 56
+    },
+    {
+      "id": "5:horn:19",
+      "track": "horn",
+      "startTick": 8160,
+      "durationTicks": 182,
+      "midi": 43,
+      "velocity": 60
+    },
+    {
+      "id": "5:percussion:22",
+      "track": "percussion",
+      "startTick": 8160,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "5:percussion:23",
+      "track": "percussion",
+      "startTick": 8160,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "5:strings:16",
+      "track": "strings",
+      "startTick": 8160,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:17",
+      "track": "strings",
+      "startTick": 8160,
+      "durationTicks": 134,
+      "midi": 67,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:18",
+      "track": "strings",
+      "startTick": 8160,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 58
+    },
+    {
+      "id": "5:woodwind:2",
+      "track": "woodwind",
+      "startTick": 8160,
+      "durationTicks": 230,
+      "midi": 67,
+      "velocity": 63
+    },
+    {
+      "id": "5:harp:21",
+      "track": "harp",
+      "startTick": 8280,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 67
+    },
+    {
+      "id": "5:percussion:24",
+      "track": "percussion",
+      "startTick": 8400,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "5:woodwind:3",
+      "track": "woodwind",
+      "startTick": 8520,
+      "durationTicks": 96,
+      "midi": 65,
+      "velocity": 46
+    },
+    {
+      "id": "5:harp:29",
+      "track": "harp",
+      "startTick": 8640,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 60
+    },
+    {
+      "id": "5:horn:28",
+      "track": "horn",
+      "startTick": 8640,
+      "durationTicks": 182,
+      "midi": 43,
+      "velocity": 60
+    },
+    {
+      "id": "5:percussion:31",
+      "track": "percussion",
+      "startTick": 8640,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "5:percussion:32",
+      "track": "percussion",
+      "startTick": 8640,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "5:strings:25",
+      "track": "strings",
+      "startTick": 8640,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:26",
+      "track": "strings",
+      "startTick": 8640,
+      "durationTicks": 134,
+      "midi": 67,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:27",
+      "track": "strings",
+      "startTick": 8640,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 58
+    },
+    {
+      "id": "5:woodwind:4",
+      "track": "woodwind",
+      "startTick": 8640,
+      "durationTicks": 230,
+      "midi": 67,
+      "velocity": 65
+    },
+    {
+      "id": "5:harp:30",
+      "track": "harp",
+      "startTick": 8760,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 68
+    },
+    {
+      "id": "5:percussion:33",
+      "track": "percussion",
+      "startTick": 8880,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "5:woodwind:5",
+      "track": "woodwind",
+      "startTick": 9000,
+      "durationTicks": 96,
+      "midi": 69,
+      "velocity": 48
+    },
+    {
+      "id": "5:harp:38",
+      "track": "harp",
+      "startTick": 9120,
+      "durationTicks": 96,
+      "midi": 74,
+      "velocity": 66
+    },
+    {
+      "id": "5:horn:37",
+      "track": "horn",
+      "startTick": 9120,
+      "durationTicks": 182,
+      "midi": 43,
+      "velocity": 60
+    },
+    {
+      "id": "5:percussion:40",
+      "track": "percussion",
+      "startTick": 9120,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "5:percussion:41",
+      "track": "percussion",
+      "startTick": 9120,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "5:strings:34",
+      "track": "strings",
+      "startTick": 9120,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:35",
+      "track": "strings",
+      "startTick": 9120,
+      "durationTicks": 134,
+      "midi": 67,
+      "velocity": 58
+    },
+    {
+      "id": "5:strings:36",
+      "track": "strings",
+      "startTick": 9120,
+      "durationTicks": 134,
+      "midi": 70,
+      "velocity": 58
+    },
+    {
+      "id": "5:woodwind:6",
+      "track": "woodwind",
+      "startTick": 9120,
+      "durationTicks": 230,
+      "midi": 67,
+      "velocity": 66
+    },
+    {
+      "id": "5:harp:39",
+      "track": "harp",
+      "startTick": 9240,
+      "durationTicks": 96,
+      "midi": 82,
+      "velocity": 59
+    },
+    {
+      "id": "5:percussion:42",
+      "track": "percussion",
+      "startTick": 9360,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "6:harp:8",
+      "track": "harp",
+      "startTick": 9600,
+      "durationTicks": 96,
+      "midi": 73,
+      "velocity": 65
+    },
+    {
+      "id": "6:horn:7",
+      "track": "horn",
+      "startTick": 9600,
+      "durationTicks": 182,
+      "midi": 45,
+      "velocity": 57
+    },
+    {
+      "id": "6:percussion:10",
+      "track": "percussion",
+      "startTick": 9600,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "6:percussion:11",
+      "track": "percussion",
+      "startTick": 9600,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "6:strings:4",
+      "track": "strings",
+      "startTick": 9600,
+      "durationTicks": 134,
+      "midi": 61,
+      "velocity": 56
+    },
+    {
+      "id": "6:strings:5",
+      "track": "strings",
+      "startTick": 9600,
+      "durationTicks": 134,
+      "midi": 64,
+      "velocity": 56
+    },
+    {
+      "id": "6:strings:6",
+      "track": "strings",
+      "startTick": 9600,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 56
+    },
+    {
+      "id": "6:woodwind:0",
+      "track": "woodwind",
+      "startTick": 9600,
+      "durationTicks": 230,
+      "midi": 64,
+      "velocity": 61
+    },
+    {
+      "id": "6:harp:9",
+      "track": "harp",
+      "startTick": 9720,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 66
+    },
+    {
+      "id": "6:percussion:12",
+      "track": "percussion",
+      "startTick": 9840,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "6:woodwind:1",
+      "track": "woodwind",
+      "startTick": 9960,
+      "durationTicks": 96,
+      "midi": 65,
+      "velocity": 46
+    },
+    {
+      "id": "6:harp:17",
+      "track": "harp",
+      "startTick": 10080,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 60
+    },
+    {
+      "id": "6:horn:16",
+      "track": "horn",
+      "startTick": 10080,
+      "durationTicks": 182,
+      "midi": 45,
+      "velocity": 57
+    },
+    {
+      "id": "6:percussion:19",
+      "track": "percussion",
+      "startTick": 10080,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "6:percussion:20",
+      "track": "percussion",
+      "startTick": 10080,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "6:strings:13",
+      "track": "strings",
+      "startTick": 10080,
+      "durationTicks": 134,
+      "midi": 61,
+      "velocity": 56
+    },
+    {
+      "id": "6:strings:14",
+      "track": "strings",
+      "startTick": 10080,
+      "durationTicks": 134,
+      "midi": 64,
+      "velocity": 56
+    },
+    {
+      "id": "6:strings:15",
+      "track": "strings",
+      "startTick": 10080,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 56
+    },
+    {
+      "id": "6:woodwind:2",
+      "track": "woodwind",
+      "startTick": 10080,
+      "durationTicks": 230,
+      "midi": 64,
+      "velocity": 63
+    },
+    {
+      "id": "6:harp:18",
+      "track": "harp",
+      "startTick": 10200,
+      "durationTicks": 96,
+      "midi": 76,
+      "velocity": 61
+    },
+    {
+      "id": "6:percussion:21",
+      "track": "percussion",
+      "startTick": 10320,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "6:harp:26",
+      "track": "harp",
+      "startTick": 10560,
+      "durationTicks": 96,
+      "midi": 76,
+      "velocity": 64
+    },
+    {
+      "id": "6:horn:25",
+      "track": "horn",
+      "startTick": 10560,
+      "durationTicks": 182,
+      "midi": 45,
+      "velocity": 57
+    },
+    {
+      "id": "6:percussion:29",
+      "track": "percussion",
+      "startTick": 10560,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "6:percussion:30",
+      "track": "percussion",
+      "startTick": 10560,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "6:strings:22",
+      "track": "strings",
+      "startTick": 10560,
+      "durationTicks": 134,
+      "midi": 61,
+      "velocity": 56
+    },
+    {
+      "id": "6:strings:23",
+      "track": "strings",
+      "startTick": 10560,
+      "durationTicks": 134,
+      "midi": 64,
+      "velocity": 56
+    },
+    {
+      "id": "6:strings:24",
+      "track": "strings",
+      "startTick": 10560,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 56
+    },
+    {
+      "id": "6:woodwind:3",
+      "track": "woodwind",
+      "startTick": 10560,
+      "durationTicks": 346,
+      "midi": 73,
+      "velocity": 63
+    },
+    {
+      "id": "6:harp:27",
+      "track": "harp",
+      "startTick": 10680,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 58
+    },
+    {
+      "id": "6:percussion:31",
+      "track": "percussion",
+      "startTick": 10800,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "6:harp:28",
+      "track": "harp",
+      "startTick": 11040,
+      "durationTicks": 96,
+      "midi": 76,
+      "velocity": 62
+    },
+    {
+      "id": "6:percussion:32",
+      "track": "percussion",
+      "startTick": 11040,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "7:harp:5",
+      "track": "harp",
+      "startTick": 11280,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 48
+    },
+    {
+      "id": "7:horn:4",
+      "track": "horn",
+      "startTick": 11280,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 46
+    },
+    {
+      "id": "7:percussion:8",
+      "track": "percussion",
+      "startTick": 11280,
+      "durationTicks": 106,
+      "midi": 36,
+      "velocity": 74
+    },
+    {
+      "id": "7:percussion:9",
+      "track": "percussion",
+      "startTick": 11280,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "7:strings:1",
+      "track": "strings",
+      "startTick": 11280,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 45
+    },
+    {
+      "id": "7:strings:2",
+      "track": "strings",
+      "startTick": 11280,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 45
+    },
+    {
+      "id": "7:strings:3",
+      "track": "strings",
+      "startTick": 11280,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 45
+    },
+    {
+      "id": "7:woodwind:0",
+      "track": "woodwind",
+      "startTick": 11280,
+      "durationTicks": 540,
+      "midi": 74,
+      "velocity": 51
+    },
+    {
+      "id": "7:harp:6",
+      "track": "harp",
+      "startTick": 11400,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 49
+    },
+    {
+      "id": "7:percussion:10",
+      "track": "percussion",
+      "startTick": 11520,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "7:harp:7",
+      "track": "harp",
+      "startTick": 11760,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 44
+    },
+    {
+      "id": "7:percussion:11",
+      "track": "percussion",
+      "startTick": 11760,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    },
+    {
+      "id": "7:harp:16",
+      "track": "harp",
+      "startTick": 12000,
+      "durationTicks": 96,
+      "midi": 77,
+      "velocity": 50
+    },
+    {
+      "id": "7:horn:15",
+      "track": "horn",
+      "startTick": 12000,
+      "durationTicks": 182,
+      "midi": 38,
+      "velocity": 46
+    },
+    {
+      "id": "7:percussion:18",
+      "track": "percussion",
+      "startTick": 12000,
+      "durationTicks": 106,
+      "midi": 38,
+      "velocity": 74
+    },
+    {
+      "id": "7:percussion:19",
+      "track": "percussion",
+      "startTick": 12000,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 48
+    },
+    {
+      "id": "7:strings:12",
+      "track": "strings",
+      "startTick": 12000,
+      "durationTicks": 134,
+      "midi": 62,
+      "velocity": 45
+    },
+    {
+      "id": "7:strings:13",
+      "track": "strings",
+      "startTick": 12000,
+      "durationTicks": 134,
+      "midi": 65,
+      "velocity": 45
+    },
+    {
+      "id": "7:strings:14",
+      "track": "strings",
+      "startTick": 12000,
+      "durationTicks": 134,
+      "midi": 69,
+      "velocity": 45
+    },
+    {
+      "id": "7:harp:17",
+      "track": "harp",
+      "startTick": 12120,
+      "durationTicks": 96,
+      "midi": 81,
+      "velocity": 44
+    },
+    {
+      "id": "7:percussion:20",
+      "track": "percussion",
+      "startTick": 12240,
+      "durationTicks": 43,
+      "midi": 42,
+      "velocity": 29
+    }
+  ]
+}

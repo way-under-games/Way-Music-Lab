@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Way Music · Browser game API example</title><link rel="stylesheet" href="/web/styles.css"></head>
+<body><main><header><a class="wordmark" href="/">WAY <span>/ GAME EXAMPLE</span></a></header>
+<section class="intro"><p class="eyebrow">EMBEDDABLE PLAYER</p><h1>The game controls the score.</h1><p>A small standalone host using the public BrowserMusic API.</p></section>
+<section class="console"><p id="state" role="status">Ready</p><p id="metrics">No audio started</p>
+<button id="load">Load recorded orchestra</button> <button id="start">Start / resume</button> <button id="battle">Enter battle</button> <button id="explore">Return to exploration</button> <button id="pause">Pause</button> <button id="stop">Stop</button> <button id="dispose">End session</button></section>
+<script type="module">
+import { BrowserMusic } from '/src/browser-player.mjs';
+const state = document.getElementById('state'), metrics = document.getElementById('metrics');
+const music = new BrowserMusic({ settings: { seed: 'game-api-fixture', tempo: 120 }, onBar: bar => {
+  state.textContent = `Committed bar ${bar.score.startBar + 1} · ${bar.score.settings.scene} · ${bar.score.settings.tempo} BPM`;
+} });
+const action = (id, callback) => document.getElementById(id).addEventListener('click', async () => { try { await callback(); } catch (error) { state.textContent = error.message; } });
+action('start', () => music.start());
+action('load', async () => { music.pause(); await music.loadSampleBank('/samples/vsco-ce/manifest.json', { onProgress: progress => { state.textContent = `Loading recordings ${progress.loaded}/${progress.total}`; } }); state.textContent = 'Recorded orchestra ready · click Start / resume'; });
+action('battle', () => { const result = music.setState({ scene: 'battle', intensity: 0.9, tempo: 140 }); state.textContent = `Battle requested · effective bar ${result.effectiveBar + 1}`; });
+action('explore', () => { const result = music.setState({ scene: 'explore', intensity: 0.2, tempo: 92 }); state.textContent = `Explore requested · effective bar ${result.effectiveBar + 1}`; });
+action('pause', () => { const bar = music.pause(); state.textContent = `Paused · resume bar ${bar + 1}`; });
+action('stop', () => { music.stop(); state.textContent = 'Stopped'; });
+action('dispose', async () => { await music.dispose(); state.textContent = 'Session disposed'; });
+const statusTimer = setInterval(() => { const status = music.getStatus(); metrics.textContent = `${status.running ? 'Running' : 'Idle'} · ${status.audioState} · ${status.voices} voices · ${status.droppedEvents} late notes · ${status.voiceLimitHits} voice-limit hits · ${status.bankId ?? 'synthesized sketch'} · ${status.sampledEvents} recorded notes`; }, 100);
+window.addEventListener('pagehide', () => { clearInterval(statusTimer); music.dispose(); });
+</script></main></body></html>

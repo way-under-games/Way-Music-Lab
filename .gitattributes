@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.wav binary
+*.mid binary
+*.png binary
+samples/vsco-ce/*.sfz -text
+samples/vsco-ce/UPSTREAM-* -text
+LICENSES/* -text

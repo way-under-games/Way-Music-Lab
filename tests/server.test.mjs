@@ -1,0 +1,53 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createMusicServer } from '../server.mjs';
+import { compose } from '../src/composer.mjs';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+
+test('HTTP adapter serves the demo, deterministic scores and MIDI; rejects invalid input and file access', async t => {
+  const server = createMusicServer();
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const request = (route, body) => fetch(base + route, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  assert.equal((await fetch(base + '/api/v1/health')).status, 200);
+  const home = await fetch(base); assert.match(await home.text(), /The astral chamber/);
+  const module = await fetch(base + '/src/browser-player.mjs'); assert.equal(module.status, 200); assert.match(module.headers.get('content-type'), /javascript/);
+  const bank = await (await fetch(base + '/samples/vsco-ce/manifest.json')).json();
+  assert.equal(bank.license, 'CC0-1.0');
+  const sample = await fetch(base + '/samples/vsco-ce/' + bank.regions[0].url);
+  assert.equal(sample.status, 200); assert.equal(sample.headers.get('content-type'), 'audio/wav');
+  assert.equal((await fetch(base + '/samples/vsco-ce/../../package.json')).status, 404);
+  const input = { seed: '世界', scene: 'battle', intensity: 0.8, bars: 2, startBar: 3 };
+  const score = await request('/api/v1/compose', input); assert.deepEqual(await score.json(), compose(input));
+  const midi = await request('/api/v1/midi', input); assert.equal(midi.headers.get('content-type'), 'audio/midi');
+  assert.equal(new TextDecoder().decode((await midi.arrayBuffer()).slice(0, 4)), 'MThd');
+  assert.equal((await request('/api/v1/compose', { bars: 300 })).status, 400);
+  assert.equal((await request('/api/v1/compose', { seed: 'x'.repeat(20_000) })).status, 400);
+  const malformed = await fetch(base + '/api/v1/compose', { method: 'POST', body: '{bad' }); assert.equal(malformed.status, 400);
+  assert.equal((await fetch(base + '/api/v1/compose')).status, 405);
+  assert.equal((await fetch(base + '/package.json')).status, 404);
+  assert.equal((await fetch(base + '/src/../../README.md')).status, 404);
+});
+
+test('render export saves validated WAV bytes without accepting arbitrary paths or malformed audio', async t => {
+  const artifactRoot = await mkdtemp(path.join(tmpdir(), 'way-music-test-'));
+  assert.ok(path.resolve(artifactRoot).startsWith(path.resolve(tmpdir()) + path.sep));
+  const server = createMusicServer({ artifactRoot });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(async () => { await new Promise(resolve => server.close(resolve)); await rm(artifactRoot, { recursive: true, force: true }); });
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const wav = Buffer.alloc(48);
+  wav.write('RIFF', 0); wav.writeUInt32LE(40, 4); wav.write('WAVEfmt ', 8); wav.writeUInt32LE(16, 16);
+  wav.writeUInt16LE(1, 20); wav.writeUInt16LE(2, 22); wav.writeUInt32LE(24000, 24); wav.writeUInt32LE(96000, 28);
+  wav.writeUInt16LE(4, 32); wav.writeUInt16LE(16, 34); wav.write('data', 36); wav.writeUInt32LE(4, 40);
+  const upload = bytes => fetch(base + '/api/v1/renders/wav', { method: 'POST', headers: { 'Content-Type': 'audio/wav' }, body: bytes });
+  const response = await upload(wav); assert.equal(response.status, 201); const saved = await response.json();
+  assert.match(saved.filename, /^score-[0-9a-f-]{36}\.wav$/); assert.deepEqual(await readFile(path.join(artifactRoot, saved.filename)), wav);
+  const download = await fetch(base + saved.url); assert.equal(download.status, 200); assert.deepEqual(Buffer.from(await download.arrayBuffer()), wav);
+  const second = await (await upload(wav)).json(); assert.notEqual(second.filename, saved.filename);
+  assert.equal((await upload(Buffer.from('invalid'))).status, 400);
+  assert.equal((await fetch(base + '/api/v1/renders/wav', { method: 'POST', body: wav })).status, 400);
+});

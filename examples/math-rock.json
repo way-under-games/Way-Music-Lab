@@ -1,0 +1,14 @@
+{
+  "seed": "astral-arcana",
+  "scene": "explore",
+  "intensity": 0.35,
+  "tempo": 92,
+  "key": "D",
+  "rhythm": "math-rock",
+  "meterCycle": [
+    { "numerator": 7, "denominator": 8, "groups": [2, 2, 3] },
+    { "numerator": 5, "denominator": 8, "groups": [3, 2] },
+    { "numerator": 4, "denominator": 4, "groups": [1, 1, 1, 1] }
+  ],
+  "bars": 8
+}

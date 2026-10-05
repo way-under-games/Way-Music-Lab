@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "0.1.0",
+  "ppq": 480,
+  "beatsPerBar": 4,
+  "startBar": 0,
+  "bars": 1,
+  "settings": {
+    "seed": "astral-arcana",
+    "scene": "explore",
+    "intensity": 0.35,
+    "tempo": 92,
+    "key": "D",
+    "muted": []
+  },
+  "tracks": [
+    {
+      "id": "strings",
+      "name": "Strings",
+      "channel": 0,
+      "program": 48
+    },
+    {
+      "id": "harp",
+      "name": "Harp",
+      "channel": 1,
+      "program": 46
+    },
+    {
+      "id": "woodwind",
+      "name": "Woodwind",
+      "channel": 2,
+      "program": 73
+    },
+    {
+      "id": "horn",
+      "name": "Horn",
+      "channel": 3,
+      "program": 60
+    },
+    {
+      "id": "percussion",
+      "name": "Percussion",
+      "channel": 9,
+      "program": null
+    }
+  ],
+  "harmony": [
+    {
+      "bar": 0,
+      "rootMidi": 50,
+      "notes": [
+        50,
+        53,
+        57
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "0:harp:4",
+      "track": "harp",
+      "startTick": 0,
+      "durationTicks": 202,
+      "midi": 62,
+      "velocity": 51
+    },
+    {
+      "id": "0:percussion:16",
+      "track": "percussion",
+      "startTick": 0,
+      "durationTicks": 216,
+      "midi": 36,
+      "velocity": 68
+    },
+    {
+      "id": "0:strings:3",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 1776,
+      "midi": 38,
+      "velocity": 53
+    },
+    {
+      "id": "0:strings:0",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 1776,
+      "midi": 50,
+      "velocity": 43
+    },
+    {
+      "id": "0:strings:1",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 1776,
+      "midi": 53,
+      "velocity": 43
+    },
+    {
+      "id": "0:strings:2",
+      "track": "strings",
+      "startTick": 0,
+      "durationTicks": 1776,
+      "midi": 57,
+      "velocity": 43
+    },
+    {
+      "id": "0:woodwind:12",
+      "track": "woodwind",
+      "startTick": 0,
+      "durationTicks": 374,
+      "midi": 62,
+      "velocity": 52
+    },
+    {
+      "id": "0:harp:5",
+      "track": "harp",
+      "startTick": 240,
+      "durationTicks": 202,
+      "midi": 65,
+      "velocity": 57
+    },
+    {
+      "id": "0:harp:6",
+      "track": "harp",
+      "startTick": 480,
+      "durationTicks": 202,
+      "midi": 69,
+      "velocity": 58
+    },
+    {
+      "id": "0:woodwind:13",
+      "track": "woodwind",
+      "startTick": 480,
+      "durationTicks": 374,
+      "midi": 65,
+      "velocity": 60
+    },
+    {
+      "id": "0:harp:7",
+      "track": "harp",
+      "startTick": 720,
+      "durationTicks": 202,
+      "midi": 65,
+      "velocity": 57
+    },
+    {
+      "id": "0:harp:8",
+      "track": "harp",
+      "startTick": 960,
+      "durationTicks": 202,
+      "midi": 62,
+      "velocity": 58
+    },
+    {
+      "id": "0:woodwind:14",
+      "track": "woodwind",
+      "startTick": 960,
+      "durationTicks": 374,
+      "midi": 69,
+      "velocity": 61
+    },
+    {
+      "id": "0:harp:9",
+      "track": "harp",
+      "startTick": 1200,
+      "durationTicks": 202,
+      "midi": 69,
+      "velocity": 56
+    },
+    {
+      "id": "0:harp:10",
+      "track": "harp",
+      "startTick": 1440,
+      "durationTicks": 202,
+      "midi": 65,
+      "velocity": 53
+    },
+    {
+      "id": "0:woodwind:15",
+      "track": "woodwind",
+      "startTick": 1440,
+      "durationTicks": 374,
+      "midi": 65,
+      "velocity": 61
+    },
+    {
+      "id": "0:harp:11",
+      "track": "harp",
+      "startTick": 1680,
+      "durationTicks": 202,
+      "midi": 69,
+      "velocity": 54
+    }
+  ]
+}
