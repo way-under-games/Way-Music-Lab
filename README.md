@@ -4,6 +4,8 @@ An engine-independent procedural score generator and live browser player. Versio
 
 Version **0.5** adds a portable **narrative score director**: one authored theme for the title, a contemplative opening, playful player control, smoothed movement/action responses, danger hysteresis, and timed story cues. Open [the story-score audition](http://127.0.0.1:4317/web/director.html) after starting the server, or read [the narrative scoring design](docs/narrative-scoring.md).
 
+The next phase studies composition with the tools already available. Read [memorable game scores and composition research](docs/memorable-game-scores.md) for twelve comparative cases, source limits, variable-meter exercises, current musical gaps, and a listening study plan.
+
 Original software: **MIT**. Bundled VSCO CE recordings: **CC0 1.0**. The theory research document is separately **CC BY-SA 4.0**. Read [attributions and source revisions](ATTRIBUTIONS.md), [license analysis](LICENSE-ANALYSIS.md), and [MIT license](LICENSE) before redistributing. No npm packages or cloud services are required.
 
 ## Run
