@@ -13,6 +13,13 @@ export const TRACKS = Object.freeze([
   Object.freeze({ id: 'percussion', name: 'Percussion', channel: 9, program: null })
 ]);
 export const DEFAULTS = Object.freeze({ seed: 'astral-arcana', scene: 'explore', intensity: 0.35, tempo: 92, key: 'D', muted: [], rhythm: 'flowing', meterCycle: Object.freeze([DEFAULT_METER]) });
+export const SCORE_STYLES = Object.freeze(['ensemble', 'title', 'contemplative', 'playful', 'danger', 'revelation', 'loss', 'resolution']);
+const STYLE_GAIN = {
+  ensemble: [1, 1, 1, 1, 1], title: [0.45, 0.95, 0, 0, 0],
+  contemplative: [0.45, 0.38, 0.6, 0, 0], playful: [0.65, 0.9, 0.85, 0.35, 0.45],
+  danger: [0.95, 0.55, 0.65, 0.85, 0.85], revelation: [0.7, 0.4, 0.7, 0.5, 0],
+  loss: [0.4, 0.3, 0.45, 0, 0], resolution: [0.75, 0.65, 0.85, 0.7, 0.25]
+};
 
 function bounded(value, name, min, max, integer = false) {
   if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max || (integer && !Number.isInteger(value))) {
@@ -31,8 +38,12 @@ export function normalizeSettings(input = {}) {
   bounded(settings.tempo, 'tempo', 40, 200);
   if (!['flowing', 'math-rock'].includes(settings.rhythm)) throw new TypeError('rhythm must be flowing or math-rock');
   const meterCycle = normalizeMeterCycle(settings.meterCycle);
+  const scoreStyle = settings.scoreStyle ?? 'ensemble';
+  if (!SCORE_STYLES.includes(scoreStyle)) throw new TypeError('Unknown scoreStyle');
+  const themeMotif = settings.themeMotif ?? null;
+  if (themeMotif !== null && (!Array.isArray(themeMotif) || themeMotif.length !== 8 || themeMotif.some(degree => !Number.isInteger(degree) || degree < 0 || degree > 6))) throw new TypeError('themeMotif must contain eight scale degrees from 0–6');
   if (!Array.isArray(settings.muted) || settings.muted.some(id => !TRACKS.some(t => t.id === id))) throw new TypeError('muted must be an array of known track IDs');
-  return Object.freeze({ seed: settings.seed, scene: settings.scene, intensity: settings.intensity, tempo: settings.tempo, key: settings.key, muted: Object.freeze([...new Set(settings.muted)]), rhythm: settings.rhythm, meterCycle });
+  return Object.freeze({ seed: settings.seed, scene: settings.scene, intensity: settings.intensity, tempo: settings.tempo, key: settings.key, muted: Object.freeze([...new Set(settings.muted)]), rhythm: settings.rhythm, meterCycle, scoreStyle, themeMotif: themeMotif && Object.freeze([...themeMotif]) });
 }
 
 // Stateless per-bar random streams make partial generation and seeking reproducible.
@@ -58,7 +69,7 @@ export function compose(input = {}) {
   const barMap = makeBarMap(settings.meterCycle, startBar, bars, input.startTick);
   const root = KEYS[settings.key];
   const identity = randomStream(settings.seed);
-  const motif = [0, 2 + Math.floor(identity() * 2), 4, 2, 1, 0, 4, 2 + Math.floor(identity() * 2)];
+  const motif = settings.themeMotif ?? [0, 2 + Math.floor(identity() * 2), 4, 2, 1, 0, 4, 2 + Math.floor(identity() * 2)];
   const phrase = planPhrase({ root, scene: settings.scene, motif });
   const events = [], harmony = [];
   for (const measure of barMap) {
@@ -73,13 +84,21 @@ export function compose(input = {}) {
     const add = (track, beat, duration, midi, velocity) => {
       const id = `${bar}:${track}:${eventIndex++}`;
       if (settings.muted.includes(track) || beat >= beats) return;
+      const styleGain = STYLE_GAIN[settings.scoreStyle][TRACKS.findIndex(item => item.id === track)];
+      if (!styleGain) return;
       const startTick = measure.startTick + Math.round(beat * PPQ);
       events.push({ id, track, startTick,
         durationTicks: Math.max(1, Math.min(Math.round(duration * PPQ), measure.startTick + measure.durationTicks - startTick)),
-        midi, velocity: Math.max(1, Math.min(127, Math.round(velocity * (track === 'percussion' ? 1 : frame.gain)))) });
+        midi, velocity: Math.max(1, Math.min(127, Math.round(velocity * styleGain * (track === 'percussion' ? 1 : frame.gain)))) });
     };
-    for (const note of melodyForBar({ frame, measure, root, rhythm: settings.rhythm, intensity })) {
-      add('woodwind', note.beat, note.duration, note.midi, (note.accent ? 57 : 43) + random() * 5);
+    const narrative = settings.scoreStyle !== 'ensemble' && settings.themeMotif;
+    const quiet = ['contemplative', 'loss'].includes(settings.scoreStyle);
+    const melody = narrative ? Array.from({ length: quiet ? 2 : 4 }, (_, index) => ({
+      beat: index * beats / (quiet ? 2 : 4), duration: beats / (quiet ? 2 : 4) * (settings.scoreStyle === 'playful' ? 0.45 : 0.82),
+      midi: degree(7 + motif[(bar % 2) * 4 + index * (quiet ? 2 : 1)]), accent: true
+    })).filter(note => !(frame.ending && note.beat >= beats / 2) && !(quiet && bar % 2)) : melodyForBar({ frame, measure, root, rhythm: settings.rhythm, intensity });
+    for (const note of melody) {
+      add(settings.scoreStyle === 'title' ? 'harp' : 'woodwind', note.beat, note.duration, note.midi, (note.accent ? 57 : 43) + random() * 5);
     }
     if (settings.rhythm === 'math-rock') {
       const unitBeats = 4 / measure.denominator;
@@ -111,6 +130,7 @@ export function compose(input = {}) {
     add('strings', 0, busy ? 1.75 : Math.max(0.1, beats - 0.3), frame.bassMidi, 53);
     const harpStep = intensity > 0.65 ? 0.25 : 0.5;
     for (let beat = 0, step = 0; beat < beats; beat += harpStep, step++) {
+      if (settings.scoreStyle === 'title' || quiet && step % 4) continue;
       if (intensity < 0.2 && step % 2) continue;
       const arp = [0, 1, 2, 1, 0, 2, 1, 2][step % 8];
       add('harp', beat, 0.42, chordNotes[arp] + 12, 45 + intensity * 18 + random() * 8);
@@ -133,7 +153,7 @@ export function compose(input = {}) {
   }
   events.sort((a, b) => a.startTick - b.startTick || a.track.localeCompare(b.track) || a.midi - b.midi);
   const startTick = barMap[0].startTick, last = barMap.at(-1);
-  return { schemaVersion: 2, generatorVersion: '0.3.0', ppq: PPQ, startBar, bars, startTick,
+  return { schemaVersion: 2, generatorVersion: '0.5.0', ppq: PPQ, startBar, bars, startTick,
     durationTicks: last.startTick + last.durationTicks - startTick, barMap,
     settings: { ...settings, muted: [...settings.muted] }, tracks: TRACKS.map(t => ({ ...t })), harmony, events };
 }

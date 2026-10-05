@@ -6,6 +6,7 @@ import { validateSampleManifest, selectSample, loadSampleBank } from '../src/sam
 import { WebAudioRenderer } from '../src/webaudio.mjs';
 import { compose } from '../src/composer.mjs';
 import { preparePcm } from '../scripts/sample-pcm.mjs';
+import { ScoreDirector, SCORE_PROFILES } from '../src/director.mjs';
 
 const manifest = JSON.parse(await readFile(new URL('../samples/vsco-ce/manifest.json', import.meta.url)));
 const event = { id: '0:strings:0', track: 'strings', midi: 66, velocity: 50 };
@@ -49,6 +50,11 @@ test('all emitted tracks find recorded regions across keys, scenes, rhythms and 
   for (const key of ['D', 'E', 'G', 'A', 'C']) for (const scene of ['explore', 'tension', 'battle', 'victory']) for (const rhythm of ['flowing', 'math-rock']) for (const intensity of [0, 1]) {
     const score = compose({ key, scene, rhythm, intensity });
     for (const note of score.events) assert.ok(selectSample(manifest.regions, note, note.durationTicks * 60 / score.settings.tempo / score.ppq), `${key} ${scene} ${note.track} ${note.midi}`);
+  }
+  const theme = new ScoreDirector().advance(0).settings;
+  for (const [scoreStyle, profile] of Object.entries(SCORE_PROFILES)) {
+    const score = compose({ ...theme, ...profile, scoreStyle });
+    for (const note of score.events) assert.ok(selectSample(manifest.regions, note, note.durationTicks * 60 / score.settings.tempo / score.ppq));
   }
 });
 

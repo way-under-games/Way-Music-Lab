@@ -1,5 +1,7 @@
 # Unreal integration contract (not yet implemented)
 
+Version 0.5 adds an engine-independent `ScoreDirector` ahead of composition. A native adapter should report semantic stage (title/opening/play), normalized movement and danger, control ownership, named player actions, and stable story-cue IDs. Keep the authored project theme seed/motif fixed across game starts. Feed prepared director settings into the composer, then consume note/tick data with the chosen Unreal audio clock. The provided director is JavaScript; embedding it or porting its policy into a native runtime still requires implementation and parity tests. The stateless HTTP compose endpoint does not itself maintain a narrative session. See [narrative scoring](../../docs/narrative-scoring.md).
+
 Keep the composition portable. Unreal owns instrument rendering, its audio clock, and the mapping from game state to musical controls. This folder documents the boundary; it does not contain a compiled plugin or claim in-engine playback verification.
 
 ## First in-engine proof

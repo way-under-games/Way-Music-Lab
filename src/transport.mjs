@@ -4,13 +4,15 @@ import { barStartTick } from './meter.mjs';
 // Renderer contract: now(), schedule(event, absoluteSeconds, durationSeconds),
 // silence(). The host owns timer cadence and audio-device lifecycle.
 export class MusicTransport {
-  constructor(renderer, { settings = {}, lookahead = 0.15, onBar = () => {} } = {}) {
+  constructor(renderer, { settings = {}, lookahead = 0.15, onBar = () => {}, prepareBar } = {}) {
     if (!renderer || ['now', 'schedule', 'silence'].some(name => typeof renderer[name] !== 'function')) throw new TypeError('Invalid renderer');
     if (!Number.isFinite(lookahead) || lookahead < 0.05 || lookahead > 0.5) throw new RangeError('lookahead must be 0.05–0.5 seconds');
     this.renderer = renderer;
     this.settings = normalizeSettings(settings);
     this.lookahead = lookahead;
     this.onBar = onBar;
+    if (prepareBar !== undefined && typeof prepareBar !== 'function') throw new TypeError('prepareBar must be a function');
+    this.prepareBar = prepareBar;
     this.running = false;
     this.nextBar = 0;
     this.pending = null;
@@ -76,6 +78,7 @@ export class MusicTransport {
       if (!this.current) {
         if (this.nextTime > horizon) break;
         if (this.pending) { this.settings = this.pending; this.pending = null; }
+        if (this.prepareBar) this.settings = normalizeSettings({ ...this.settings, ...this.prepareBar(this.nextBar) });
         const score = compose({ ...this.settings, startBar: this.nextBar, startTick: this.nextTick, bars: 1 });
         const secondsPerTick = 60 / this.settings.tempo / PPQ;
         this.current = { score, secondsPerTick, startTime: this.nextTime,

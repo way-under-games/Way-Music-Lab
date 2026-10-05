@@ -3,10 +3,12 @@ import { WebAudioRenderer } from './webaudio.mjs';
 
 // Optional browser host. Core composition and transport do not depend on this class.
 export class BrowserMusic {
-  constructor({ settings = {}, volume = 0.6, onBar = () => {}, pauseWhenHidden = true } = {}) {
+  constructor({ settings = {}, volume = 0.6, onBar = () => {}, pauseWhenHidden = true, director } = {}) {
+    if (director && (typeof director.advance !== 'function' || typeof director.resetTimeline !== 'function')) throw new TypeError('Invalid score director');
+    this.director = director;
     this.context = new AudioContext({ latencyHint: 'interactive' });
     this.renderer = new WebAudioRenderer(this.context, { volume });
-    this.transport = new MusicTransport(this.renderer, { settings, onBar });
+    this.transport = new MusicTransport(this.renderer, { settings, onBar, prepareBar: director ? bar => director.advance(bar).settings : undefined });
     this.resumeBar = 0;
     this.resumeTick = undefined;
     this.disposed = false;
@@ -54,6 +56,7 @@ export class BrowserMusic {
   stop() {
     this.epoch++;
     this.transport.stop(); clearInterval(this.timer); this.timer = null; this.resumeBar = 0; this.resumeTick = undefined; this.barHistory = [];
+    this.director?.resetTimeline();
   }
   getStatus() {
     return { running: this.transport.running, audioState: this.context.state,
@@ -61,7 +64,7 @@ export class BrowserMusic {
       voices: this.renderer.voices.size, droppedEvents: this.transport.droppedEvents,
       resyncs: this.transport.resyncs, voiceLimitHits: this.renderer.voiceLimitHits, error: this.lastError,
       bankId: this.renderer.sampleBank?.manifest.id ?? null, sampledEvents: this.renderer.sampledEvents,
-      synthesizedEvents: this.renderer.synthesizedEvents };
+      synthesizedEvents: this.renderer.synthesizedEvents, director: this.director?.getStatus() ?? null };
   }
   async dispose() {
     if (this.disposed) return;

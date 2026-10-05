@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Way Music · The unfolding score</title><link rel="stylesheet" href="/web/styles.css"></head>
+<body><main>
+<header><a class="wordmark" href="/">WAY <span>/ STORY SCORE</span></a><span class="badge">ONE THEME / MANY MEANINGS</span></header>
+<section class="intro"><p class="eyebrow">THE WORLD ANSWERS YOUR THEME</p><h1>An unfolding score<span>.</span></h1><p>The title introduces your leitmotif. The opening gives it space.<br>As you move, play, and encounter danger, the same theme changes shape.</p></section>
+<section class="console" aria-label="Story score controls">
+<div class="transport"><div><span id="status" role="status">Title · ready to introduce the theme</span><p id="position">Fixed theme: astral-arcana · D · 0–2–4–3 / 2–0–1–0</p></div><div class="transport-buttons"><button id="play" class="primary">Play title theme</button><button id="pause">Pause</button><button id="stop">Stop</button></div></div>
+<p id="samples" class="hint" role="status">Recorded CC0 orchestra · loads on Play</p>
+<div class="scene-heading"><span class="label">01 / THE STORY</span><span class="hint">Ordinary changes wait for a phrase boundary</span></div>
+<div class="scenes" role="group" aria-label="Narrative phase">
+<button data-stage="title" aria-pressed="true"><strong>Title</strong><small>Introduce the recurring theme</small></button>
+<button data-stage="opening" aria-pressed="false"><strong>Opening</strong><small>Soft, contemplative, room to breathe</small></button>
+<button id="control"><strong>Gain control</strong><small>Curiosity and a playful pulse</small></button>
+<button id="reset"><strong>New game</strong><small>Same authored theme, new progression</small></button></div>
+<div class="dials">
+<div><label for="movement">Movement <output id="movement-value">0%</output></label><input id="movement" type="range" min="0" max="100" value="0"><div class="range-captions"><span>Still</span><span>Exploring</span></div></div>
+<div><label for="danger">Danger <output id="danger-value">0%</output></label><input id="danger" type="range" min="0" max="100" value="0"><div class="range-captions"><span>Safe</span><span>Battle</span></div></div>
+<div><label for="volume">Listening level <output id="volume-value">60%</output></label><input id="volume" type="range" min="0" max="100" value="60"></div>
+</div>
+<p class="label">02 / PLAYER ACTIONS</p><p class="hint">Actions shape the next musical pulse. They do not play a note for every footstep.</p>
+<p><button data-action="jump">Jump</button> <button data-action="interact">Interact</button> <button data-action="discover">Discover</button></p>
+<p class="label">03 / STORY MOMENTS</p><p class="hint">Authored cues can take priority over battle, then return to the current game state.</p>
+<p><button data-cue="revelation">Revelation</button> <button data-cue="loss">Loss</button> <button data-cue="resolution">Resolution</button></p>
+<p id="request" class="hint" role="status">The theme seed is authored once and stays fixed across games.</p>
+</section>
+<section class="score-view"><p class="label">THE SCORE DIRECTOR</p><h2 id="profile">Title</h2><p id="decision" role="status">Waiting for the first downbeat.</p><p id="metrics" class="hint">No audio started</p><p class="hint">Battle enters at the next available bar. Calm returns after a safety hold and phrase boundary. Tempo and activity change gradually.</p></section>
+<footer><span>PORTABLE NARRATIVE POLICY / BROWSER AUDIO ADAPTER</span><span><a href="https://versilian-studios.com/vsco-community/">VSCO CE · CC0</a> · v0.5</span></footer>
+</main><script type="module" src="/web/director-app.mjs"></script></body></html>

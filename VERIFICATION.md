@@ -1,4 +1,14 @@
-# Version 0.4 verification
+# Version 0.5 and 0.4 verification
+
+## Narrative director, version 0.5
+
+Measured October 5, 2026. `node --test tests/*.test.mjs`: **43 passed, 0 failed**. Seven additional tests cover fixed authored identity across new games and story progression, phrase-boundary phase changes, danger hysteresis, cue priorities/duration/deduplication/return, bounded activity and malformed inputs, valid partial mixed-meter arrangements, and replay after next-bar lookahead. Sample-selection coverage now includes every narrative arrangement. Generator is 0.5.0; score schema remains version 2 with optional `scoreStyle` and `themeMotif` settings. Older saved scores remain readable.
+
+Browser audition at `/web/director.html` verified a title theme on harp/soft strings, transition to a sparse contemplative opening, player-control transition with movement 80% and a Discover action, danger at 90%, and a four-bar Loss cue overriding battle. The theme remained `astral-arcana` in D throughout. Observed title/opening tempos were 76/64 BPM; playful settled around 106 BPM at movement 80%; battle reached 128 BPM. The Loss cue used quieter/sparser arrangement and a bounded tempo descent. No synthesized fallback or late notes were observed in that sequence. The cue returned to the current danger state when its four bars expired. This is a short browser audition, not a broad device/load test or proof of soundtrack quality.
+
+See [narrative design and firsthand research sources](docs/narrative-scoring.md), [policy module](src/director.mjs), and [audition screenshot](docs/media/narrative-preview.png). Film-quality transitions, full silence policy, save/restore snapshots, authored secondary themes, tempo-map export and Unreal/native integration remain unfinished.
+
+## Recorded-instrument baseline, version 0.4
 
 Measured October 5, 2026. Original composition generator remains 0.3.0 and score schema remains version 2; 0.4 is the recorded-instrument/packaging update.
 

@@ -49,6 +49,8 @@
         "meterCycle"
       ],
       "properties": {
+        "scoreStyle": { "enum": ["ensemble", "title", "contemplative", "playful", "danger", "revelation", "loss", "resolution"] },
+        "themeMotif": { "type": ["array", "null"], "minItems": 8, "maxItems": 8, "items": { "type": "integer", "minimum": 0, "maximum": 6 } },
         "seed": {
           "type": "string",
           "minLength": 1,

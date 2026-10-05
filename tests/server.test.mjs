@@ -14,6 +14,8 @@ test('HTTP adapter serves the demo, deterministic scores and MIDI; rejects inval
   const request = (route, body) => fetch(base + route, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   assert.equal((await fetch(base + '/api/v1/health')).status, 200);
   const home = await fetch(base); assert.match(await home.text(), /The astral chamber/);
+  const audition = await fetch(base + '/web/director.html'); assert.match(await audition.text(), /An unfolding score/);
+  assert.equal((await fetch(base + '/src/director.mjs')).status, 200);
   const module = await fetch(base + '/src/browser-player.mjs'); assert.equal(module.status, 200); assert.match(module.headers.get('content-type'), /javascript/);
   const bank = await (await fetch(base + '/samples/vsco-ce/manifest.json')).json();
   assert.equal(bank.license, 'CC0-1.0');

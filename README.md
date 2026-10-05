@@ -2,6 +2,8 @@
 
 An engine-independent procedural score generator and live browser player. Version **0.4** uses **recorded orchestral instruments** with variable meters, a syncopated math-rock rhythmic preset, and a theory-based phrase planner: violin/cello ensemble, harp, flute, French horn, and percussion. The composer and score contract are portable; the playable audio adapter currently targets browsers. A native Unreal plugin and full tracker editor remain future work.
 
+Version **0.5** adds a portable **narrative score director**: one authored theme for the title, a contemplative opening, playful player control, smoothed movement/action responses, danger hysteresis, and timed story cues. Open [the story-score audition](http://127.0.0.1:4317/web/director.html) after starting the server, or read [the narrative scoring design](docs/narrative-scoring.md).
+
 Original software: **MIT**. Bundled VSCO CE recordings: **CC0 1.0**. The theory research document is separately **CC BY-SA 4.0**. Read [attributions and source revisions](ATTRIBUTIONS.md), [license analysis](LICENSE-ANALYSIS.md), and [MIT license](LICENSE) before redistributing. No npm packages or cloud services are required.
 
 ## Run
@@ -53,7 +55,7 @@ Use `WAY_MUSIC_PORT` to change the local port. The server binds to loopback only
 
 The portable theory layer chooses bounded chord inversions with less voice movement, repeats and develops motif contours, emphasizes chord-tone melodic anchors, adds short stepwise ornaments, shapes phrase dynamics, and leaves space at endings. Minor-key V chords use the raised seventh; Explore/Battle resolve to tonic while Tension ends on dominant. These are tonal style heuristics rather than a universal musical scoring system. See [the source-linked theory and sound study](docs/music-theory-and-sound.md) for algorithms, listening criteria, and further development.
 
-Generator 0.3.0 changes the resulting notes for earlier seeds; the instrument update leaves that generator version and score schema version 2 unchanged. Earlier saved scores remain playable. Theme replay must retain generator version or the actual score. Cross-scene transitions and cross-bar melodic continuity still need further development; recorded instruments do not solve those composition problems.
+Generator 0.5.0 adds authored motif and arrangement settings while preserving score schema version 2. Earlier saved scores remain playable. Theme replay must retain generator version or the actual score. The director adds narrative policy and phrase-boundary changes; harmonic transition bridges and cross-bar melodic continuity still need further development.
 
 ## Browser game API
 
