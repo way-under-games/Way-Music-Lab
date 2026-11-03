@@ -1,12 +1,14 @@
 # Way Music
 
-An engine-independent procedural score generator and live browser player. Version **0.4** uses **recorded orchestral instruments** with variable meters, a syncopated math-rock rhythmic preset, and a theory-based phrase planner: violin/cello ensemble, harp, flute, French horn, and percussion. The composer and score contract are portable; the playable audio adapter currently targets browsers. A native Unreal plugin and full tracker editor remain future work.
+Version **0.6** revamps Way into an **authored music studio** with Perform, Sound, and Game workspaces. Play a computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
+
+The earlier procedural score generator and recorded-orchestra auditions remain available. Version **0.4** uses **recorded orchestral instruments** with variable meters, a syncopated math-rock rhythmic preset, and a theory-based phrase planner: violin/cello ensemble, harp, flute, French horn, and percussion. The composer and score contract are portable; audio adapters currently target browsers. A native Unreal plugin remains future work.
 
 Version **0.5** adds a portable **narrative score director**: one authored theme for the title, a contemplative opening, playful player control, smoothed movement/action responses, danger hysteresis, and timed story cues. Open [the story-score audition](http://127.0.0.1:4317/web/director.html) after starting the server, or read [the narrative scoring design](docs/narrative-scoring.md).
 
 The next phase studies composition with the tools already available. Read [memorable game scores and composition research](docs/memorable-game-scores.md) for twelve comparative cases, source limits, variable-meter exercises, current musical gaps, and a listening study plan.
 
-The authoring direction is now explicit: users supply melodies, countermelodies, and signature hooks. The [visual instrument and keyboard authoring study](docs/visual-instruments-and-keyboard-authoring.md) compares modern synth workflows and proposes keyboard/MIDI recording, visual sound design, reusable patches, and bounded game controls. These authoring features are proposed, not yet implemented.
+The [visual instrument and keyboard authoring study](docs/visual-instruments-and-keyboard-authoring.md) records the research behind this workflow. Version 0.6 implements its initial authoring path; broader sample conversion, granular synthesis, richer FM, and a shared native DSP backend remain future work.
 
 Original software: **MIT**. Bundled VSCO CE recordings: **CC0 1.0**. The theory research document is separately **CC BY-SA 4.0**. Read [attributions and source revisions](ATTRIBUTIONS.md), [license analysis](LICENSE-ANALYSIS.md), and [MIT license](LICENSE) before redistributing. No npm packages or cloud services are required.
 
@@ -20,7 +22,9 @@ cd Way-Music-Lab
 node server.mjs
 ```
 
-Open [the music lab](http://127.0.0.1:4317). Click Play to unlock browser audio. Choose Explore, Tension, Battle, or Victory; change energy, tempo, key, theme seed, and muted sections. State changes land on the next uncommitted bar. Changing tempo does not reset the musical position. Volume changes immediately with a short ramp.
+Open [the authoring studio](http://127.0.0.1:4317). Enable audio, play keys or draw notes, and record/keep a take. Perform edits authored parts, Sound edits instruments, and Game auditions scene arrangements and mappings. Use Export project for a durable copy of all parts and patches. See the [studio guide](docs/authoring-studio.md) for keyboard controls, recording, limits, exports, and integration.
+
+The remainder of the score-generation instructions below describes the [legacy procedural lab](http://127.0.0.1:4317/web/index.html). There, click Play to unlock audio, choose Explore/Tension/Battle/Victory, and change energy, tempo, key, theme seed, and muted sections. State changes land on the next uncommitted bar.
 
 The page pauses when hidden or when the audio device suspends. Resume starts the paused bar again; it does not restore sounding voices halfway through a bar. Stop cancels voices and room tails and returns to bar zero. Exports generate eight bars from bar zero with the selected settings, rather than recording live state-change history. WAV uses the selected sound and the same loaded bank at 24 kHz stereo, adds a four-second release/room tail, and uses a fixed renderer volume independent of the live listening-level control.
 

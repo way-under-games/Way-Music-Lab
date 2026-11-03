@@ -4,7 +4,7 @@ Research date: November 2, 2026. Original analysis and proposed design: MIT.
 
 Way should let composers play and preserve their own melodies, countermelodies, riffs, bass hooks, and signature sounds. The most useful precedent from modern production software is a short, reversible loop: play a phrase, change the sound while hearing the phrase, compare alternatives, and save both the musical part and the instrument. Visual synthesis, expressive input, and a small set of meaningful performance controls make a deep instrument approachable.
 
-The proposed direction is three connected workspaces: **Perform**, **Sound**, and **Game**. Authored parts and instrument patches remain separate portable assets. Procedural systems arrange the parts and move approved sound controls; they do not replace recognizable hooks. This is a research and design update, not an implemented instrument editor.
+The direction is three connected workspaces: **Perform**, **Sound**, and **Game**. Authored parts and instrument patches remain separate portable assets. Procedural systems arrange the parts and move approved sound controls; they do not replace recognizable hooks. Version 0.6 implements the initial authoring workflow described in [the studio guide](authoring-studio.md); the broader synthesis and portability proposals below remain the research roadmap.
 
 ## What current tools make easy
 

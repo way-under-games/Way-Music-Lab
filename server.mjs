@@ -11,6 +11,8 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=
 const ALLOWED = new Set(['/web/index.html', '/web/integration.html', '/web/styles.css', '/web/meters.css', '/web/app.mjs', '/src/composer.mjs', '/src/theory.mjs', '/src/meter.mjs', '/src/midi.mjs', '/src/transport.mjs', '/src/webaudio.mjs', '/src/browser-player.mjs']);
 ALLOWED.add('/src/samples.mjs'); ALLOWED.add('/samples/vsco-ce/manifest.json');
 for (const route of ['/src/director.mjs', '/web/director.html', '/web/director-app.mjs']) ALLOWED.add(route);
+for (const route of ['/src/studio.mjs', '/src/studio-audio.mjs', '/src/studio-midi.mjs', '/web/studio.html', '/web/studio.css', '/web/studio-app.mjs']) ALLOWED.add(route);
+ALLOWED.add('/src/studio-host.mjs');
 
 async function readJson(request) {
   let bytes = 0;
@@ -30,7 +32,7 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
     const sendJson = (status, data) => { response.writeHead(status, { 'Content-Type': TYPES['.json'] }); response.end(JSON.stringify(data)); };
     try {
       const url = new URL(request.url, 'http://localhost');
-      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.5.0', scoreSchemaVersion: 2, audioRenderer: 'client-owned' });
+      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.6.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
       if (url.pathname === '/api/v1/renders/wav') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with rendered WAV bytes' });
         if (request.headers['content-type'] !== 'audio/wav') return sendJson(400, { error: 'Content-Type must be audio/wav' });
@@ -63,7 +65,7 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
         return response.end(exportMidi(score));
       }
       if (request.method !== 'GET' && request.method !== 'HEAD') return sendJson(405, { error: 'Method not allowed' });
-      const route = url.pathname === '/' ? '/web/index.html' : url.pathname;
+      const route = url.pathname === '/' ? '/web/studio.html' : url.pathname;
       if (!ALLOWED.has(route) && !/^\/samples\/vsco-ce\/[a-zA-Z0-9_-]+\.wav$/.test(route)) return sendJson(404, { error: 'Not found' });
       const file = path.join(root, route.slice(1));
       const contents = await readFile(file);

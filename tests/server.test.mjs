@@ -13,7 +13,9 @@ test('HTTP adapter serves the demo, deterministic scores and MIDI; rejects inval
   const base = `http://127.0.0.1:${server.address().port}`;
   const request = (route, body) => fetch(base + route, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   assert.equal((await fetch(base + '/api/v1/health')).status, 200);
-  const home = await fetch(base); assert.match(await home.text(), /The astral chamber/);
+  const home = await fetch(base); assert.match(await home.text(), /Give your world a voice/);
+  const legacy = await fetch(base + '/web/index.html'); assert.match(await legacy.text(), /The astral chamber/);
+  for(const route of ['/web/studio.css','/web/studio-app.mjs','/src/studio.mjs','/src/studio-audio.mjs','/src/studio-midi.mjs','/src/studio-host.mjs'])assert.equal((await fetch(base+route)).status,200,route);
   const audition = await fetch(base + '/web/director.html'); assert.match(await audition.text(), /An unfolding score/);
   assert.equal((await fetch(base + '/src/director.mjs')).status, 200);
   const module = await fetch(base + '/src/browser-player.mjs'); assert.equal(module.status, 200); assert.match(module.headers.get('content-type'), /javascript/);

@@ -30,6 +30,8 @@ No Philharmonia recordings, SoundFont, commercial orchestral library, third-part
 
 ## Dependencies and future integrations
 
+Version 0.6 adds only original MIT runtime code and original harmonic instrument recipes. The optional in-memory UI check fetches the pinned ISC-licensed LinkeDOM worker into ignored development cache and retains its license. It is not shipped by the local server, committed in the repository, or imported by the application. Its licensing remains separate; the test script's original orchestration code is MIT. Optional headless verification requires a separately installed browser and does not redistribute that browser. See the updated [attribution inventory](ATTRIBUTIONS.md).
+
 There are **zero third-party npm/runtime package dependencies**. Browser audio is the platform Web Audio API; the local service uses Node built-ins. The repository does not redistribute Node itself. SFZ maps are included as source provenance, but no sfizz, FluidSynth, Tone.js, Strudel, SuperCollider, Unreal runtime or other researched engine is imported.
 
 Adopting an external authoring/rendering engine later is a new licensing decision. For example, [Strudel's project](https://strudel.cc/) identifies AGPL licensing; that could introduce source/distribution or network-use obligations for an integrated derivative, and its sound-bank terms are separate. A separate executable or adapter does not automatically resolve every copyleft boundary. Unreal's engine/plugin terms likewise require an actual packaging review. No such component presently prevents our original library from being MIT.
