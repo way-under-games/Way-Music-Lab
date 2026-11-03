@@ -70,7 +70,7 @@
     "exportedSampleRate": 48000,
     "exportBankRequests": 0,
     "midi": 60,
-    "durationTicks": 111.87200000000001,
+    "durationTicks": 111.872,
     "recordedKeyboard": true,
     "customKeyboard": true,
     "voices": "0 voices"
@@ -79,42 +79,42 @@
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 1623,
+      "height": 2718,
       "tab": "perform",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 2025,
+      "height": 4207,
       "tab": "perform",
       "overflow": []
     },
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 3109,
+      "height": 3702,
       "tab": "sound",
       "overflow": []
     },
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 2365,
+      "height": 2778,
       "tab": "game",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 4855,
+      "height": 5796,
       "tab": "sound",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 3542,
+      "height": 4354,
       "tab": "game",
       "overflow": []
     }
@@ -127,5 +127,66 @@
   "pointerPlayground": {
     "commitFinalPosition": true,
     "restoreOriginal": true
-  }
+  },
+  "version": "0.7.0",
+  "meterUsability": {
+    "draftProtected": true,
+    "notesProtected": true,
+    "nativeCountPreview": true,
+    "unfinishedTakeNavigationGuard": true
+  },
+  "toolLayouts": [
+    {
+      "tool": "chamber",
+      "width": 1500,
+      "scrollWidth": 1485,
+      "active": "chamber",
+      "frameLeft": 0,
+      "frameWidth": 1485,
+      "background": "rgb(8, 11, 25)"
+    },
+    {
+      "tool": "chamber",
+      "width": 430,
+      "scrollWidth": 415,
+      "active": "chamber",
+      "frameLeft": 0,
+      "frameWidth": 415,
+      "background": "rgb(8, 11, 25)"
+    },
+    {
+      "tool": "director",
+      "width": 1500,
+      "scrollWidth": 1485,
+      "active": "director",
+      "frameLeft": 0,
+      "frameWidth": 1485,
+      "background": "rgb(8, 11, 25)"
+    },
+    {
+      "tool": "director",
+      "width": 430,
+      "scrollWidth": 415,
+      "active": "director",
+      "frameLeft": 0,
+      "frameWidth": 415,
+      "background": "rgb(8, 11, 25)"
+    },
+    {
+      "tool": "integration",
+      "width": 1500,
+      "scrollWidth": 1485,
+      "frameLeft": 0,
+      "frameWidth": 1485,
+      "background": "rgb(8, 11, 25)"
+    },
+    {
+      "tool": "integration",
+      "width": 430,
+      "scrollWidth": 415,
+      "frameLeft": 0,
+      "frameWidth": 415,
+      "background": "rgb(8, 11, 25)"
+    }
+  ]
 }

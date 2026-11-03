@@ -1,3 +1,4 @@
+import {createMeterBuilder} from '/web/meter-builder.mjs';
 import { compose, normalizeSettings, TRACKS, DEFAULTS, PPQ } from '/src/composer.mjs';
 import { MATH_ROCK_METERS, parseMeterCycle, formatMeterCycle } from '/src/meter.mjs';
 import { exportMidi } from '/src/midi.mjs';
@@ -152,12 +153,13 @@ element('new-theme').addEventListener('click', () => { element('seed').value = `
 function applyMeters(meterCycle, rhythm = settings.rhythm) {
   update({ meterCycle, rhythm });
   element('meter-cycle').value = formatMeterCycle(settings.meterCycle);
+  meterBuilder.set(element('meter-cycle').value);
   element('rhythm').value = settings.rhythm;
   element('meter-feedback').textContent = `${settings.meterCycle.map(meter => `${meter.numerator}/${meter.denominator}`).join(' → ')} · ${transport?.running ? 'pending next bar' : 'ready'} · quarter-note tempo`;
 }
 element('meter-preset').addEventListener('change', event => {
   const preset = event.target.value;
-  if (preset === 'custom') { element('meter-cycle').focus(); return; }
+  if (preset === 'custom') { element('meter-builder').scrollIntoView({block:'center'}); return; }
   const text = { '4/4': '4/4:1+1+1+1', '7/8': '7/8:2+2+3', '5/4': '5/4:3+2', shifting: '7/8:2+2+3,9/8:3+3+3,11/8:3+3+3+2' }[preset];
   applyMeters(preset === 'math-rock' ? MATH_ROCK_METERS : parseMeterCycle(text), preset === 'math-rock' ? 'math-rock' : settings.rhythm);
 });
@@ -210,3 +212,6 @@ function animate() {
   requestAnimationFrame(animate);
 }
 displayScore(compose({ ...settings, bars: 1 })); animate();
+
+const meterBuilder=createMeterBuilder(element('meter-builder'),{value:element('meter-cycle').value,tempo:()=>settings.tempo,onApply:text=>{applyMeters(parseMeterCycle(text));element('meter-preset').value='custom';}});
+window.addEventListener('pagehide',()=>meterBuilder.destroy());

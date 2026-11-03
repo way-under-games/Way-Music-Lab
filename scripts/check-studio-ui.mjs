@@ -28,7 +28,7 @@ const parameter=()=>({value:0,setValueAtTime(){},linearRampToValueAtTime(){},exp
 const audioNode=()=>({gain:parameter(),frequency:parameter(),Q:parameter(),pan:parameter(),detune:parameter(),delayTime:parameter(),threshold:parameter(),ratio:parameter(),connect(n){return n;},disconnect(){},start(){},stop(){},setPeriodicWave(){}});
 const contexts=[];
 globalThis.AudioContext=class { constructor(){this.currentTime=0;this.sampleRate=48000;this.state='running';this.destination={};contexts.push(this);}async resume(){}addEventListener(){}createGain(){return audioNode();}createDynamicsCompressor(){return audioNode();}createAnalyser(){return audioNode();}createBiquadFilter(){return audioNode();}createWaveShaper(){return audioNode();}createDelay(){return audioNode();}createStereoPanner(){return audioNode();}createOscillator(){return audioNode();}createPeriodicWave(){return{};} };
-let app=await readFile(new URL('../web/studio-app.mjs',import.meta.url),'utf8');app=app.replaceAll("from '/src/",`from '${new URL('../src/',import.meta.url).href}`);await writeFile(new URL('app.mjs',cache),app);await import(new URL('app.mjs',cache));
+let app=await readFile(new URL('../web/studio-app.mjs',import.meta.url),'utf8');app=app.replaceAll("from '/src/",`from '${new URL('../src/',import.meta.url).href}`);app=app.replaceAll("from '/web/",`from '${new URL('../web/',import.meta.url).href}`);await writeFile(new URL('app.mjs',cache),app);await import(new URL('app.mjs',cache));
 const $=id=>document.getElementById(id),flush=()=>new Promise(resolve=>setImmediate(resolve));
 async function click(id){$(id).dispatchEvent(new window.Event('click',{bubbles:true}));await flush();}
 async function change(id,value){$(id).value=value;$(id).dispatchEvent(new window.Event('change',{bubbles:true}));await flush();}
@@ -36,6 +36,15 @@ const saved=()=>JSON.parse(localStorage.getItem('way-studio-v1'));
 assert.equal(document.querySelectorAll('#parts .part').length,3);assert.equal(document.querySelectorAll('#keyboard button').length,24);
 await click('add-note');assert.equal(saved().parts[0].notes.length,1);const original=structuredClone(saved().parts[0].notes);
 await click('vary');assert.deepEqual(saved().parts[0].notes,original,'Sound variation preserves notes');
+const meterBefore=saved().meter;
+document.querySelector('[data-meter-starter="Steady"]').click();await flush();assert.equal(saved().meter,meterBefore,'Meter edits remain a draft');
+document.querySelector('#meter-builder .meter-actions .primary').click();await flush();assert.equal(saved().meter,'4/4:1+1+1+1');assert.deepEqual(saved().parts[0].notes,original);
+const count=document.querySelector('#meter-builder select');count.value='7';count.dispatchEvent(new window.Event('change'));await flush();
+document.querySelector('[data-meter-tick="0:1"]').click();await flush();
+document.querySelector('#meter-builder .meter-actions .primary').click();await flush();assert.match(saved().meter,/^7\/4:1\+1\+2\+3$/);
+document.querySelector('#meter-builder .meter-fit input').checked=true;document.querySelector('#meter-builder .meter-actions .primary').click();await flush();assert.equal(saved().loopTicks,7*480);
+assert.deepEqual(saved().parts[0].notes,original,'Visual rhythm edits never rewrite authored notes');
+document.querySelector('[data-workspace-link="sound"]').click();await flush();assert.equal($('sound').hidden,false,'Quick start opens the selected workspace');
 document.querySelector('[data-tab="sound"]').click();await flush();$('explore-listen').checked=false;
 const startingPatch=structuredClone(saved().parts[0].patch);
 document.querySelector('[data-world="swarm"]').click();await flush();

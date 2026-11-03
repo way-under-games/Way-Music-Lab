@@ -114,6 +114,30 @@ try{
     }finally{HTMLAnchorElement.prototype.click=originalClick;window.fetch=originalFetch;}
     return {nativePlayground:true,nativeRecording:true,exportedSampleRate,exportBankRequests:bankRequests,midi:note.midi,durationTicks:note.duration,recordedKeyboard:true,customKeyboard:true,voices:$('voice-state').textContent};
   })()`);console.log('Performance results: '+JSON.stringify(performance));await writeFile(path.join(cache,'performance.json'),JSON.stringify(performance,null,2));
+  const meterUsability=await evaluate(`(async()=>{
+    const $=id=>document.getElementById(id),wait=ms=>new Promise(resolve=>setTimeout(resolve,ms)),before=JSON.parse(localStorage.getItem('way-studio-v1')),notes=JSON.stringify(before.parts.map(p=>p.notes));
+    document.querySelector('[data-tab="perform"]').click();document.querySelector('[data-meter-starter="Waltz"]').click();
+    if(JSON.parse(localStorage.getItem('way-studio-v1')).meter!==before.meter)throw new Error('Draft meter changed playback before Apply');
+    document.querySelector('#meter-builder .meter-actions .primary').click();const after=JSON.parse(localStorage.getItem('way-studio-v1'));if(after.meter!=='3/4:1+1+1'||JSON.stringify(after.parts.map(p=>p.notes))!==notes)throw new Error('Visual meter apply failed or changed notes');
+    const NativeContext=window.AudioContext;let previewContext;window.AudioContext=class extends NativeContext{constructor(...args){super(...args);previewContext=this;}};
+    try{const listen=document.querySelectorAll('#meter-builder .meter-actions button')[1];listen.click();await wait(180);if(previewContext?.state!=='running'||!document.querySelector('#meter-builder .counting'))throw new Error('Native count preview did not run');listen.click();await wait(30);if(previewContext.state!=='closed')throw new Error('Count preview did not close');}finally{window.AudioContext=NativeContext;}
+    $('record').click();await wait(40);const event=new MouseEvent('click',{bubbles:true,cancelable:true});document.querySelector('[data-tool-link="director"]').dispatchEvent(event);if(!event.defaultPrevented)throw new Error('Navigation lost an unfinished take');$('record').click();await wait(20);$('discard-take').click();
+    return{draftProtected:true,notesProtected:true,nativeCountPreview:true,unfinishedTakeNavigationGuard:true};
+  })()`);console.log('Meter usability: '+JSON.stringify(meterUsability));
+  const toolLayouts=[];
+  for(const [route,tool]of [['/web/index.html','chamber'],['/web/director.html','director'],['/web/integration.html','integration']]){
+    await command('Page.navigate',{url:url+route});
+    await evaluate(`new Promise(resolve=>{const check=()=>document.readyState==='complete'&&document.querySelectorAll('.tool-nav a').length===3${tool==='chamber'?"&&document.querySelectorAll('#meter-builder .meter-bar').length>0":''}?resolve(true):setTimeout(check,20);check();})`);
+    for(const width of [1500,430]){
+      await command('Emulation.setDeviceMetricsOverride',{width,height:1100,deviceScaleFactor:1,mobile:false});await evaluate('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
+      const layout=await evaluate(`({tool:'${tool}',width:innerWidth,scrollWidth:document.documentElement.scrollWidth,active:document.querySelector('.tool-nav a[aria-current="page"]')?.dataset.toolLink,frameLeft:document.querySelector('.tool-nav').getBoundingClientRect().left,frameWidth:document.querySelector('.tool-nav').getBoundingClientRect().width,background:getComputedStyle(document.body).backgroundColor})`);if(layout.scrollWidth>width+1||layout.active!==(tool==='integration'?undefined:tool)||Math.abs(layout.frameLeft)>1||Math.abs(layout.frameWidth-layout.scrollWidth)>1)throw new Error('Tool navigation/layout failed: '+JSON.stringify(layout));toolLayouts.push(layout);
+      const shot=await command('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(path.join(cache,tool+'-'+width+'.png'),Buffer.from(shot.data,'base64'));
+    }
+    if(tool==='chamber')await evaluate(`document.querySelector('[data-meter-starter="Off-kilter"]').click();document.querySelector('#meter-builder .meter-actions .primary').click();if(!document.getElementById('meter-feedback').textContent.includes('7/8'))throw new Error('Chamber meter builder did not apply')`);
+    else if(tool==='director')await evaluate(`document.getElementById('control').click();if(!document.getElementById('request').textContent.includes('Player control granted'))throw new Error('Story control failed')`);
+  }
+  await evaluate(`document.querySelector('[data-tool-link="studio"]').click()`);await evaluate(`new Promise(resolve=>{const check=()=>document.querySelectorAll('#keyboard .piano-key').length===24?resolve(true):setTimeout(check,20);check();})`);
+  await writeFile(path.join(cache,'usability.json'),JSON.stringify({meterUsability,toolLayouts},null,2));console.log('Additional tool layouts: '+JSON.stringify(toolLayouts));
   if(exceptions.length)throw new Error('Uncaught page exceptions: '+exceptions.join('\n'));
   console.log('Screenshots: '+cache);console.log('Only a dedicated headless process with an isolated test profile was used. No existing browser or desktop input.');
 }finally{

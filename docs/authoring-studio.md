@@ -1,6 +1,8 @@
 # Way Music authoring studio
 
-Version 0.6 implements the Perform, Sound, and Game workflow. The home page is now an authoring studio. Projects start with empty melody, countermelody, and bass-hook parts; the application does not invent their notes. The earlier procedural orchestra and narrative auditions remain available from the sidebar.
+Version 0.7 provides the Perform, Sound, and Game workflow. The home page is now an authoring studio. Projects start with empty melody, countermelody, and bass-hook parts; the application does not invent their notes. The earlier procedural orchestra and narrative auditions remain available from the sidebar.
+
+The [guided rhythm and navigation guide](usability-and-navigation.md) explains the visual meter editor, count preview, shared navigation and first-visit help.
 
 ## Perform
 
@@ -16,7 +18,9 @@ Step input places played pitches at the note editor's start position and advance
 
 Grid quantization moves starts only, and is reversible. MIDI pitch-bend gestures are retained as per-note timelines during recording; sustain extends recorded durations. CC macro performance is live and its latest value is saved in the patch, but CC automation is not recorded as a timeline in this version.
 
-The variable meter field accepts the same additive cycles as the earlier tool, for example `7/8:2+2+3, 5/8:3+2, 4/4`. Applying a meter does not modify notes or loop length. Tempo counts quarter notes. Notes may cross bar and loop boundaries; notes starting outside the loop remain saved but do not play or export in the selected loop. Loop length is independently editable.
+The visual rhythm builder offers presets, tick/accent buttons, bar copying/reordering, a count preview, and explicit Apply. Typed notation remains under Advanced. Applying a rhythm preserves authored notes; optional loop fitting changes only the playback loop length.
+
+The advanced variable meter field accepts the same additive cycles as the earlier tool, for example `7/8:2+2+3, 5/8:3+2, 4/4`. Applying a meter does not modify notes or loop length. Tempo counts quarter notes. Notes may cross bar and loop boundaries; notes starting outside the loop remain saved but do not play or export in the selected loop. Loop length is independently editable.
 
 ## Sound
 

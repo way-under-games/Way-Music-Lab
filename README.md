@@ -1,6 +1,8 @@
 # Way Music
 
-Version **0.6.1** provides an **authored music studio** with Perform, Sound, and Game workspaces. Play a customizable computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments or choose recorded orchestral sounds per part, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
+Version **0.7** provides an **authored music studio** with Perform, Sound, and Game workspaces. Play a customizable computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments or choose recorded orchestral sounds per part, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
+
+The [guided rhythm and navigation update](docs/usability-and-navigation.md) adds a visual meter builder with audible count preview, beginner guidance, persistent tool/workspace navigation, and a consistent cosmic frame across Studio, Astral Chamber, Story Director, and the game example.
 
 The [fidelity and optimization pass](docs/fidelity-and-performance.md) adds clean drive bypass, 48 kHz studio exports, reusable audio assets, lighter visual updates, and HTTP caching/seeking.
 

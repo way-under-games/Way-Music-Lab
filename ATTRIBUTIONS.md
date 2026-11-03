@@ -87,3 +87,5 @@ The maintained ComfyUI toolkit referenced in the parent Way workspace generates 
 The cosmic Sound playground, six sound-world parameter recipes, harmonic morphing, mutation controls, and original CSS/SVG interface are original Way code and data under MIT. No commercial synthesizer code, factory preset, waveform recording, font, icon pack, or new runtime dependency was imported for this update.
 
 The 0.6.1 drive correction, audio caching/smoothing, export refinements, frontend optimizations, HTTP caching/range support and measurement scripts are original MIT implementation work; no new dependency or third-party asset was added.
+
+Version 0.7 adds an original visual meter editor/count preview, beginner guidance, shared navigation and cosmic stylesheet under MIT. It uses the existing portable meter contract and native Web Audio APIs; no external UI library, sound, factory preset, font or icon asset was added.
