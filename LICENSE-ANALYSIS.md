@@ -44,3 +44,7 @@ Adopting an external authoring/rendering engine later is a new licensing decisio
 - The published repository is the standalone music project, excluding the parent research vault, caches, local credentials and unrelated content-generation projects.
 
 This is an engineering assessment of the materials actually included, not a guarantee of worldwide rights clearance or a legal opinion. The practical conclusion for this release is **MIT software, CC0 recordings, and one separately identified CC BY-SA research document**.
+
+## 0.8 instrument-workbench update
+
+The new portable curve/partial functions, browser editing controls, tests and research analysis are original repository work covered by MIT. This update adds no runtime dependency or external instrument asset. Vital, Pigments, Phase Plant and Serum are cited as interface/workflow references; their software, factory content and visual assets are not distributed here. Their vendor licenses are not being applied to the original Way implementation. Any future import of external engine code or factory content needs its own license/provenance review. The existing CC0 recording and separately CC BY-SA theory-document notices remain unchanged.

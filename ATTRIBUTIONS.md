@@ -89,3 +89,12 @@ The cosmic Sound playground, six sound-world parameter recipes, harmonic morphin
 The 0.6.1 drive correction, audio caching/smoothing, export refinements, frontend optimizations, HTTP caching/range support and measurement scripts are original MIT implementation work; no new dependency or third-party asset was added.
 
 Version 0.7 adds an original visual meter editor/count preview, beginner guidance, shared navigation and cosmic stylesheet under MIT. It uses the existing portable meter contract and native Web Audio APIs; no external UI library, sound, factory preset, font or icon asset was added.
+
+## Version 0.8 instrument-workbench references
+
+- [Vital](https://vital.audio/): visual movement and source-to-target modulation interaction.
+- [Arturia Pigments](https://www.arturia.com/products/software-instruments/pigments/overview): consistent control-family colors and performance-oriented editing.
+- [Kilohearts Phase Plant](https://kilohearts.com/docs/phase_plant) and [modulation documentation](https://kilohearts.com/docs/modulation): modular organization and source/destination selection.
+- [Xfer Serum 2 manual](https://xferrecords.com/web-manual/serum-2/welcome): reversible module editing, keyboard audition and wavetable workflow context.
+
+These are research/design references. The movement evaluator, partial transforms, drawing/connection controls, envelope handles, thumbnails and audition dock are original MIT code. No vendor code, patches, samples, screenshots, fonts, logos or skins are included. See [the research and implementation comparison](docs/instrument-workbench-research.md).

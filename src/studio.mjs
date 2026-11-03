@@ -1,3 +1,4 @@
+import {movementCurve,lfoValue} from './instrument-design.mjs';
 // MIT. Portable authoring assets. No DOM, audio device, or generated melody.
 import { PPQ, parseMeterCycle, formatMeterCycle, meterTicks, makeBarMap } from './meter.mjs';
 export { PPQ };
@@ -14,7 +15,7 @@ const base = () => ({ version: 1, name: 'Glass lantern', author: 'Way original',
   oscillators: [{ shape: 'harmonic', level: .7, detune: 0 }, { shape: 'sine', level: .2, detune: 5 }],
   frames: [[1, .32, .12, .08, .03, 0, 0, 0], [1, .08, .4, .04, .16, .02, .08, 0]],
   position: .1, attack: .008, decay: .45, sustain: .25, release: .8, cutoff: 4200, resonance: .8,
-  filterEnv: .3, lfoRate: .4, lfoSync: false, lfoShape: 'sine', lfoDepth: .15,
+  filterEnv: .3, lfoRate: .4, lfoSync: false, lfoShape: 'sine', lfoCurve:movementCurve('sine'), lfoDepth: .15,
   routes: [{ source: 'lfo', target: 'position', amount: .2 }],
   macros: { brightness: .45, motion: .25, width: .25, space: .3 },
   effects: { drive: .1, delay: .12, feedback: .25 }, locks: [] });
@@ -37,7 +38,8 @@ export function validatePatch(input) {
   for (const key of ['position','sustain','filterEnv','lfoDepth']) num(p[key], 0, 1, key);
   for (const key of ['attack','decay','release']) num(p[key], .001, 5, key);
   num(p.cutoff, 80, 18000, 'Cutoff'); num(p.resonance, .1, 12, 'Resonance'); num(p.lfoRate, .05, 16, 'LFO rate');
-  if (typeof p.lfoSync !== 'boolean' || !['sine','triangle','square'].includes(p.lfoShape)) throw new TypeError('Invalid LFO');
+  if (typeof p.lfoSync !== 'boolean' || !['sine','triangle','square','custom'].includes(p.lfoShape)) throw new TypeError('Invalid LFO');
+  p.lfoCurve??=movementCurve('sine');if(!Array.isArray(p.lfoCurve)||p.lfoCurve.length<4||p.lfoCurve.length>64||p.lfoCurve.some(v=>!Number.isFinite(v)||Math.abs(v)>1))throw new TypeError('Movement curve needs 4–64 points between -1 and 1');
   if (!Array.isArray(p.routes) || p.routes.length > 8) throw new TypeError('Too many routes');
   for (const r of p.routes) { if (!['lfo','velocity'].includes(r.source) || !['position','cutoff','pitch'].includes(r.target)) throw new TypeError('Invalid modulation route'); num(r.amount, -1, 1, 'Route amount'); }
   for (const m of MACROS) num(p.macros?.[m], 0, 1, m);
@@ -88,7 +90,7 @@ export function blendSounds(a,b,amount) {
   for(const k of ['drive','delay','feedback'])p.effects[k]=mix(a.effects[k],b.effects[k]);
   const routeMap=p=>Object.fromEntries(p.routes.map(r=>[r.source+':'+r.target,r.amount]));const ar=routeMap(a),br=routeMap(b);
   p.routes=[...new Set([...Object.keys(ar),...Object.keys(br)])].map(key=>{const[source,target]=key.split(':');return{source,target,amount:mix(ar[key]??0,br[key]??0)};});
-  p.lfoShape=amount<.5?a.lfoShape:b.lfoShape;p.lfoSync=amount<.5?a.lfoSync:b.lfoSync;p.source='synth';return validatePatch(p);
+  p.lfoShape=amount<.5?a.lfoShape:b.lfoShape;if(a.lfoShape==='custom'||b.lfoShape==='custom'){p.lfoShape='custom';p.lfoCurve=Array.from({length:Math.max(a.lfoCurve.length,b.lfoCurve.length)},(_,i)=>{const phase=i/Math.max(a.lfoCurve.length,b.lfoCurve.length);return mix(lfoValue(a.lfoShape,phase,a.lfoCurve),lfoValue(b.lfoShape,phase,b.lfoCurve));});}p.lfoSync=amount<.5?a.lfoSync:b.lfoSync;p.source='synth';return validatePatch(p);
 }
 export function exploreSound(original,x,y) {
   original=validatePatch(original);num(x,0,1,'X');num(y,0,1,'Y');

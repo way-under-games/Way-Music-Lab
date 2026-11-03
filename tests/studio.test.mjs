@@ -13,6 +13,12 @@ function context() {
 }
 const note=(extra={})=>({id:'authored-note',midi:62,velocity:91,start:300,duration:650,...extra});
 
+test('drawn movement curves drive voice tone and expose the actual per-voice phase',()=>{
+  const c=context(),engine=new StudioEngine(c),p=preset();p.lfoShape='custom';p.lfoCurve=[0,1,0,-1];p.lfoRate=1;p.lfoDepth=1;p.macros.motion=1;p.macros.brightness=.45;p.cutoff=1000;p.filterEnv=0;p.routes=[{source:'lfo',target:'cutoff',amount:1}];
+  engine.noteOn('movement',60,90,'part',p);const voice=engine.voices.get('movement');engine.updateVoice(voice,.25);assert.equal(voice.lfoPhase,.25);assert.equal(voice.lfoValue,1);assert.equal(voice.cutoff,8000);
+  engine.updateVoice(voice,.75);assert.equal(voice.lfoValue,-1);assert.equal(voice.cutoff,125);engine.dispose();
+});
+
 test('audio caches harmonic waves and snapshots while keeping active amplitude envelopes stable',()=>{
   const c=context(),e=new StudioEngine(c),p=preset();p.oscillators[1].shape='harmonic';
   e.noteOn('a',60,90,'part',p);e.noteOn('b',64,90,'part',p);

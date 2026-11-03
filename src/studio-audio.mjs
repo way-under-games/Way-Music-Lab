@@ -1,3 +1,4 @@
+import {lfoValue} from './instrument-design.mjs';
 // MIT. Browser adapter for portable Studio parts and patches.
 import { PPQ, validateProject, clamp, mappedMacros, AuthoredDirector, needsSampleBank } from './studio.mjs';
 import { parseMeterCycle, barStartTick } from './meter.mjs';
@@ -82,7 +83,7 @@ export class StudioEngine {
     const p = v.patch, m = v.macros, t = time - v.start;
     const rate = p.lfoSync ? tempo / 60 / p.lfoRate : p.lfoRate;
     const phase = t * rate % 1;
-    const lfo = (p.lfoShape === 'sine' ? Math.sin(phase * Math.PI * 2) : p.lfoShape === 'triangle' ? 1 - 4 * Math.abs(phase - .5) : phase < .5 ? 1 : -1) * p.lfoDepth * m.motion;
+    const lfo = lfoValue(p.lfoShape,phase,p.lfoCurve) * p.lfoDepth * m.motion;v.lfoPhase=phase;v.lfoValue=lfo;
     let position = p.position, cutoff = p.cutoff * 2 ** ((m.brightness - .45) * 3), pitch = (this.bends.get(v.channel) ?? 0) + v.bend;
     // Expression is a step timeline relative to this attack, independent for overlapping notes.
     if (v.expression.length) { let value=0; for(const point of v.expression) { if(point.tick>t*v.tempo/60*PPQ) break; value=point.value; } pitch=(this.bends.get(v.channel)??0)+v.bend+value; }

@@ -2,7 +2,7 @@
   "date": "2026-11-02",
   "runtime": "v24.22.1",
   "unitTests": {
-    "passed": 69,
+    "passed": 73,
     "failed": 0
   },
   "native": {
@@ -56,7 +56,8 @@
     "drivenThirdHarmonic": 0.026442714171131428,
     "fullQualitySampleRate": 48000,
     "highFeedbackDuration": 11.31,
-    "rms": 0.003489177558651382,
+    "movementDifferenceRms": 0.00710102370837649,
+    "rms": 0.003489177346084363,
     "recordedPeak": 0.011322021484375,
     "bytes": 784848,
     "duration": 8.175041666666667,
@@ -70,7 +71,7 @@
     "exportedSampleRate": 48000,
     "exportBankRequests": 0,
     "midi": 60,
-    "durationTicks": 111.872,
+    "durationTicks": 102.05866666666671,
     "recordedKeyboard": true,
     "customKeyboard": true,
     "voices": "0 voices"
@@ -93,7 +94,7 @@
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 3702,
+      "height": 4332,
       "tab": "sound",
       "overflow": []
     },
@@ -107,7 +108,7 @@
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 5796,
+      "height": 6660,
       "tab": "sound",
       "overflow": []
     },
@@ -128,7 +129,7 @@
     "commitFinalPosition": true,
     "restoreOriginal": true
   },
-  "version": "0.7.0",
+  "version": "0.8.0",
   "meterUsability": {
     "draftProtected": true,
     "notesProtected": true,
@@ -188,5 +189,14 @@
       "frameWidth": 415,
       "background": "rgb(8, 11, 25)"
     }
-  ]
+  ],
+  "instrumentEditing": {
+    "drawnCurve": true,
+    "draggableEnvelope": true,
+    "frameTools": true,
+    "visualRouting": true,
+    "dragDropEvents": true,
+    "nativeHoldAudition": true,
+    "liveModulation": true
+  }
 }

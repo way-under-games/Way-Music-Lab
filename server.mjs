@@ -14,8 +14,8 @@ const ALLOWED = new Set(['/web/index.html', '/web/integration.html', '/web/style
 ALLOWED.add('/src/samples.mjs'); ALLOWED.add('/samples/vsco-ce/manifest.json');
 for (const route of ['/src/director.mjs', '/web/director.html', '/web/director-app.mjs']) ALLOWED.add(route);
 for (const route of ['/src/studio.mjs', '/src/studio-audio.mjs', '/src/studio-midi.mjs', '/web/studio.html', '/web/studio.css', '/web/studio-app.mjs']) ALLOWED.add(route);
-ALLOWED.add('/src/studio-host.mjs');
-for(const route of ['/web/meter-builder.mjs','/web/way-shell.css'])ALLOWED.add(route);
+ALLOWED.add('/src/studio-host.mjs');ALLOWED.add('/src/instrument-design.mjs');
+for(const route of ['/web/meter-builder.mjs','/web/instrument-editor.mjs','/web/instrument-editor.css','/web/way-shell.css'])ALLOWED.add(route);
 
 async function readJson(request) {
   let bytes = 0;
@@ -73,7 +73,7 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
     const sendJson = (status, data) => { response.writeHead(status, { 'Content-Type': TYPES['.json'] }); response.end(JSON.stringify(data)); };
     try {
       const url = new URL(request.url, 'http://localhost');
-      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.7.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
+      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.8.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
       if (url.pathname === '/api/v1/renders/wav') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with rendered WAV bytes' });
         if (request.headers['content-type'] !== 'audio/wav') return sendJson(400, { error: 'Content-Type must be audio/wav' });

@@ -1,6 +1,6 @@
 # Way Music authoring studio
 
-Version 0.7 provides the Perform, Sound, and Game workflow. The home page is now an authoring studio. Projects start with empty melody, countermelody, and bass-hook parts; the application does not invent their notes. The earlier procedural orchestra and narrative auditions remain available from the sidebar.
+Version 0.8 provides the Perform, Sound, and Game workflow. The home page is now an authoring studio. Projects start with empty melody, countermelody, and bass-hook parts; the application does not invent their notes. The earlier procedural orchestra and narrative auditions remain available from the sidebar.
 
 The [guided rhythm and navigation guide](usability-and-navigation.md) explains the visual meter editor, count preview, shared navigation and first-visit help.
 
@@ -23,6 +23,13 @@ The visual rhythm builder offers presets, tick/accent buttons, bar copying/reord
 The advanced variable meter field accepts the same additive cycles as the earlier tool, for example `7/8:2+2+3, 5/8:3+2, 4/4`. Applying a meter does not modify notes or loop length. Tempo counts quarter notes. Notes may cross bar and loop boundaries; notes starting outside the loop remain saved but do not play or export in the selected loop. Loop length is independently editable.
 
 ## Sound
+
+Use the Tone / Shape / Movement / Performance jump buttons to move through the instrument. The sticky audition dock offers named test notes, Strike for new waveform/envelope attacks, Hold for continuous filter/movement edits, and Stop audition. These previews do not write notes.
+
+Frame thumbnails select an edit frame and move its base scan position. Copy/delete frames or apply a starting spectrum, brighten/soften, hollow, or phase inversion. The first oscillator uses the harmonic source after a frame tool is applied.
+
+Drag an envelope handle, use its arrow-key controls, or adjust the sliders. Time handles use logarithmic display regions, not a linear seconds axis. Draw a movement curve or choose a recipe, then drag its source chip to a target—or click the source followed by a destination. Expand point editing or connection depths for precise adjustments. Movement connections set audible starting depth/Motion values; Undo restores the previous patch. Read the [source-linked workbench research and limits](instrument-workbench-research.md).
+
 
 Each part owns its own instrument patch. Four original starting recipes provide bell/pluck, pad, lead, and bass directions. They contain no third-party recordings or factory presets.
 

@@ -53,6 +53,13 @@ $('planet-x').value='0.9';$('planet-x').dispatchEvent(new window.Event('input',{
 await change('mutation-strength','1');await click('mutate-sound');assert.match(saved().parts[0].patch.name,/Mutation/);
 assert.deepEqual(saved().parts[0].notes,original,'Playground preserves the authored hook');
 await click('restore-sound');assert.deepEqual(saved().parts[0].patch,startingPatch,'Exploration start restores the full patch');
+const editorNotes=structuredClone(saved().parts[0].notes),frameCount=saved().parts[0].patch.frames.length;
+document.querySelector('[data-frame-tool="bell"]').click();await flush();assert.equal(saved().parts[0].patch.oscillators[0].shape,'harmonic');
+await click('copy-frame');assert.equal(saved().parts[0].patch.frames.length,frameCount+1);await click('delete-frame');assert.equal(saved().parts[0].patch.frames.length,frameCount);
+document.querySelector('[data-movement-shape="steps"]').click();await flush();assert.equal(saved().parts[0].patch.lfoShape,'custom');
+document.querySelector('[data-mod-source="lfo"]').click();document.querySelector('[data-mod-target="cutoff"]').click();await flush();assert.ok(saved().parts[0].patch.routes.some(r=>r.source==='lfo'&&r.target==='cutoff'));
+const beforeSustain=saved().parts[0].patch.sustain,handle=document.querySelector('[data-envelope="sustain"]'),adjust=new window.Event('keydown',{bubbles:true});Object.assign(adjust,{key:'ArrowUp'});handle.dispatchEvent(adjust);await flush();assert.ok(saved().parts[0].patch.sustain>beforeSustain);
+assert.deepEqual(saved().parts[0].notes,editorNotes,'Instrument editors preserve the authored hook');
 await change('meter','5/8:3+2, 7/8:2+2+3');await click('apply-meter');assert.deepEqual(saved().parts[0].notes,original,'Meter edits preserve notes');
 await click('store-variation');assert.equal(saved().variations.Contemplative.length,3);
 await click('audio');await click('record');contexts[0].currentTime=.25;
