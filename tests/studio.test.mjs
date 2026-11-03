@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { newProject, validateProject, validatePatch, preset, varyPatch, setMeter, bars, mappedMacros, TakeRecorder, quantize, History, harmonics, AuthoredDirector } from '../src/studio.mjs';
+import { newProject, validateProject, validatePatch, preset, varyPatch, setMeter, bars, mappedMacros, TakeRecorder, quantize, History, harmonics, AuthoredDirector, parseKeyBindings } from '../src/studio.mjs';
 import { StudioEngine, StudioPlayer, encodeWav, renderStudioWav } from '../src/studio-audio.mjs';
 import { BrowserStudio } from '../src/studio-host.mjs';
 import { exportStudioMidi } from '../src/studio-midi.mjs';
@@ -9,7 +9,7 @@ function context() {
   const nodes=[];
   const param=()=>({value:0,events:[],setValueAtTime(v,t){this.events.push(['value',v,t]);},linearRampToValueAtTime(v,t){this.events.push(['linear',v,t]);},exponentialRampToValueAtTime(v,t){this.events.push(['exp',v,t]);},setTargetAtTime(v,t,s){this.events.push(['target',v,t,s]);},cancelScheduledValues(t){this.events.push(['cancel',t]);},cancelAndHoldAtTime(t){this.events.push(['hold',t]);}});
   const node=()=>{const n={gain:param(),frequency:param(),detune:param(),pan:param(),Q:param(),delayTime:param(),threshold:param(),ratio:param(),connected:[],connect(to){this.connected.push(to);return to;},disconnect(){this.disconnected=true;},start(t){this.started=t;},stop(t){this.stopped=t;},setPeriodicWave(w){this.wave=w;}};nodes.push(n);return n;};
-  return {currentTime:0,sampleRate:48000,nodes,destination:{},createGain:node,createBiquadFilter:node,createStereoPanner:node,createWaveShaper:node,createDelay:node,createDynamicsCompressor:node,createAnalyser:node,createOscillator:node,createPeriodicWave:(r,i,o)=>({real:r,imaginary:i,options:o})};
+  return {currentTime:0,sampleRate:48000,nodes,destination:{},createGain:node,createBiquadFilter:node,createStereoPanner:node,createWaveShaper:node,createDelay:node,createDynamicsCompressor:node,createAnalyser:node,createOscillator:node,createBufferSource(){const s=node();s.playbackRate=param();return s;},createPeriodicWave:(r,i,o)=>({real:r,imaginary:i,options:o})};
 }
 const note=(extra={})=>({id:'authored-note',midi:62,velocity:91,start:300,duration:650,...extra});
 
@@ -81,4 +81,32 @@ test('browser host validates telemetry atomically and disposal cancels an asynch
   globalThis.AudioContext=class{constructor(){return c;}};globalThis.document={addEventListener(){},removeEventListener(){}};t.after(()=>{globalThis.AudioContext=previousAudio;globalThis.document=previousDocument;});
   const host=new BrowserStudio(newProject());assert.throws(()=>host.setTelemetry({danger:.8,movement:2}));assert.equal(host.player.telemetry.danger,0);host.setTelemetry({danger:.8});assert.equal(host.player.telemetry.danger,.8);
   const start=host.start();await host.dispose();resume();await start;assert.equal(host.player.running,false);assert.equal(host.timer,null);await host.dispose();assert.equal(c.closed,true);await assert.rejects(()=>host.start(),/disposed/);
+});
+test('capture preserves pitch bend already held at attack and records later bend relative to it',()=>{
+  const recorder=new TakeRecorder({tempo:120});recorder.on('midi:0:60',60,90,.1,1.25);recorder.bend('midi:',-.5,.2);recorder.off('midi:0:60',.3);const [captured]=recorder.finish(.4);
+  assert.equal(captured.bend,1.25);assert.deepEqual(captured.expression,[{tick:96,value:-1.75}]);
+  const c=context(),engine=new StudioEngine(c);engine.noteOn('replay',captured.midi,90,'part',preset(),{bend:captured.bend,expression:captured.expression,tempo:120});c.currentTime=.1;engine.tick();
+  assert.equal(engine.voices.get('replay').sources[0].oscillator.detune.events.at(-1)[1],-50);
+});
+test('unsorted authored notes commit upcoming stage decisions in chronological order',()=>{
+  const project=newProject();project.tempo=200;project.meter='1/16';project.loopTicks=480;project.parts[0].notes=[note({id:'later',start:250}),note({id:'earlier',start:130})];project.scenes.loss.parts=[];
+  const c=context(),engine=new StudioEngine(c),player=new StudioPlayer(engine,project);player.gameEnabled=true;player.director.setStage('play');player.director.cue('loss',2);player.start();c.currentTime=.08;player.tick();
+  assert.equal(engine.voices.size,1);assert.ok([...engine.voices.keys()][0].endsWith(':later'));assert.equal(player.director.history.get(1),'loss');assert.equal(player.director.history.get(2),'play');
+});
+test('authored parts can use recorded instruments with stable take selection and held-note release',()=>{
+  const c=context(),engine=new StudioEngine(c),patch=preset();patch.source='orchestra';patch.instrument='woodwind';
+  assert.throws(()=>engine.noteOn('key',60,90,'melody',patch),/Load the recorded bank/);assert.equal(engine.voices.size,0);
+  const region={track:'woodwind',midi:60,loKey:0,hiKey:127,loVel:1,hiVel:127,rr:1,url:'flute-1.wav',articulation:'sustain',gainDb:0,buffer:{duration:3},loop:{start:.5,end:2.5}};
+  engine.sampleBank={manifest:{gain:1},regions:[region,{...region,rr:2,url:'flute-2.wav'}]};
+  engine.noteOn('live-key',64,90,'melody',patch,{eventId:'melody:hook-1'});const live=engine.voices.get('live-key');assert.equal(live.sources[0].oscillator.playbackRate.value,2**(4/12));assert.equal(live.sources[0].oscillator.loop,true);
+  engine.noteOn('offline-key',64,90,'melody',patch,{eventId:'melody:hook-1'});assert.equal(engine.voices.get('offline-key').sample.url,live.sample.url);engine.release('live-key',.5);assert.equal(live.releaseAt,.5);assert.ok(Number.isFinite(live.end));engine.dispose();assert.equal(engine.voices.size,0);assert.equal(engine.sampleBank,null);
+});
+test('custom keyboard layouts are portable and reject duplicate or out-of-range assignments',()=>{
+  assert.deepEqual(parseKeyBindings('Q:0, 2:1, W:2'),{KeyQ:0,Digit2:1,KeyW:2});const project=newProject();project.keyBindings=parseKeyBindings('Q:0, W:2');assert.deepEqual(validateProject(project).keyBindings,project.keyBindings);
+  for(const bad of ['A:24','A:0,A:2','Control:0','A=2',''])assert.throws(()=>parseKeyBindings(bad));
+});
+test('earlier version-one projects normalize newly optional patch fields in parts and variations',()=>{
+  const project=newProject();project.variations.old=project.parts.map(part=>structuredClone(part.patch));delete project.keyBindings;
+  for(const patch of [...project.parts.map(p=>p.patch),...project.variations.old]){delete patch.source;delete patch.instrument;delete patch.articulation;}
+  const restored=validateProject(project);assert.equal(restored.parts[0].patch.source,'synth');assert.equal(restored.variations.old[0].instrument,'woodwind');assert.equal(restored.keyBindings.KeyA,0);
 });

@@ -6,6 +6,8 @@ Version 0.6 implements the Perform, Sound, and Game workflow. The home page is n
 
 Enable audio through the button or a played note. The computer layout uses A–K for white keys, W/E/T/Y/U for black keys, Z/X for octave, and C/V for velocity. The on-screen keyboard supports pointer input. Typing into text and numeric fields does not play notes. Pitch assignments are retained until key release, including after an octave change. Focus loss and All notes off cancel voices.
 
+Customize computer keyboard opens a portable key map. Enter letter/digit and semitone-offset pairs, such as `Q:0, 2:1, W:2`, then Apply. Offsets are relative to the octave control; reset restores the default piano layout. Assigning Z/X/C/V to notes overrides those shortcut keys. Key-map changes do not edit existing musical parts.
+
 Connect MIDI optionally, choose an input or all inputs, and play notes with velocity, sustain, pitch bend, and assignable CC controls. The Learn button under each Sound macro binds a MIDI channel/CC pair. Device changes clear held notes. Web MIDI availability and permissions depend on the browser; computer and on-screen input do not require MIDI access.
 
 Record a take, finish it, and explicitly Keep or Discard. Overdub adds notes; Replace replaces the selected part only when the take is kept. Undo restores the prior part. Loop overdub plays the existing parts and folds new note starts into the current loop while retaining durations across its boundary. Turn it off for a linear take that can extend the loop. Count-in is a visual quarter-beat countdown; it is not an audible metronome.
@@ -19,6 +21,10 @@ The variable meter field accepts the same additive cycles as the earlier tool, f
 ## Sound
 
 Each part owns its own instrument patch. Four original starting recipes provide bell/pluck, pad, lead, and bass directions. They contain no third-party recordings or factory presets.
+
+Sound source also offers the bundled **recorded orchestra**: strings, harp, flute, French horn, and percussion, with sustain or short articulation selection. Preload recordings or start playing to load and verify the 95 local CC0 WAVs. Melody/countermelody parts and saved variations can mix synthesized and recorded instruments. The same event ID selects the same recorded take in live and offline rendering. Percussion uses GM drum pitches such as 36 (kick), 38 (snare), 42 (short cymbal substitute), and 45 (timpani); set the input octave or enter the corresponding MIDI pitches. The compact bank still has the pitch-shifting and articulation limits described in the root README.
+
+The waveform/oscillator editor applies to the designed-synth source. Envelopes, filters, effects, and filter/pitch modulation also shape recorded instruments. Wavetable-position modulation has no effect on a recorded source. A live readout shows the selected part's effective filter and modulation values while playing.
 
 Two oscillators can use sine, triangle, saw, square, or the custom harmonic source, with level and detune. A harmonic frame contains eight signed sine-partial coefficients. The waveform canvas resynthesizes a drawn shape into those eight coefficients; this is a bounded approximation rather than unrestricted waveform capture. Harmonic sliders provide precise alternative input. Add up to sixteen frames and scan their position manually or through modulation. Native PeriodicWave oscillators handle the harmonic sources; adjacent frames crossfade with aligned starts.
 
@@ -46,7 +52,7 @@ WAV uses native OfflineAudioContext at 24 kHz stereo PCM. It renders one loop, r
 
 ## Browser game integration
 
-The browser host is a thin adapter over portable project data and authored stage policy. Serve the four studio modules and `meter.mjs` alongside the game, and load your exported project:
+The browser host is a thin adapter over portable project data and authored stage policy. Serve the `src` directory alongside the game; include `samples/vsco-ce` and its notices when using recorded instruments. The host preloads the recorded bank if the project or its variations need it. Load your exported project:
 
 ```javascript
 import { BrowserStudio } from './way-music/src/studio-host.mjs';
@@ -67,7 +73,7 @@ Call stage setters at the corresponding events, not all together as an initializ
 
 ## Formats and bounds
 
-Project and instrument formats are version 1. Notes use absolute tick starts, durations, MIDI pitches and velocities; PPQ is 480. Expression points are tick offsets from a note's start with semitone bend values. Meter is separate from phrase identity. Project JSON includes parts, patches, mappings, scene admissions, variation snapshots, and MIDI CC bindings. Runtime validators are exported from [studio.mjs](../src/studio.mjs).
+Project and instrument formats are version 1. Notes use absolute tick starts, durations, MIDI pitches and velocities; PPQ is 480. Expression points are tick offsets from a note's start with semitone bend values relative to its initial bend. Meter is separate from phrase identity. Project JSON includes parts, patches, instrument-source choices, mappings, scene admissions, variation snapshots, MIDI CC bindings, and the computer key map. Earlier version-one files default to the original synth source and key layout. Runtime validators are exported from [studio.mjs](../src/studio.mjs).
 
 Bounds include 16 parts, 10,000 notes, 1,000 expression points per note, sixteen eight-harmonic frames per patch, eight modulation routes per patch, sixteen game mappings, 32 variations, and a 128-quarter-beat loop. The renderer caps active note voices at 32. Keyboard input is immediate; authored playback uses 120 ms scheduling lookahead and a 25 ms feeder.
 
@@ -75,4 +81,4 @@ Bounds include 16 parts, 10,000 notes, 1,000 expression points per note, sixteen
 
 Run `node --test tests/*.test.mjs` for core, scheduling, policy, format, MIDI, HTTP, and regression tests. `node scripts/check-studio-ui.mjs` runs an isolated in-memory DOM workflow check; it fetches the pinned LinkeDOM 0.18.12 worker with npm integrity verification and caches it under ignored `.cache`. It does not open or control a browser or desktop. Canvas and audio APIs in that test are doubles.
 
-`node scripts/check-studio-isolated.mjs <chromium-executable>` provides a separate opt-in headless check of native offline synthesis and real-page initialization, plus viewport screenshots. It creates its own ignored test profile, never attaches to an existing browser, and sends no desktop input. See [version 0.6 verification](../VERIFICATION-0.6.md) for results and remaining limits.
+`node scripts/check-studio-isolated.mjs <chromium-executable>` provides a separate headless check of native synth/recorded WAV rendering, real-page keyboard recording, source switching and key remapping, plus viewport screenshots of all three workspaces. It creates its own ignored test profile, never attaches to an existing browser, and sends no desktop input. Native audio completion is reported to the temporary test server; screenshots use explicitly sized test viewports. See [version 0.6 verification](../VERIFICATION-0.6.md) for results and remaining device limits.

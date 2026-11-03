@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-02",
+  "runtime": "v24.22.1",
+  "unitTests": {
+    "passed": 62,
+    "failed": 0
+  },
+  "native": {
+    "nativeAudio": true,
+    "peak": 0.0615234375,
+    "rms": 0.005501012473197006,
+    "recordedPeak": 0.017852783203125,
+    "bytes": 784848,
+    "duration": 8.175041666666667,
+    "parts": 3,
+    "keys": 24,
+    "scenes": 7
+  },
+  "performance": {
+    "nativeRecording": true,
+    "midi": 60,
+    "durationTicks": 111.87199999999997,
+    "recordedKeyboard": true,
+    "customKeyboard": true,
+    "voices": "0 voices"
+  },
+  "layouts": [
+    {
+      "width": 1500,
+      "scrollWidth": 1485,
+      "height": 1575,
+      "tab": "perform",
+      "overflow": []
+    },
+    {
+      "width": 430,
+      "scrollWidth": 415,
+      "height": 1947,
+      "tab": "perform",
+      "overflow": []
+    },
+    {
+      "width": 1500,
+      "scrollWidth": 1485,
+      "height": 2371,
+      "tab": "sound",
+      "overflow": []
+    },
+    {
+      "width": 1500,
+      "scrollWidth": 1485,
+      "height": 2293,
+      "tab": "game",
+      "overflow": []
+    },
+    {
+      "width": 430,
+      "scrollWidth": 415,
+      "height": 3571,
+      "tab": "sound",
+      "overflow": []
+    },
+    {
+      "width": 430,
+      "scrollWidth": 415,
+      "height": 3440,
+      "tab": "game",
+      "overflow": []
+    }
+  ],
+  "method": "Dedicated headless test profile; no existing browser attachment or desktop input",
+  "limits": [
+    "Physical MIDI hardware and output-device latency not measured",
+    "Subjective musical quality not assessed"
+  ]
+}

@@ -3,13 +3,14 @@ import { PPQ, parseMeterCycle, formatMeterCycle, meterTicks, makeBarMap } from '
 export { PPQ };
 export const MACROS = ['brightness', 'motion', 'width', 'space'];
 export const STAGES = ['title','opening','play','danger','revelation','loss','resolution'];
+export const DEFAULT_KEYMAP = Object.freeze({KeyA:0,KeyW:1,KeyS:2,KeyE:3,KeyD:4,KeyF:5,KeyT:6,KeyG:7,KeyY:8,KeyH:9,KeyU:10,KeyJ:11,KeyK:12});
 export const clone = value => structuredClone(value);
 export const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
 const num = (v, lo, hi, name) => { if (!Number.isFinite(v) || v < lo || v > hi) throw new TypeError(`${name} must be ${lo}–${hi}`); return v; };
 const label = v => { if (typeof v !== 'string' || !v.trim() || v.length > 100) throw new TypeError('Names need 1–100 characters'); return v; };
 export const id = () => globalThis.crypto.randomUUID();
 export const noteName = midi => ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi % 12] + (Math.floor(midi / 12) - 1);
-const base = () => ({ version: 1, name: 'Glass lantern', author: 'Way original', revision: 1,
+const base = () => ({ version: 1, name: 'Glass lantern', author: 'Way original', revision: 1, source: 'synth', instrument: 'woodwind', articulation: 'sustain',
   oscillators: [{ shape: 'harmonic', level: .7, detune: 0 }, { shape: 'sine', level: .2, detune: 5 }],
   frames: [[1, .32, .12, .08, .03, 0, 0, 0], [1, .08, .4, .04, .16, .02, .08, 0]],
   position: .1, attack: .008, decay: .45, sustain: .25, release: .8, cutoff: 4200, resonance: .8,
@@ -27,6 +28,8 @@ export function preset(name = 'Glass lantern') {
 export function validatePatch(input) {
   const p = clone(input);
   if (p?.version !== 1) throw new TypeError('Unsupported instrument version');
+  p.source ??= 'synth';p.instrument ??= 'woodwind';p.articulation ??= 'sustain';
+  if(!['synth','orchestra'].includes(p.source)||!['strings','harp','woodwind','horn','percussion'].includes(p.instrument)||!['sustain','short'].includes(p.articulation))throw new TypeError('Invalid instrument source');
   label(p.name); label(p.author); num(p.revision, 1, 1e9, 'Revision');
   if (!Array.isArray(p.oscillators) || p.oscillators.length !== 2) throw new TypeError('Two oscillators required');
   for (const o of p.oscillators) { if (!['harmonic','sine','triangle','sawtooth','square'].includes(o.shape)) throw new TypeError('Unknown oscillator'); num(o.level, 0, 1, 'Level'); num(o.detune, -100, 100, 'Detune'); }
@@ -61,7 +64,7 @@ export function newProject() {
     parts: ['Melody','Countermelody','Bass hook'].map((name, i) => ({ id: `part-${i}`, name, muted: false, patch: preset(['Glass lantern','Paper sky','Moss bass'][i]), notes: [] })),
     mappings: MACROS.map((target, i) => ({ source: i === 0 ? 'danger' : i === 1 ? 'movement' : 'story', target, min: .15, max: i === 2 ? .45 : .8, smoothing: .5, enabled: i < 2 })),
     scenes: Object.fromEntries(STAGES.map(stage=>[stage,{parts:stage==='title'||stage==='loss'?['part-0']:stage==='opening'?['part-0','part-1']:['part-0','part-1','part-2'],variation:''}])),
-    variations: {}, bindings: {} };
+    variations: {}, bindings: {}, keyBindings:{...DEFAULT_KEYMAP} };
 }
 export function validateProject(input) {
   const p = clone(input);
@@ -81,12 +84,19 @@ export function validateProject(input) {
   for (const m of p.mappings) { if (!['danger','movement','story'].includes(m.source) || !MACROS.includes(m.target) || typeof m.enabled !== 'boolean') throw new TypeError('Invalid game mapping'); num(m.min, 0, 1, 'Mapping minimum'); num(m.max, 0, 1, 'Mapping maximum'); num(m.smoothing, .01, 5, 'Smoothing'); }
   p.variations ??= {}; p.bindings ??= {};
   if (!p.variations || typeof p.variations!=='object' || Array.isArray(p.variations) || Object.keys(p.variations).some(k=>['__proto__','constructor','prototype'].includes(k)) || Object.keys(p.variations).length > 32 || Object.values(p.variations).some(v => !Array.isArray(v) || v.length !== p.parts.length)) throw new TypeError('Invalid patch variation');
-  for (const patches of Object.values(p.variations)) patches.forEach(validatePatch);
+  for (const [name,patches] of Object.entries(p.variations)) p.variations[name]=patches.map(validatePatch);
   p.scenes ??= Object.fromEntries(STAGES.map(stage=>[stage,{parts:p.parts.map(part=>part.id),variation:''}]));
   for(const stage of STAGES) { const scene=p.scenes[stage]; if(!scene||!Array.isArray(scene.parts)||scene.parts.some(key=>!ids.has(key))||typeof scene.variation!=='string'||scene.variation&&!Object.hasOwn(p.variations,scene.variation))throw new TypeError('Invalid authored scene '+stage); }
   if(typeof p.bindings!=='object'||Array.isArray(p.bindings)||Object.keys(p.bindings).length>256)throw new TypeError('Invalid MIDI bindings');
   for (const [binding, target] of Object.entries(p.bindings)) if (!/^\d+:\d+$/.test(binding) || !MACROS.includes(target)) throw new TypeError('Invalid MIDI binding');
+  p.keyBindings ??= {...DEFAULT_KEYMAP};
+  if(typeof p.keyBindings!=='object'||Array.isArray(p.keyBindings)||Object.keys(p.keyBindings).length<1||Object.keys(p.keyBindings).length>36)throw new TypeError('Keyboard map needs 1–36 assignments');
+  for(const[key,offset]of Object.entries(p.keyBindings))if(!/^(Key[A-Z]|Digit[0-9])$/.test(key)||!Number.isInteger(offset)||offset<0||offset>23)throw new TypeError('Invalid keyboard assignment');
   return p;
+}
+export function parseKeyBindings(text){
+  if(typeof text!=='string'||text.length>512)throw new TypeError('Enter keys and semitone offsets, such as A:0, W:1, S:2');
+  const result={};for(const item of text.split(',')){const match=item.trim().toUpperCase().match(/^([A-Z0-9])\s*:\s*(\d{1,2})$/);if(!match)throw new TypeError('Use key:offset pairs, such as A:0, W:1, S:2');const key=(/\d/.test(match[1])?'Digit':'Key')+match[1],offset=Number(match[2]);if(Object.hasOwn(result,key)||offset>23)throw new TypeError('Keys must be unique and offsets must be 0–23');result[key]=offset;}return result;
 }
 export function bars(project, count = 32) { return makeBarMap(parseMeterCycle(project.meter), 0, count); }
 export function setMeter(project, text) { const cycle = parseMeterCycle(text); project.meter = formatMeterCycle(cycle); return cycle.reduce((sum, m) => sum + meterTicks(m), 0); }
@@ -95,12 +105,13 @@ export function mappedMacros(project, telemetry, base) {
   for (const m of project.mappings) if (m.enabled) result[m.target] = m.min + (m.max - m.min) * clamp(telemetry[m.source] ?? 0);
   return result;
 }
+export const needsSampleBank = project => project.parts.some(part=>part.patch.source==='orchestra')||Object.values(project.variations).some(patches=>patches.some(p=>p.source==='orchestra'));
 export class TakeRecorder {
   constructor({ tempo, startTime = 0, startTick = 0 }) { this.tempo = tempo; this.startTime = startTime; this.startTick = startTick; this.held = new Map(); this.notes = []; }
   tick(time) { return Math.max(0, this.startTick + (time - this.startTime) * this.tempo / 60 * PPQ); }
-  on(key, midi, velocity, time) { if (time < this.startTime) return; if(this.held.has(key))this.off(key,time); this.held.set(key, { id: id(), midi, velocity, start: this.tick(time) }); }
+  on(key, midi, velocity, time, initialBend = 0) { if (time < this.startTime) return; if(this.held.has(key))this.off(key,time); this.held.set(key, { id: id(), midi, velocity, start: this.tick(time), ...(initialBend ? {bend:initialBend} : {}) }); }
   off(key, time) { const n = this.held.get(key); if (!n) return; this.held.delete(key); n.duration = Math.max(1, this.tick(time) - n.start); this.notes.push(n); }
-  bend(prefix, value, time) { for (const [key,n] of this.held) if (key.startsWith(prefix)) { n.expression ??= []; if(n.expression.length<1000) n.expression.push({tick:Math.max(0,this.tick(time)-n.start),value}); } }
+  bend(prefix, value, time) { for (const [key,n] of this.held) if (key.startsWith(prefix)) { n.expression ??= []; if(n.expression.length<1000) n.expression.push({tick:Math.max(0,this.tick(time)-n.start),value:value-(n.bend??0)}); } }
   finish(time) { for (const key of [...this.held.keys()]) this.off(key, time); return clone(this.notes); }
 }
 export function quantize(notes, grid) { return notes.map(n => ({ ...n, start: Math.max(0, Math.round(n.start / grid) * grid) })); }

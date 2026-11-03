@@ -1,14 +1,20 @@
 // MIT. Browser adapter for portable Studio parts and patches.
-import { PPQ, validatePatch, validateProject, clamp, mappedMacros, AuthoredDirector, bars } from './studio.mjs';
+import { PPQ, validateProject, clamp, mappedMacros, AuthoredDirector, needsSampleBank } from './studio.mjs';
 import { parseMeterCycle, barStartTick } from './meter.mjs';
+import { loadSampleBank, selectSample } from './samples.mjs';
 const freq = midi => 440 * 2 ** ((midi - 69) / 12);
 export class StudioEngine {
   constructor(context) {
-    this.context = context; this.voices = new Map(); this.buses = new Map(); this.sustained = new Map(); this.pedals = new Set(); this.bends = new Map(); this.dropped = 0;
+    this.context = context; this.voices = new Map(); this.buses = new Map(); this.sustained = new Map(); this.pedals = new Set(); this.bends = new Map(); this.dropped = 0;this.sampleBank=null;this.bankPromise=null;this.disposed=false;
     this.master = context.createGain(); this.master.gain.value = .55;
     this.compressor = context.createDynamicsCompressor(); this.compressor.threshold.value = -12; this.compressor.ratio.value = 12;
     this.analyser = context.createAnalyser(); this.analyser.fftSize = 1024;
     this.master.connect(this.compressor).connect(this.analyser).connect(context.destination);
+  }
+  async ensureSampleBank(url='/samples/vsco-ce/manifest.json'){
+    if(this.sampleBank)return this.sampleBank;
+    if(!this.bankPromise)this.bankPromise=loadSampleBank(this.context,url).then(bank=>{if(this.disposed)throw new Error('Instrument engine disposed during preload');this.sampleBank=bank;return bank;}).catch(error=>{this.bankPromise=null;throw error;});
+    return this.bankPromise;
   }
   bus(key, patch, macros) {
     if (!this.buses.has(key)) {
@@ -26,15 +32,22 @@ export class StudioEngine {
     b.wet.gain.setTargetAtTime(patch.effects.delay * macros.space * .65, now, .05);
     return b;
   }
-  noteOn(key, midi, velocity, partId, patch, { time = this.context.currentTime, channel = 'keys', macros = patch.macros, bend = 0, expression = [], tempo = 92 } = {}) {
+  noteOn(key, midi, velocity, partId, patch, { time = this.context.currentTime, channel = 'keys', macros = patch.macros, bend = 0, expression = [], tempo = 92, eventId = key } = {}) {
     if (!Number.isInteger(midi) || midi < 0 || midi > 127 || !Number.isFinite(velocity) || velocity < 1 || velocity > 127 || !Number.isFinite(time)) throw new TypeError('Invalid performance note');
+    let sample=null;
+    if(patch.source==='orchestra'){if(!this.sampleBank)throw new Error('Load the recorded bank before playing this instrument');sample=selectSample(this.sampleBank.regions,{id:eventId,track:patch.instrument,midi,velocity},patch.articulation==='short'?.2:1);if(!sample)throw new Error('No recording for this note; percussion uses GM drum pitches such as 36, 38, 42 or 45');}
     this.kill(key); if (this.voices.size >= 32) { this.dropped++; return false; }
     const c = this.context, gain = c.createGain(), filter = c.createBiquadFilter(), pan = c.createStereoPanner();
     filter.type = 'lowpass'; gain.connect(filter).connect(pan).connect(this.bus(partId, patch, macros).input);
-    const level = velocity / 127 * .17, attack = time + patch.attack, decay = attack + patch.decay;
+    const level = velocity / 127 * .17 * (sample ? (this.sampleBank.manifest.gain??1)*10**(sample.gainDb/20) : 1), attack = time + patch.attack, decay = attack + patch.decay;
     gain.gain.setValueAtTime(0, time); gain.gain.linearRampToValueAtTime(level, attack); gain.gain.exponentialRampToValueAtTime(Math.max(.00001, level * patch.sustain), decay);
     const voice = { key, midi, velocity, partId, patch: structuredClone(patch), macros: { ...macros }, channel, start: time, gain, filter, pan, sources: [], frameGains: [], released: false, releaseAt: Infinity, end: Infinity, level, attack, decay, bend, expression, tempo };
-    patch.oscillators.forEach((spec, oscillatorIndex) => {
+    if(sample){
+      const source=c.createBufferSource();source.buffer=sample.buffer;source.playbackRate.value=patch.instrument==='percussion'?1:2**((midi-sample.midi)/12);
+      if(sample.loop){source.loop=true;source.loopStart=sample.loop.start;source.loopEnd=sample.loop.end;}
+      source.connect(gain);source.start(time);voice.sources.push({oscillator:source,spec:{detune:0}});voice.sample=sample;
+      if(!sample.loop)voice.end=time+sample.buffer.duration/source.playbackRate.value+.03;
+    }else patch.oscillators.forEach((spec, oscillatorIndex) => {
       const frames = spec.shape === 'harmonic' ? patch.frames : [null];
       const normalization = Math.max(1, ...patch.frames.map(f => f.reduce((s, a) => s + Math.abs(a), 0)));
       frames.forEach((frame, frameIndex) => {
@@ -69,6 +82,7 @@ export class StudioEngine {
     }
     const envelope = t < p.attack ? t / p.attack : Math.exp(-(t - p.attack) / p.decay);
     cutoff *= 2 ** (envelope * p.filterEnv * 3);
+    v.position=clamp(position);v.cutoff=cutoff;
     v.filter.frequency.setTargetAtTime(clamp(cutoff, 40, Math.min(18000, this.context.sampleRate * .45)), time, .025);
     v.filter.Q.setTargetAtTime(p.resonance, time, .025); v.pan.pan.setTargetAtTime((v.midi % 2 ? -1 : 1) * m.width * .65, time, .025);
     for (const source of v.sources) source.oscillator.detune.setTargetAtTime(source.spec.detune + pitch * 100, time, .015);
@@ -83,7 +97,7 @@ export class StudioEngine {
     else { v.gain.gain.cancelScheduledValues(t); v.gain.gain.setValueAtTime(Math.max(0, current), t); }
     v.gain.gain.linearRampToValueAtTime(0, t + p.release);
     for (const s of v.sources) s.oscillator.stop(t + p.release + .02);
-    v.released = true; v.releaseAt = t; v.end = t + p.release + .03; this.sustained.delete(key);
+    v.released = true; v.releaseAt = t; v.end = Math.min(v.end,t + p.release + .03); this.sustained.delete(key);
   }
   sustain(channel, down) {
     if (down) this.pedals.add(channel); else { this.pedals.delete(channel); for (const [key, ch] of [...this.sustained]) if (ch === channel) this.release(key); }
@@ -91,7 +105,7 @@ export class StudioEngine {
   bend(channel, semitones) { this.bends.set(channel, semitones); }
   kill(key) {
     const v = this.voices.get(key); if (!v) return;
-    for (const s of v.sources) { try { s.oscillator.stop(); } catch {} s.oscillator.disconnect(); s.volume.disconnect(); }
+    for (const s of v.sources) { try { s.oscillator.stop(); } catch {} s.oscillator.disconnect(); s.volume?.disconnect(); }
     v.gain.disconnect(); v.filter.disconnect(); v.pan.disconnect(); this.voices.delete(key); this.sustained.delete(key);
   }
   update(partId, patch, macros) {
@@ -101,7 +115,7 @@ export class StudioEngine {
   }
   tick(tempo = 92) { const now = this.context.currentTime; for (const [key, v] of this.voices) if (v.end < now) this.kill(key); else this.updateVoice(v, now, tempo); }
   silence() { this.pedals.clear(); this.bends.clear(); for (const key of [...this.voices.keys()]) this.kill(key); for (const b of this.buses.values()) { b.input.disconnect(); b.drive.disconnect(); b.delay.disconnect(); b.feedback.disconnect(); b.wet.disconnect(); } this.buses.clear(); }
-  dispose() { this.silence(); for (const b of this.buses.values()) Object.values(b).forEach(n => n?.disconnect?.()); this.buses.clear(); this.master.disconnect(); this.compressor.disconnect(); this.analyser.disconnect(); }
+  dispose() { this.disposed=true;this.silence(); for (const b of this.buses.values()) Object.values(b).forEach(n => n?.disconnect?.()); this.buses.clear(); this.sampleBank=null;this.bankPromise=null;this.master.disconnect(); this.compressor.disconnect(); this.analyser.disconnect(); }
 }
 // Deterministic lookahead over authored events; never generates pitches or edits parts.
 export class StudioPlayer {
@@ -118,6 +132,7 @@ export class StudioPlayer {
         for (const part of p.parts) if (!part.muted) for (const n of part.notes) if (n.start < p.loopTicks) this.pending.push({ part, n, time: this.origin + cycle * length + n.start * seconds, key: `clip:${cycle}:${part.id}:${n.id}` });
         if (this.pending.length > 20000) { this.stop(); throw new Error('Too many pending notes'); }
       }
+      this.pending.sort((a,b)=>a.time-b.time);
       this.pending = this.pending.filter(event => {
         if (event.time > now + .12) return true;
         if (event.time >= now - .05) {
@@ -125,7 +140,7 @@ export class StudioPlayer {
           const eventStage=this.gameEnabled?this.director.advance(this.barAt(event.time),this.telemetry.danger):null;
           if(this.gameEnabled&&!p.scenes[eventStage].parts.includes(activePart.id))return false;
           const currentPatch=this.patchFor(activePart,eventStage),macros = this.macros({...activePart,patch:currentPatch}), channel = `clip:${activePart.id}`;
-          this.engine.noteOn(event.key, event.n.midi, event.n.velocity, activePart.id, currentPatch, { time: Math.max(now, event.time), channel, macros, bend:event.n.bend??0, expression:event.n.expression??[], tempo:p.tempo });
+          this.engine.noteOn(event.key, event.n.midi, event.n.velocity, activePart.id, currentPatch, { time: Math.max(now, event.time), channel, macros, bend:event.n.bend??0, expression:event.n.expression??[], tempo:p.tempo,eventId:activePart.id+':'+event.n.id });
           this.engine.release(event.key, Math.max(now, event.time) + event.n.duration * seconds);
         } return false;
       });
@@ -144,7 +159,7 @@ export class StudioPlayer {
   snapshot(){const p=structuredClone(this.project);for(let i=0;i<p.parts.length;i++){p.parts[i].patch=structuredClone(this.patchFor(this.project.parts[i]));p.parts[i].patch.macros={...this.macros(p.parts[i])};if(this.gameEnabled&&!p.scenes[this.audibleStage??this.director.current].parts.includes(p.parts[i].id))p.parts[i].muted=true;}return p;}
   get tickPosition() { return this.running ? Math.max(0, (this.engine.context.currentTime - this.origin) * this.project.tempo / 60 * PPQ) % this.project.loopTicks : 0; }
 }
-export async function renderStudioWav(project, { sampleRate = 24000, cycles = 1 } = {}) {
+export async function renderStudioWav(project, { sampleRate = 24000, cycles = 1, bankUrl='/samples/vsco-ce/manifest.json', sampleBank=null } = {}) {
   project = validateProject(project);
   if (![24000,44100,48000].includes(sampleRate) || !Number.isInteger(cycles) || cycles < 1 || cycles > 4) throw new TypeError('Invalid render options');
   const seconds = 60 / project.tempo / PPQ, length = project.loopTicks * seconds;
@@ -152,15 +167,16 @@ export async function renderStudioWav(project, { sampleRate = 24000, cycles = 1 
   const duration = lastEnd + 6;
   if (duration > 180) throw new RangeError('Render is limited to three minutes');
   const context = new OfflineAudioContext(2, Math.ceil(duration * sampleRate), sampleRate), engine = new StudioEngine(context);
+  if(needsSampleBank(project)){if(sampleBank)engine.sampleBank=sampleBank;else await engine.ensureSampleBank(bankUrl);}
   // Schedule in time order so offline cleanup and the 32-voice bound reflect overlap, not file size.
   const events = [];
   for (let cycle = 0; cycle < cycles; cycle++) for (const part of project.parts) if (!part.muted) for (const n of part.notes) if (n.start < project.loopTicks) events.push({ part, n, time: cycle * length + n.start * seconds });
   events.sort((a,b) => a.time - b.time);
-  const sources=events.reduce((sum,event)=>sum+event.part.patch.oscillators.reduce((n,o)=>n+(o.shape==='harmonic'?event.part.patch.frames.length:1),0),0);
+  const sources=events.reduce((sum,event)=>sum+(event.part.patch.source==='orchestra'?1:event.part.patch.oscillators.reduce((n,o)=>n+(o.shape==='harmonic'?event.part.patch.frames.length:1),0)),0);
   if(sources>16000){engine.dispose();throw new RangeError('Offline instrument graph is too large; render a shorter loop or use fewer wavetable frames');}
   for (const [i, { part, n, time }] of events.entries()) {
     for (const [key, voice] of engine.voices) if (voice.end <= time) { engine.voices.delete(key); /* Scheduled offline nodes remain connected until render. */ }
-    const key = `offline:${i}`; engine.noteOn(key, n.midi, n.velocity, part.id, part.patch, { time, bend:n.bend??0, expression:n.expression??[], tempo:project.tempo });
+    const key = `offline:${i}`; engine.noteOn(key, n.midi, n.velocity, part.id, part.patch, { time, bend:n.bend??0, expression:n.expression??[], tempo:project.tempo,eventId:part.id+':'+n.id });
     const voice=engine.voices.get(key); if(voice) for(let t=time;t<time+n.duration*seconds;t+=1/40) engine.updateVoice(voice,t,project.tempo);
     engine.release(key, time + n.duration * seconds);
   }

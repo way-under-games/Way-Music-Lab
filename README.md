@@ -1,6 +1,6 @@
 # Way Music
 
-Version **0.6** revamps Way into an **authored music studio** with Perform, Sound, and Game workspaces. Play a computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
+Version **0.6** revamps Way into an **authored music studio** with Perform, Sound, and Game workspaces. Play a customizable computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments or choose recorded orchestral sounds per part, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
 
 The earlier procedural score generator and recorded-orchestra auditions remain available. Version **0.4** uses **recorded orchestral instruments** with variable meters, a syncopated math-rock rhythmic preset, and a theory-based phrase planner: violin/cello ensemble, harp, flute, French horn, and percussion. The composer and score contract are portable; audio adapters currently target browsers. A native Unreal plugin remains future work.
 
