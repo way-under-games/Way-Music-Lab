@@ -9,7 +9,7 @@ import { createMusicServer } from '../server.mjs';
 const executable=process.argv[2];if(!executable)throw new Error('Usage: node scripts/check-studio-isolated.mjs <chromium-executable>');
 const cache=fileURLToPath(new URL('../.cache/studio-isolated/',import.meta.url));await mkdir(cache,{recursive:true});
 const fixture=`<!doctype html><html><body><pre id="result">RUNNING</pre><iframe id="studio" src="/web/studio.html" style="width:1500px;height:1100px"></iframe><script>window.report=async text=>{document.getElementById('result').textContent=text;await fetch('/__studio_result',{method:'POST',body:text});};window.addEventListener('error',e=>report('FAIL '+e.message));window.addEventListener('unhandledrejection',e=>report('FAIL '+e.reason));</script><script type="module">
-import {newProject} from '/src/studio.mjs';import {renderStudioWav} from '/src/studio-audio.mjs';
+import {newProject,SOUND_WORLDS,soundWorld} from '/src/studio.mjs';import {renderStudioWav} from '/src/studio-audio.mjs';
 const result=document.getElementById('result');const assert=(condition,message)=>{if(!condition)throw new Error(message);};
 try{
 result.textContent='WAITING_FOR_FRAME';
@@ -26,7 +26,10 @@ result.textContent='RENDERING_AUDIO';const bytes=await renderStudioWav(p);const 
 assert(peak>.005&&peak<.99,'Audio silent or clipping: '+peak);assert(bytes.byteLength>24000*4*7,'Cross-loop release was truncated');
 const changed=structuredClone(p);changed.parts[0].patch.cutoff=100;changed.parts[0].patch.filterEnv=0;const other=new Uint8Array(await renderStudioWav(changed));const original=new Uint8Array(bytes);assert(original.some((v,i)=>i>44&&v!==other[i]),'Filter control did not change rendered audio');
 const recorded=structuredClone(p);recorded.parts[0].patch.source='orchestra';recorded.parts[0].patch.instrument='woodwind';const recordedView=new DataView(await renderStudioWav(recorded));let recordedPeak=0;for(let i=44;i<recordedView.byteLength;i+=2)recordedPeak=Math.max(recordedPeak,Math.abs(recordedView.getInt16(i,true)/32768));assert(recordedPeak>.001&&recordedPeak<.99,'Recorded instrument silent or clipping');
-await report('PASS '+JSON.stringify({nativeAudio:true,peak,rms:Math.sqrt(sum/count),recordedPeak,bytes:bytes.byteLength,duration:(bytes.byteLength-44)/96000,parts:d.querySelectorAll('#parts .part').length,keys:24,scenes:7}));
+const soundWorldAudio=[];
+for(const world of SOUND_WORLDS){const probe=newProject();probe.tempo=120;probe.loopTicks=1920;probe.parts[0].patch=soundWorld(world.id);probe.parts[0].notes=[{id:'world-probe',midi:60,start:0,duration:1920,velocity:90}];const rendered=new DataView(await renderStudioWav(probe));let worldPeak=0,energy=0,tail=0,crossings=0,last=0;for(let frame=0;frame<(rendered.byteLength-44)/4;frame++){const v=rendered.getInt16(44+frame*4,true)/32768;worldPeak=Math.max(worldPeak,Math.abs(v));if(frame<24000)energy+=v*v;if(frame>=36000&&frame<48000)tail+=v*v;if(frame<24000&&v*last<0)crossings++;last=v;}assert(worldPeak>.001&&worldPeak<.99,'World silent or clipping: '+world.id+' '+worldPeak);soundWorldAudio.push({world:world.id,peak:worldPeak,firstSecondRms:Math.sqrt(energy/24000),sustainRms:Math.sqrt(tail/12000),crossings});}
+assert(Math.max(...soundWorldAudio.map(w=>w.crossings))>Math.min(...soundWorldAudio.map(w=>w.crossings))*1.5,'Sound worlds lack spectral contrast');
+await report('PASS '+JSON.stringify({nativeAudio:true,peak,soundWorldAudio,rms:Math.sqrt(sum/count),recordedPeak,bytes:bytes.byteLength,duration:(bytes.byteLength-44)/96000,parts:d.querySelectorAll('#parts .part').length,keys:24,scenes:7}));
 }catch(error){await report('FAIL '+error.stack);}
 </script></body></html>`;
 let finishResult;const resultPromise=new Promise(resolve=>finishResult=resolve);
@@ -63,10 +66,28 @@ try{
   }
   await writeFile(path.join(cache,'layouts.json'),JSON.stringify(layouts,null,2));console.log('Viewport results: '+JSON.stringify(layouts));
   if(layouts.some(l=>l.scrollWidth>l.width+1))throw new Error('A studio workspace overflows the viewport');
+  await command('Emulation.setDeviceMetricsOverride',{width:1500,height:1200,deviceScaleFactor:1,mobile:false});
+  const planet=await evaluate(`document.querySelector('[data-tab="sound"]').click();document.getElementById('explore-listen').checked=false;document.getElementById('sound-planet').scrollIntoView({block:'center'});(()=>{const r=document.getElementById('sound-planet').getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};})()`);
+  await command('Input.dispatchMouseEvent',{type:'mousePressed',x:planet.x+planet.width*.2,y:planet.y+planet.height*.2,button:'left',buttons:1,clickCount:1});
+  await command('Input.dispatchMouseEvent',{type:'mouseMoved',x:planet.x+planet.width*.8,y:planet.y+planet.height*.7,buttons:1});
+  await command('Input.dispatchMouseEvent',{type:'mouseReleased',x:planet.x+planet.width*.8,y:planet.y+planet.height*.7,button:'left',clickCount:1});
+  const dragged=await evaluate(`JSON.parse(localStorage.getItem('way-studio-v1')).parts[0].patch.name`);if(!dragged.startsWith('Planet 80 / 70'))throw new Error('Pointer drag did not commit its final patch: '+dragged);
+  await evaluate(`document.getElementById('restore-sound').click();document.getElementById('explore-listen').checked=true`);
+  console.log('Pointer drag: committed final position and restored original patch');
   const performance=await evaluate(`(async()=>{
     const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms)),$=id=>document.getElementById(id);
     document.querySelector('[data-tab="perform"]').click();$('audio').click();await wait(100);
     if($('audio').textContent!=='Audio enabled')throw new Error('Native audio could not be enabled');
+    const startPatch=JSON.parse(localStorage.getItem('way-studio-v1')).parts[0].patch;
+    const startNotes=JSON.stringify(JSON.parse(localStorage.getItem('way-studio-v1')).parts[0].notes);
+    document.querySelector('[data-tab="sound"]').click();document.querySelector('[data-world="swarm"]').click();await wait(100);
+    if(parseInt($('voice-state').textContent)<1)throw new Error('World card did not audition with native audio');
+    $('planet-x').value='.9';$('planet-x').dispatchEvent(new Event('input',{bubbles:true}));$('planet-x').dispatchEvent(new Event('change',{bubbles:true}));await wait(50);
+    if(!JSON.parse(localStorage.getItem('way-studio-v1')).parts[0].patch.name.startsWith('Planet'))throw new Error('Planet did not persist');
+    $('mutate-sound').click();await wait(50);if(!JSON.parse(localStorage.getItem('way-studio-v1')).parts[0].patch.name.startsWith('Mutation'))throw new Error('Mutation did not persist');
+    $('restore-sound').click();await wait(50);const restored=JSON.parse(localStorage.getItem('way-studio-v1')).parts[0];
+    if(JSON.stringify(restored.patch)!==JSON.stringify(startPatch)||JSON.stringify(restored.notes)!==startNotes)throw new Error('Exploration restore or hook protection failed');
+    $('panic').click();document.querySelector('[data-tab="perform"]').click();
     const before=JSON.parse(localStorage.getItem('way-studio-v1')).parts[0].notes.length;
     $('record').click();await wait(100);document.body.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyA',bubbles:true}));await wait(140);document.body.dispatchEvent(new KeyboardEvent('keyup',{code:'KeyA',bubbles:true}));await wait(30);$('record').click();await wait(30);
     if(!$('take-state').textContent.includes('1 notes captured'))throw new Error('Native recorder did not capture keyboard input: '+$('message').textContent);
@@ -77,7 +98,7 @@ try{
     const deadline=performance.now()+10000;while(!$('recording-status').textContent.includes('ready')){if(performance.now()>deadline)throw new Error('Recorded source did not preload: '+$('message').textContent);await wait(20);}
     $('record').click();await wait(90);document.body.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyQ',bubbles:true}));await wait(120);document.body.dispatchEvent(new KeyboardEvent('keyup',{code:'KeyQ',bubbles:true}));await wait(20);$('record').click();await wait(20);$('keep-take').click();await wait(20);$('stop').click();await wait(30);
     const recorded=JSON.parse(localStorage.getItem('way-studio-v1'));if(recorded.parts[0].notes.length!==before+2||recorded.parts[0].notes.at(-1).midi!==60||recorded.parts[0].patch.source!=='orchestra')throw new Error('Recorded keyboard source or custom mapping failed');
-    return {nativeRecording:true,midi:note.midi,durationTicks:note.duration,recordedKeyboard:true,customKeyboard:true,voices:$('voice-state').textContent};
+    return {nativePlayground:true,nativeRecording:true,midi:note.midi,durationTicks:note.duration,recordedKeyboard:true,customKeyboard:true,voices:$('voice-state').textContent};
   })()`);console.log('Performance results: '+JSON.stringify(performance));await writeFile(path.join(cache,'performance.json'),JSON.stringify(performance,null,2));
   if(exceptions.length)throw new Error('Uncaught page exceptions: '+exceptions.join('\n'));
   console.log('Screenshots: '+cache);console.log('Only a dedicated headless process with an isolated test profile was used. No existing browser or desktop input.');

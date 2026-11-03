@@ -52,6 +52,58 @@ export function varyPatch(p, random = Math.random) {
   }
   p.revision++; return p;
 }
+// Original sound recipes. These are portable patch data, independent of an audio host.
+export const SOUND_WORLDS = [
+  {id:'crystal',name:'Crystal rain',hint:'Tiny glass strikes · bright, delicate',icon:'✧'},
+  {id:'sub',name:'Gravity well',hint:'Round sub bass · deep, compact',icon:'◉'},
+  {id:'acid',name:'Solar acid',hint:'Biting saw · resonant filter sweep',icon:'☀'},
+  {id:'arcade',name:'Pixel comet',hint:'Hollow square · fast stepped motion',icon:'▦'},
+  {id:'swarm',name:'Ion swarm',hint:'Detuned saws · wide, fierce sustain',icon:'≋'},
+  {id:'drone',name:'Velvet nebula',hint:'Slow harmonic cloud · long, drifting',icon:'☁'}
+];
+export function soundWorld(world) {
+  if(!SOUND_WORLDS.some(w=>w.id===world))throw new TypeError('Unknown sound world');
+  const p=preset();p.name=SOUND_WORLDS.find(w=>w.id===world).name;
+  if(world==='crystal')Object.assign(p,{frames:[[1,0,.07,0,.6,0,0,.3],[.4,0,.5,0,.1,0,.7,0]],attack:.002,decay:.18,sustain:.015,release:1.4,cutoff:14000,filterEnv:0,macros:{brightness:.7,motion:.15,width:.65,space:.8},effects:{drive:0,delay:.55,feedback:.48}});
+  if(world==='sub')Object.assign(p,{oscillators:[{shape:'sine',level:.85,detune:0},{shape:'triangle',level:.12,detune:0}],attack:.006,decay:.2,sustain:.8,release:.12,cutoff:220,filterEnv:.05,macros:{brightness:.1,motion:0,width:0,space:0},effects:{drive:.08,delay:0,feedback:0},routes:[]});
+  if(world==='acid')Object.assign(p,{oscillators:[{shape:'sawtooth',level:.65,detune:0},{shape:'square',level:.12,detune:-7}],attack:.002,decay:.12,sustain:.18,release:.08,cutoff:450,resonance:9,filterEnv:1,lfoRate:3,lfoDepth:.75,routes:[{source:'lfo',target:'cutoff',amount:.8}],macros:{brightness:.55,motion:.85,width:.12,space:.1},effects:{drive:.65,delay:.12,feedback:.2}});
+  if(world==='arcade')Object.assign(p,{oscillators:[{shape:'square',level:.48,detune:0},{shape:'triangle',level:.18,detune:0}],attack:.001,decay:.045,sustain:.35,release:.025,cutoff:10000,filterEnv:0,lfoShape:'square',lfoRate:9,lfoDepth:1,routes:[{source:'lfo',target:'pitch',amount:.5}],macros:{brightness:.6,motion:1,width:0,space:.18},effects:{drive:.15,delay:.16,feedback:.2}});
+  if(world==='swarm')Object.assign(p,{oscillators:[{shape:'sawtooth',level:.48,detune:-38},{shape:'sawtooth',level:.48,detune:38}],attack:.035,decay:.4,sustain:.8,release:.55,cutoff:7400,resonance:2.4,filterEnv:.2,lfoRate:5,lfoDepth:.6,routes:[{source:'lfo',target:'cutoff',amount:.5}],macros:{brightness:.8,motion:.8,width:1,space:.45},effects:{drive:.85,delay:.35,feedback:.38}});
+  if(world==='drone')Object.assign(p,{frames:[[1,.05,.3,0,.12,0,.04,0],[.2,.6,.08,.3,0,.1,0,.15]],oscillators:[{shape:'harmonic',level:.65,detune:-12},{shape:'harmonic',level:.25,detune:12}],attack:1.3,decay:1.5,sustain:.8,release:2.6,cutoff:1800,filterEnv:.3,lfoRate:.16,lfoDepth:1,routes:[{source:'lfo',target:'position',amount:.8},{source:'lfo',target:'cutoff',amount:.35}],macros:{brightness:.4,motion:1,width:.9,space:1},effects:{drive:.04,delay:.65,feedback:.6}});
+  return validatePatch(p);
+}
+function partials(p,o,frame) {
+  return Array.from({length:8},(_,i)=>{const n=i+1;return o.shape==='harmonic'?p.frames[frame%p.frames.length][i]:o.shape==='sine'?(n===1?1:0):o.shape==='sawtooth'?1/n:o.shape==='square'?(n%2?1/n:0):(n%2?(-1)**((n-1)/2)/(n*n):0);});
+}
+export function blendSounds(a,b,amount) {
+  a=validatePatch(a);b=validatePatch(b);num(amount,0,1,'Blend');
+  if(amount===0)return a;if(amount===1)return b;
+  const p=clone(a),mix=(x,y)=>x+(y-x)*amount;
+  for(const k of ['position','sustain','filterEnv','lfoDepth','resonance'])p[k]=mix(a[k],b[k]);
+  for(const k of ['attack','decay','release','cutoff','lfoRate'])p[k]=a[k]*(b[k]/a[k])**amount;
+  // A fixed harmonic topology makes intermediate timbres reproducible and smoothly blended.
+  p.frames=Array.from({length:2},(_,f)=>partials(a,a.oscillators[0],f).map((v,i)=>mix(v,partials(b,b.oscillators[0],f)[i])));
+  p.oscillators=[{shape:'harmonic',level:mix(a.oscillators[0].level,b.oscillators[0].level),detune:mix(a.oscillators[0].detune,b.oscillators[0].detune)},{shape:'sine',level:mix(a.oscillators[1].level,b.oscillators[1].level),detune:mix(a.oscillators[1].detune,b.oscillators[1].detune)}];
+  for(const k of MACROS)p.macros[k]=mix(a.macros[k],b.macros[k]);
+  for(const k of ['drive','delay','feedback'])p.effects[k]=mix(a.effects[k],b.effects[k]);
+  const routeMap=p=>Object.fromEntries(p.routes.map(r=>[r.source+':'+r.target,r.amount]));const ar=routeMap(a),br=routeMap(b);
+  p.routes=[...new Set([...Object.keys(ar),...Object.keys(br)])].map(key=>{const[source,target]=key.split(':');return{source,target,amount:mix(ar[key]??0,br[key]??0)};});
+  p.lfoShape=amount<.5?a.lfoShape:b.lfoShape;p.lfoSync=amount<.5?a.lfoSync:b.lfoSync;p.source='synth';return validatePatch(p);
+}
+export function exploreSound(original,x,y) {
+  original=validatePatch(original);num(x,0,1,'X');num(y,0,1,'Y');
+  const p=blendSounds(blendSounds(soundWorld('drone'),soundWorld('crystal'),x),blendSounds(soundWorld('sub'),soundWorld('acid'),x),y);
+  p.name='Planet '+Math.round(x*100)+' / '+Math.round(y*100);p.locks=[...original.locks];
+  for(const k of p.locks)p[k]=original[k];p.revision=original.revision+1;return validatePatch(p);
+}
+export function mutateSound(original,strength=.8,random=Math.random) {
+  original=validatePatch(original);num(strength,0,1,'Mutation strength');if(strength===0)return original;
+  const target=soundWorld(SOUND_WORLDS[Math.min(5,Math.floor(clamp(random())*6))].id);
+  target.frames=target.frames.map(f=>f.map((v,i)=>i===0?v:clamp(v+(random()-.5)*.8,-1,1)));
+  target.cutoff=80*200**random();target.position=random();
+  const p=blendSounds(original,target,strength);p.name='Mutation · '+target.name;p.locks=[...original.locks];
+  for(const k of p.locks)p[k]=original[k];p.revision=original.revision+1;return validatePatch(p);
+}
 export function harmonics(p, position = p.position) {
   const pos = clamp(position) * (p.frames.length - 1), left = Math.floor(pos), right = Math.min(left + 1, p.frames.length - 1), mix = pos - left;
   return p.frames[left].map((v, i) => v * (1 - mix) + p.frames[right][i] * mix);

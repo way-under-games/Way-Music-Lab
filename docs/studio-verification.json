@@ -2,12 +2,56 @@
   "date": "2026-11-02",
   "runtime": "v24.22.1",
   "unitTests": {
-    "passed": 62,
+    "passed": 65,
     "failed": 0
   },
   "native": {
     "nativeAudio": true,
     "peak": 0.0615234375,
+    "soundWorldAudio": [
+      {
+        "world": "crystal",
+        "peak": 0.0128173828125,
+        "firstSecondRms": 0.001653070357517212,
+        "sustainRms": 0.00021912138214668118,
+        "crossings": 492
+      },
+      {
+        "world": "sub",
+        "peak": 0.030059814453125,
+        "firstSecondRms": 0.00840488968474306,
+        "sustainRms": 0.0018461246026063212,
+        "crossings": 491
+      },
+      {
+        "world": "acid",
+        "peak": 0.09619140625,
+        "firstSecondRms": 0.02089764075361049,
+        "sustainRms": 0.004858131009957333,
+        "crossings": 793
+      },
+      {
+        "world": "arcade",
+        "peak": 0.02276611328125,
+        "firstSecondRms": 0.01460697818721455,
+        "sustainRms": 0.003191898621382477,
+        "crossings": 518
+      },
+      {
+        "world": "swarm",
+        "peak": 0.124847412109375,
+        "firstSecondRms": 0.03718835007262525,
+        "sustainRms": 0.015220111946682593,
+        "crossings": 1119
+      },
+      {
+        "world": "drone",
+        "peak": 0.02044677734375,
+        "firstSecondRms": 0.003432410073622726,
+        "sustainRms": 0.00930420948369329,
+        "crossings": 761
+      }
+    ],
     "rms": 0.005501012473197006,
     "recordedPeak": 0.017852783203125,
     "bytes": 784848,
@@ -17,9 +61,10 @@
     "scenes": 7
   },
   "performance": {
+    "nativePlayground": true,
     "nativeRecording": true,
     "midi": 60,
-    "durationTicks": 111.87199999999997,
+    "durationTicks": 102.05866666666661,
     "recordedKeyboard": true,
     "customKeyboard": true,
     "voices": "0 voices"
@@ -28,42 +73,42 @@
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 1575,
+      "height": 1623,
       "tab": "perform",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 1947,
+      "height": 1988,
       "tab": "perform",
       "overflow": []
     },
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 2371,
+      "height": 3109,
       "tab": "sound",
       "overflow": []
     },
     {
       "width": 1500,
       "scrollWidth": 1485,
-      "height": 2293,
+      "height": 2365,
       "tab": "game",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 3571,
+      "height": 4818,
       "tab": "sound",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 3440,
+      "height": 3505,
       "tab": "game",
       "overflow": []
     }
@@ -72,5 +117,9 @@
   "limits": [
     "Physical MIDI hardware and output-device latency not measured",
     "Subjective musical quality not assessed"
-  ]
+  ],
+  "pointerPlayground": {
+    "commitFinalPosition": true,
+    "restoreOriginal": true
+  }
 }

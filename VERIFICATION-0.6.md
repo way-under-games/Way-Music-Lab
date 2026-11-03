@@ -4,7 +4,7 @@ November 2, 2026. Verified in the standalone Way-Music-Lab checkout. Browser che
 
 ## Passed checks
 
-- `node --test tests/*.test.mjs`: **62 tests pass**, including 43 existing regression tests and nineteen authoring, audio-contract, stage-policy, compatibility, recorded-source, and keyboard-map tests.
+- `node --test tests/*.test.mjs`: **65 tests pass**, including the existing regressions and three sound-playground tests for contrasting recipes, bounded blends, locks, deterministic mutation, and protected hooks.
 - `node scripts/check-studio-ui.mjs`: isolated in-memory DOM checks pass note entry, protected hooks, meter edits, variations, recording/keeping a take, undo/redo, and part creation. This check uses canvas/audio doubles and a pinned development-only LinkeDOM worker.
 - `node scripts/check-studio-isolated.mjs "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"`: real-page and native Web Audio checks pass. The fixture waits for actual audio completion rather than advancing a virtual clock past rendering.
 - New modules parse, local documentation links resolve, and `git diff --check` passes.
@@ -26,6 +26,10 @@ November 2, 2026. Verified in the standalone Way-Music-Lab checkout. Browser che
 | Perform, Sound, Game at 430 px | Each document measures 415 px wide, with no horizontal overflow. |
 
 Screenshots of all six workspace/viewport combinations were generated and inspected. The checks exposed mobile overflow in volume and harmonic controls; both are corrected. [Sound workspace preview](docs/media/studio-sound-0.6.png). [Recorded measurements](docs/studio-verification.json).
+
+## Sound playground verification
+
+Six native WAV probes render the same C4 note through all six worlds: non-silent peaks range from 0.0128 to 0.1249, below clipping for this test. First-second zero-crossing counts range from 491 to 1119; crystal sustain RMS is approximately 0.00022 versus drone sustain RMS 0.00930. These are basic contrast/signal checks, not perceptual quality or loudness matching. A real pointer drag commits the final planet coordinates and restores the initial patch; native card audition, slider/mutation persistence, restoration, and note protection pass. All six responsive workspace checks remain free of horizontal overflow.
 
 ## Requirement audit
 

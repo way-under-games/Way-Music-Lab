@@ -2,6 +2,8 @@
 
 Version **0.6** revamps Way into an **authored music studio** with Perform, Sound, and Game workspaces. Play a customizable computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments or choose recorded orchestral sounds per part, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
 
+The Sound workspace now includes six contrasting sound worlds, a draggable sound planet, strength-controlled mutation, immediate note audition, and a full exploration-start restore. All sound discovery preserves your authored notes.
+
 The earlier procedural score generator and recorded-orchestra auditions remain available. Version **0.4** uses **recorded orchestral instruments** with variable meters, a syncopated math-rock rhythmic preset, and a theory-based phrase planner: violin/cello ensemble, harp, flute, French horn, and percussion. The composer and score contract are portable; audio adapters currently target browsers. A native Unreal plugin remains future work.
 
 Version **0.5** adds a portable **narrative score director**: one authored theme for the title, a contemplative opening, playful player control, smoothed movement/action responses, danger hysteresis, and timed story cues. Open [the story-score audition](http://127.0.0.1:4317/web/director.html) after starting the server, or read [the narrative scoring design](docs/narrative-scoring.md).
