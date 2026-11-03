@@ -2,7 +2,7 @@
 
 Version **0.8** provides an **authored music studio** with Perform, Sound, and Game workspaces. Play a customizable computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments or choose recorded orchestral sounds per part, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
 
-The [EDM synthesis gap assessment](docs/edm-synthesis-gap-assessment.md) explains the current sound engine limits, how producers build distinctive basses/leads/textures, and the recommended synthesis and processing work. It is a research roadmap, not an implemented engine upgrade.
+The [EDM synthesis gap assessment](docs/edm-synthesis-gap-assessment.md) explains the current sound engine limits, how producers build distinctive basses/leads/textures, and a combined roadmap for EDM synthesis and the user’s game-soundtrack references. Both directions remain core requirements. It is a research roadmap, not an implemented engine upgrade.
 
 The [instrument workbench study and update](docs/instrument-workbench-research.md) adapts interaction ideas from Vital, Pigments, Phase Plant and Serum into drawable movement curves, draggable envelopes, visual frame shaping, source-to-target connections and a persistent audition dock. Curves affect both live audio and WAV export; your authored notes stay intact.
 

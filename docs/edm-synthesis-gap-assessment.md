@@ -4,9 +4,9 @@ November 3, 2026. Audit of Way Music 0.8 at commit `c788a4e`. Original analysis:
 
 Way's editor has advanced faster than its sound engine. Several sound-design methods used in EDM remain unavailable, so more experimentation with the current controls cannot reach every reference sound. The next substantial improvement should expand synthesis, modulation, processing and performance behavior together.
 
-## User reference tracks and revised priorities
+## Combined EDM and game soundtrack direction
 
-The user subsequently supplied **Stardew Valley**, **Donkey Kong Country — Simian Segue**, and **Vampire Survivors — Reincarnated Echoes** as the sound references. These direct the next implementation toward a hybrid retro-game instrument palette. The broad EDM feature gaps below remain valid, but the priority order for these references is now sample/instrument variety, playable layering, articulation, spatial/tone processing, and arrangement support, followed by deeper oscillator synthesis.
+The user subsequently supplied **Stardew Valley**, **Donkey Kong Country — Simian Segue**, and **Vampire Survivors — Reincarnated Echoes** as the sound references. These add a hybrid retro-game palette to the existing EDM direction. The user explicitly wants both incorporated. EDM synthesis is a core requirement alongside the game references; FM/PM, true unison, richer wavetables, independent modulation and flexible processing must not be deferred until a retro-instrument tool is finished. Both directions should use the same engine and layered instrument format.
 
 Use the original Stardew Valley soundtrack as the broad reference, the original SNES world-map version of Simian Segue as the working version, and poncle's original Reincarnated Echoes upload. The exact Stardew track remains unspecified. The following palette descriptions are proposed design targets, not a transcription or a claim to have identified the original presets.
 
@@ -22,15 +22,20 @@ Use the original Stardew Valley soundtrack as the broad reference, the original 
 - [David Wise's first-person DKC interview](https://vgmonline.net/davidwiseinterview/) describes tiny waveform samples and programmed sequences inspired by the Korg Wavestation. This establishes an approach used in the series, not the exact construction or authorship of Simian Segue. The [track reference](https://www.mariowiki.com/Simian_Segue) distinguishes the original world-map cue from the GBA naming ambiguity.
 - [Poncle's official Reincarnated Echoes upload](https://www.youtube.com/watch?v=dwx2DtyqSLc) credits Daniele Zandara as composer/arranger. Original sound-library and patch details are not established here.
 
-### User-specific implementation sequence
+### Integrated implementation sequence
 
-1. **Expand the source palette.** Provide a curated, appropriately licensed set of keys, plucked/mallet tones, winds, strings/brass, organ-like voices, basses and drums. Keep the current orchestra; supplement its limited range with the instruments needed for these references.
-2. **Make one instrument a deliberate rack of layers.** A sampled attack, a sustained sample or synth body, and an optional bass/air layer should have independent gain, tuning, envelopes and pan. Display which layers are sounding. This is different from replacing a patch with the planet or stacking separately authored musical parts.
-3. **Add general sample-instrument editing.** Import a recording with root-note/key-range mapping, loop points/crossfades, envelope and tuning controls. Preserve source provenance and memory budgets. Sampling and synthesizing should be usable together in one instrument rather than the current mutually exclusive source choice.
-4. **Improve expression and processing.** Reverb, EQ and chorus, flexible effect ordering, useful mono/legato/glide behavior, independent envelopes and velocity/key-dependent behavior will help the instruments sit together and respond musically.
-5. **Broaden synthesis where it serves a reference.** Richer custom wavetables, FM/PM and true stereo unison remain important, especially for evolving leads and synthetic colors. They should be evaluated against concrete instrument examples rather than treated as a universal solution.
+| Milestone | Shared capabilities | EDM acceptance example | Game-score acceptance example |
+| --- | --- | --- | --- |
+| 1. Hybrid instrument foundation | Explicit sample/synth layers with independent gain, tuning, envelopes and pan; playable sample mapping/loops; true bounded unison, sub and mono/glide behavior. Review source allocation before multiplying unison voices. | Wide lead and expressive detuned bass. | Warm keys/plucks and a compact retro map ensemble. |
+| 2. Spectral sound generation | Audio-rate FM/PM with ratio/depth envelopes, richer band-limited wavetable representation, and oscillator shaping. | Metallic pluck and evolving/growling bass. | Bell/mallet colors and animated synthetic leads/pads. |
+| 3. Movement and processing | Independent envelopes/LFOs, broader destinations, musical volume pumping, EQ/filter choices, nonlinear models, flexible ordering, chorus and reverb. | Articulated talking bass and pumping stereo chords. | Expressive melodic ensemble and energetic lead/bass/drums. |
+| 4. Personal source creation | Curated licensed instrument palette, owned-recording import, resampling/re-import and prepared sample-to-wavetable conversion; granular tools where they serve the sound. | Personal vocal-derived or fractured textures. | Reusable bespoke sampled instruments and environmental colors. |
 
-Acceptance should include three original short ensemble demonstrations in the reference directions, using user-authored test melodies and separate lead/counterline/bass/percussion roles. Evaluate an isolated patch as well as the ensemble: instrument construction, orchestration and rhythmic articulation all contribute to the result. These proposed targets do not require copying the reference melodies or redistributing their instrument samples.
+Each milestone must demonstrate both directions through complete original sounds, with isolated-patch and ensemble listening. The game references guide palette, articulation and arrangement; the EDM research supplies additional synthesis, modulation and processing requirements. Neither is a substitute for the other.
+
+Provide descriptive macro starting points and a visible layer/signal-path view so powerful processing remains understandable. A sample attack, synth body and clean sub should be audible as deliberate layers, rather than being confused with patch replacement controls. Composition and game hosts should consume the same instrument assets while keeping authored melody/countermelody separate.
+
+Retain the broader EDM audit and roadmap below as technical requirements. Evaluate user-authored test phrases across the game-reference ensembles plus a wide EDM lead, FM/growling bass, metallic pluck and personal sampled texture. These targets do not require copying reference melodies or redistributing their instrument samples. A new runtime capability is complete only when live/offline sound behavior, resource bounds and game-transition behavior are checked.
 
 ## How distinctive electronic instruments are made
 
