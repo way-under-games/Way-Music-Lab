@@ -1,5 +1,7 @@
 # Way Music authoring studio
 
+The current [0.10 workflow](ui-workflow-review.md) uses **Compose / Instruments / Game score**, with optional setup folded away and an explicit browse/design/save instrument path. Earlier names in the version history below map to the same workspaces and data contracts.
+
 Version 0.9 adds the [layered instrument workshop](instrument-workshop.md), persistent libraries, custom audio and portable packages. Its guide extends the classic patch controls and export behavior described below.
 
 Version 0.8 provides the Perform, Sound, and Game workflow. The home page is now an authoring studio. Projects start with empty melody, countermelody, and bass-hook parts; the application does not invent their notes. The earlier procedural orchestra and narrative auditions remain available from the sidebar.

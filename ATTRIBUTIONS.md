@@ -1,5 +1,7 @@
 # Attribution and provenance
 
+Version 0.10's [UI workflow evaluation](docs/ui-workflow-review.md) uses the official Ableton Live instrument/effect manual, Phase Plant interface documentation and FL Studio Channel Rack manual as organizational references. The redesigned navigation, inspector, browsing/preview and disclosure controls are original MIT code. No vendor assets, UI images, implementation or new runtime dependency were imported. Existing recording licenses remain unchanged.
+
 Audit date: October 5, 2026. This inventory separates redistributed material, adapted code, theory references, and evaluated tools. The repository's original software is MIT; source assets and the theory research document have the separate licenses described in [LICENSE-ANALYSIS.md](LICENSE-ANALYSIS.md).
 
 ## Included orchestral recordings and instrument maps

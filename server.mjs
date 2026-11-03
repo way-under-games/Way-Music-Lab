@@ -93,7 +93,7 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts'),
         if(asset&&['GET','HEAD'].includes(method)){if(!asset[2])return sendJson(200,await library.getAsset(asset[1]));await library.getAsset(asset[1]);await serveFile(request,response,library.assetPath(asset[1]),'audio/wav');return;}
         return sendJson(405,{error:'Unsupported library operation'});
       }
-      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.9.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
+      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.10.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
       if (url.pathname === '/api/v1/renders/wav') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with rendered WAV bytes' });
         if (request.headers['content-type'] !== 'audio/wav') return sendJson(400, { error: 'Content-Type must be audio/wav' });

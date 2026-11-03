@@ -4,6 +4,8 @@ Version 0.9, November 3, 2026. Original implementation and recipes are MIT. This
 
 ## Start here
 
+The [0.10 UI redesign](ui-workflow-review.md) renames Sound to **Instruments** and Library to **Browse**. Choose a recipe there, use **Design** for Layers & tone / Movement / Effects, and open **Save & share** for library saving and portable export. Classic controls are available through Design → Open classic editor. The 0.9 capabilities described below are retained.
+
 Open Sound → Library. **Prism chorus** demonstrates stereo unison; **Cobalt growl** combines an FM bass with a clean sub; **Lantern mallet** uses an independent FM depth envelope; **Map room** uses harmonic keys; **Canopy strings** combines CC0 recorded strings with a synthetic upper layer; **Crypt organ** layers an original additive organ and octave reed. Use Strike/Hold in the persistent dock or your computer/MIDI keyboard. Your authored notes stay on their existing parts.
 
 Select Layers to see what is actually sounding. Every enabled layer plays together when the incoming note is inside its key and velocity zone. Selecting a row changes the editor selection, not the sound source. On toggles a layer; Solo enables just that layer, and pressing it again restores all layers. The header states the active signal path. A classic version-one patch still uses its classic editor until you convert it or load a layered instrument. Conversion is an approximate translation into the new architecture; Undo retains the original project snapshot. It is not a promise of an identical waveform.
