@@ -6,6 +6,8 @@ Version **0.5** adds a portable **narrative score director**: one authored theme
 
 The next phase studies composition with the tools already available. Read [memorable game scores and composition research](docs/memorable-game-scores.md) for twelve comparative cases, source limits, variable-meter exercises, current musical gaps, and a listening study plan.
 
+The authoring direction is now explicit: users supply melodies, countermelodies, and signature hooks. The [visual instrument and keyboard authoring study](docs/visual-instruments-and-keyboard-authoring.md) compares modern synth workflows and proposes keyboard/MIDI recording, visual sound design, reusable patches, and bounded game controls. These authoring features are proposed, not yet implemented.
+
 Original software: **MIT**. Bundled VSCO CE recordings: **CC0 1.0**. The theory research document is separately **CC BY-SA 4.0**. Read [attributions and source revisions](ATTRIBUTIONS.md), [license analysis](LICENSE-ANALYSIS.md), and [MIT license](LICENSE) before redistributing. No npm packages or cloud services are required.
 
 ## Run

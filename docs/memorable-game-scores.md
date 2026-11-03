@@ -156,6 +156,8 @@ The present theme interface stores eight scale degrees, with note timing supplie
 
 The first task is to learn which musical choices work. Extending the schema or replacing a renderer before that evidence would add machinery without answering the composition question.
 
+The subsequent authoring requirement is that the user supplies melodies, countermelodies, and signature hooks. Theme exercises below concern composer-authored material; they are not a request to automatically generate those identities. The [visual instrument and keyboard authoring study](visual-instruments-and-keyboard-authoring.md) describes how performance input and instrument design can support that direction.
+
 ## Listening and composition study plan
 
 ### Compare actual music in its game context
