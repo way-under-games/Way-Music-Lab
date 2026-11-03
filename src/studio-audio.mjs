@@ -1,3 +1,6 @@
+import {RackAudio} from './rack-audio.mjs';
+import {rackTail,layerSourceCost} from './instrument-rack.mjs';
+import {loadInstrumentAssets} from './library-client.mjs';
 import {lfoValue} from './instrument-design.mjs';
 // MIT. Browser adapter for portable Studio parts and patches.
 import { PPQ, validateProject, clamp, mappedMacros, AuthoredDirector, needsSampleBank } from './studio.mjs';
@@ -6,7 +9,7 @@ import { loadSampleBank, selectSample } from './samples.mjs';
 const freq = midi => 440 * 2 ** ((midi - 69) / 12);
 export class StudioEngine {
   constructor(context) {
-    this.context = context; this.voices = new Map(); this.buses = new Map(); this.sustained = new Map(); this.pedals = new Set(); this.bends = new Map(); this.dropped = 0;this.sampleBank=null;this.bankPromise=null;this.disposed=false;
+    this.context = context; this.voices = new Map(); this.buses = new Map(); this.sustained = new Map(); this.pedals = new Set(); this.bends = new Map(); this.dropped = 0;this.sampleBank=null;this.bankPromise=null;this.disposed=false;this.customAssets=new Map();this.rackAudio=new RackAudio(this);
     this.master = context.createGain(); this.master.gain.value = .55;
     this.waveCache=new Map();this.paramValues=new WeakMap();
     this.compressor = context.createDynamicsCompressor(); this.compressor.threshold.value = -12; this.compressor.ratio.value = 12;
@@ -48,6 +51,7 @@ export class StudioEngine {
   }
   noteOn(key, midi, velocity, partId, patch, { time = this.context.currentTime, channel = 'keys', macros = patch.macros, bend = 0, expression = [], tempo = 92, eventId = key } = {}) {
     if (!Number.isInteger(midi) || midi < 0 || midi > 127 || !Number.isFinite(velocity) || velocity < 1 || velocity > 127 || !Number.isFinite(time)) throw new TypeError('Invalid performance note');
+    if(patch.rack){this.kill(key);if(this.voices.size>=32){this.dropped++;return false;}const voice=this.rackAudio.create(key,midi,velocity,partId,patch,{time,channel,macros,bend,expression,tempo,eventId});if(voice)this.voices.set(key,voice);return !!voice;}
     let sample=null;
     if(patch.source==='orchestra'){if(!this.sampleBank)throw new Error('Load the recorded bank before playing this instrument');sample=selectSample(this.sampleBank.regions,{id:eventId,track:patch.instrument,midi,velocity},patch.articulation==='short'?.2:1);if(!sample)throw new Error('No recording for this note; percussion uses GM drum pitches such as 36, 38, 42 or 45');}
     this.kill(key); if (this.voices.size >= 32) { this.dropped++; return false; }
@@ -80,6 +84,7 @@ export class StudioEngine {
   }
   updateVoice(v, time = this.context.currentTime, tempo = 92) {
     if (time >= v.releaseAt || time < v.start) return;
+    if(v.rackVoice){this.rackAudio.update(v,time,tempo);return;}
     const p = v.patch, m = v.macros, t = time - v.start;
     const rate = p.lfoSync ? tempo / 60 / p.lfoRate : p.lfoRate;
     const phase = t * rate % 1;
@@ -104,6 +109,7 @@ export class StudioEngine {
   release(key, time = this.context.currentTime) {
     const v = this.voices.get(key); if (!v || v.released && time >= v.releaseAt) return;
     if (this.pedals.has(v.channel)) { this.sustained.set(key, v.channel); return; }
+    if(v.rackVoice){this.rackAudio.release(v,time);this.sustained.delete(key);return;}
     const t = Math.max(v.start, time), p = v.amplitude;
     const current = t < v.attack ? v.level * (t - v.start) / p.attack : t < v.decay ? v.level * Math.max(.00001, p.sustain) ** ((t - v.attack) / p.decay) : v.level * p.sustain;
     if(v.gain.gain.cancelAndHoldAtTime) v.gain.gain.cancelAndHoldAtTime(t);
@@ -119,17 +125,18 @@ export class StudioEngine {
   kill(key) {
     const v = this.voices.get(key); if (!v) return;
     for (const s of v.sources) { try { s.oscillator.stop(); } catch {} s.oscillator.disconnect(); s.volume?.disconnect(); }
-    v.gain.disconnect(); v.filter.disconnect(); v.pan.disconnect(); this.voices.delete(key); this.sustained.delete(key);
+    if(v.rackVoice)this.rackAudio.kill(v);else{v.gain.disconnect(); v.filter.disconnect(); v.pan.disconnect();} this.voices.delete(key); this.sustained.delete(key);
   }
   update(partId, patch, macros) {
+    if(patch.rack){for(const v of this.voices.values())if(v.partId===partId&&v.rackVoice&&this.context.currentTime<v.releaseAt){v.patch=patch;Object.assign(v.macros,macros);}return;}
     if(!this.buses.has(partId))return;
     const bus=this.bus(partId, patch, macros);
     // Oscillator topology/frame edits apply to the next attack; continuous controls update held voices.
     for (const v of this.voices.values()) if (v.partId === partId && this.context.currentTime < v.releaseAt) { v.patch = bus.patchSnapshot; Object.assign(v.macros,macros); }
   }
   tick(tempo = 92) { const now = this.context.currentTime; for (const [key, v] of this.voices) if (v.end < now) this.kill(key); else this.updateVoice(v, now, tempo); }
-  silence() { this.pedals.clear(); this.bends.clear(); for (const key of [...this.voices.keys()]) this.kill(key); for (const b of this.buses.values()) { b.input.disconnect(); b.drive.disconnect(); b.delay.disconnect(); b.feedback.disconnect(); b.wet.disconnect(); } this.buses.clear(); }
-  dispose() { this.disposed=true;this.silence();this.waveCache.clear(); this.sampleBank=null;this.bankPromise=null;this.master.disconnect(); this.compressor.disconnect(); this.analyser.disconnect(); }
+  silence() { this.pedals.clear(); this.bends.clear(); for (const key of [...this.voices.keys()]) this.kill(key); for (const b of this.buses.values()) { b.input.disconnect(); b.drive.disconnect(); b.delay.disconnect(); b.feedback.disconnect(); b.wet.disconnect(); } this.buses.clear();this.rackAudio.silence(); }
+  dispose() { this.disposed=true;this.silence();this.waveCache.clear();this.rackAudio.dispose();this.customAssets.clear(); this.sampleBank=null;this.bankPromise=null;this.master.disconnect(); this.compressor.disconnect(); this.analyser.disconnect(); }
 }
 // Deterministic lookahead over authored events; never generates pitches or edits parts.
 export class StudioPlayer {
@@ -174,22 +181,23 @@ export class StudioPlayer {
   snapshot(){const p=structuredClone(this.project);for(let i=0;i<p.parts.length;i++){p.parts[i].patch=structuredClone(this.patchFor(this.project.parts[i]));p.parts[i].patch.macros={...this.macros(p.parts[i])};if(this.gameEnabled&&!p.scenes[this.audibleStage??this.director.current].parts.includes(p.parts[i].id))p.parts[i].muted=true;}return p;}
   get tickPosition() { return this.running ? Math.max(0, (this.engine.context.currentTime - this.origin) * this.project.tempo / 60 * PPQ) % this.project.loopTicks : 0; }
 }
-export async function renderStudioWav(project, { sampleRate = 24000, cycles = 1, bankUrl='/samples/vsco-ce/manifest.json', sampleBank=null } = {}) {
+export async function renderStudioWav(project, { sampleRate = 24000, cycles = 1, bankUrl='/samples/vsco-ce/manifest.json', sampleBank=null, customAssets=null, assetResolve } = {}) {
   project = validateProject(project);
   if (![24000,44100,48000].includes(sampleRate) || !Number.isInteger(cycles) || cycles < 1 || cycles > 4) throw new TypeError('Invalid render options');
   const seconds = 60 / project.tempo / PPQ, length = project.loopTicks * seconds;
   const lastEnd = Math.max(length * cycles, ...project.parts.filter(p=>!p.muted).flatMap(p=>p.notes.filter(n=>n.start<project.loopTicks).map(n=>(cycles-1)*length+(n.start+n.duration)*seconds+p.patch.release)));
   const delayTail=Math.max(6,...project.parts.filter(p=>!p.muted&&p.patch.effects.delay*p.patch.macros.space>0).map(({patch:p})=>(.16+p.macros.space*.3)*Math.max(1,p.effects.feedback>0?Math.ceil(Math.log(.001)/Math.log(p.effects.feedback)):1)+.1));
-  const duration = lastEnd + delayTail;
+  const duration = lastEnd + Math.max(delayTail,...project.parts.filter(p=>!p.muted&&p.patch.rack).map(p=>rackTail(p.patch.rack)));
   if (duration > 180) throw new RangeError('Render is limited to three minutes');
   const context = new OfflineAudioContext(2, Math.ceil(duration * sampleRate), sampleRate), engine = new StudioEngine(context);
   try {
   if(needsSampleBank(project)){if(sampleBank)engine.sampleBank=sampleBank;else await engine.ensureSampleBank(bankUrl);}
+  if(customAssets)engine.customAssets=new Map(customAssets);await loadInstrumentAssets(engine,project,{resolve:assetResolve});
   // Schedule in time order so offline cleanup and the 32-voice bound reflect overlap, not file size.
   const events = [];
   for (let cycle = 0; cycle < cycles; cycle++) for (const part of project.parts) if (!part.muted) for (const n of part.notes) if (n.start < project.loopTicks) events.push({ part, n, time: cycle * length + n.start * seconds });
   events.sort((a,b) => a.time - b.time);
-  const sources=events.reduce((sum,event)=>sum+(event.part.patch.source==='orchestra'?1:event.part.patch.oscillators.reduce((n,o)=>n+(o.shape==='harmonic'?event.part.patch.frames.length:1),0)),0);
+  const sources=events.reduce((sum,event)=>sum+(event.part.patch.rack?event.part.patch.rack.layers.filter(l=>l.enabled).reduce((n,l)=>n+layerSourceCost(l),0):event.part.patch.source==='orchestra'?1:event.part.patch.oscillators.reduce((n,o)=>n+(o.shape==='harmonic'?event.part.patch.frames.length:1),0)),0);
   if(sources>16000){engine.dispose();throw new RangeError('Offline instrument graph is too large; render a shorter loop or use fewer wavetable frames');}
   for (const [i, { part, n, time }] of events.entries()) {
     for (const [key, voice] of engine.voices) if (voice.end <= time) { engine.voices.delete(key); /* Scheduled offline nodes remain connected until render. */ }

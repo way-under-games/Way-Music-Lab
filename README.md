@@ -1,8 +1,10 @@
 # Way Music
 
+Version **0.9** adds a layered instrument workshop: true stereo unison, audio-rate FM and its own envelope, independent movement, ordered effects, persistent instrument libraries, audio import, and synth-to-sample baking. **Both EDM synthesis and game-score instruments are supported.** Start in **Sound → Library**, load a recipe, then use Layers or Samples. Read the [workshop guide, contracts and verification](docs/instrument-workshop.md). Portable instrument/project packages include custom recordings and source recipes; original code and factory recipes remain MIT.
+
 Version **0.8** provides an **authored music studio** with Perform, Sound, and Game workspaces. Play a customizable computer/MIDI keyboard, record melodies and countermelodies, edit the piano roll, design harmonic/wavetable instruments or choose recorded orchestral sounds per part, save patches and variations, and map gameplay to approved sound and arrangement controls. Projects start with empty musical parts; procedural sound design never replaces your hooks. Read the [studio guide and game-host API](docs/authoring-studio.md).
 
-The [EDM synthesis gap assessment](docs/edm-synthesis-gap-assessment.md) explains the current sound engine limits, how producers build distinctive basses/leads/textures, and a combined roadmap for EDM synthesis and the user’s game-soundtrack references. Both directions remain core requirements. It is a research roadmap, not an implemented engine upgrade.
+The [EDM synthesis gap assessment](docs/edm-synthesis-gap-assessment.md) records the original engine limits, producer techniques and combined roadmap. Both directions remain core requirements. Version 0.9 implements its layered synthesis/library foundation; the workshop guide identifies remaining advanced DSP work.
 
 The [instrument workbench study and update](docs/instrument-workbench-research.md) adapts interaction ideas from Vital, Pigments, Phase Plant and Serum into drawable movement curves, draggable envelopes, visual frame shaping, source-to-target connections and a persistent audition dock. Curves affect both live audio and WAV export; your authored notes stay intact.
 

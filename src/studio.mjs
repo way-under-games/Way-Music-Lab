@@ -1,4 +1,5 @@
 import {movementCurve,lfoValue} from './instrument-design.mjs';
+import {validateRack,rackNeedsOrchestra} from './instrument-rack.mjs';
 // MIT. Portable authoring assets. No DOM, audio device, or generated melody.
 import { PPQ, parseMeterCycle, formatMeterCycle, meterTicks, makeBarMap } from './meter.mjs';
 export { PPQ };
@@ -45,6 +46,7 @@ export function validatePatch(input) {
   for (const m of MACROS) num(p.macros?.[m], 0, 1, m);
   for (const key of ['drive','delay','feedback']) num(p.effects?.[key], 0, key === 'feedback' ? .7 : 1, key);
   if (!Array.isArray(p.locks) || p.locks.some(k => !['position','cutoff','attack','decay','sustain','release','filterEnv','lfoDepth'].includes(k))) throw new TypeError('Invalid parameter lock');
+  if(p.rack!==undefined)p.rack=validateRack(p.rack);
   return p;
 }
 export function varyPatch(p, random = Math.random) {
@@ -159,7 +161,8 @@ export function mappedMacros(project, telemetry, base) {
   for (const m of project.mappings) if (m.enabled) result[m.target] = m.min + (m.max - m.min) * clamp(telemetry[m.source] ?? 0);
   return result;
 }
-export const needsSampleBank = project => project.parts.some(part=>part.patch.source==='orchestra')||Object.values(project.variations).some(patches=>patches.some(p=>p.source==='orchestra'));
+const patchNeedsOrchestra=p=>p.rack?rackNeedsOrchestra(p.rack):p.source==='orchestra';
+export const needsSampleBank = project => project.parts.some(part=>patchNeedsOrchestra(part.patch))||Object.values(project.variations).some(patches=>patches.some(patchNeedsOrchestra));
 export class TakeRecorder {
   constructor({ tempo, startTime = 0, startTick = 0 }) { this.tempo = tempo; this.startTime = startTime; this.startTick = startTick; this.held = new Map(); this.notes = []; }
   tick(time) { return Math.max(0, this.startTick + (time - this.startTime) * this.tempo / 60 * PPQ); }

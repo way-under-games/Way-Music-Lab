@@ -1,5 +1,11 @@
 # License analysis and distribution boundaries
 
+## Version 0.9 instruments and user library
+
+The original layered rack implementation, portable records, library server, interface and six original factory recipes are MIT. Existing bryc/Mulberry32 attribution and MIT fallback also cover the rack mixer. Manufacturer manuals informed general synthesis/interface techniques; no vendor implementation, artwork, presets, samples or impulses were imported. The generated room impulse is derived from seeded noise in our own adapter. No new third-party runtime dependency or external recording was added.
+
+The ignored local `library/` is user content. An author/license field records a declaration and cannot grant rights the supplier lacks. Normalizing, reversing, layering or baking a recording does not remove its source conditions. Generated assets retain their patch recipe and dependent source hashes; portable exports include custom source dependencies so they can be inspected and edited. Original synth-only output has no added vendor/sample license from this implementation; CC0 orchestra does not introduce share-alike. Arbitrary imported recordings may carry attribution, redistribution or other conditions that must be reviewed separately. An MIT code license does not relicense them.
+
 Reviewed October 5, 2026 against the pinned sources in [ATTRIBUTIONS.md](ATTRIBUTIONS.md). **The original software can be released under MIT. No included runtime library or sample bank requires that software to become copyleft.** The repository contains multiple separately licensed categories; an MIT label does not relicense other authors' recordings or textbook summaries.
 
 ## What is covered by which license

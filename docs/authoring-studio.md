@@ -1,5 +1,7 @@
 # Way Music authoring studio
 
+Version 0.9 adds the [layered instrument workshop](instrument-workshop.md), persistent libraries, custom audio and portable packages. Its guide extends the classic patch controls and export behavior described below.
+
 Version 0.8 provides the Perform, Sound, and Game workflow. The home page is now an authoring studio. Projects start with empty melody, countermelody, and bass-hook parts; the application does not invent their notes. The earlier procedural orchestra and narrative auditions remain available from the sidebar.
 
 The [guided rhythm and navigation guide](usability-and-navigation.md) explains the visual meter editor, count preview, shared navigation and first-visit help.

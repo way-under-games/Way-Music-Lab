@@ -98,3 +98,7 @@ Version 0.7 adds an original visual meter editor/count preview, beginner guidanc
 - [Xfer Serum 2 manual](https://xferrecords.com/web-manual/serum-2/welcome): reversible module editing, keyboard audition and wavetable workflow context.
 
 These are research/design references. The movement evaluator, partial transforms, drawing/connection controls, envelope handles, thumbnails and audition dock are original MIT code. No vendor code, patches, samples, screenshots, fonts, logos or skins are included. See [the research and implementation comparison](docs/instrument-workbench-research.md).
+
+## Version 0.9 layered workshop
+
+Original rack schema, Web Audio adapter, factory recipes, persistent library, import/export, sample baking, UI and tests are MIT. The deterministic rack noise/phase/room mixer uses the same Mulberry32 algorithm credited above (Tommy Ettinger / bryc; retained MIT fallback notice). The [Phase Plant manual](https://kilohearts.com/docs/phase_plant), [Ableton instrument reference](https://www.ableton.com/en/manual/live-instrument-reference/) and [Web Audio specification](https://www.w3.org/TR/webaudio-1.1/) are technique/API references, not imported implementation or assets. No new vendor code, preset, recording, impulse, font or runtime dependency was copied. Existing VSCO CE recordings remain CC0; user-imported and rendered recordings retain their individual source/provenance terms. See [the workshop guide](docs/instrument-workshop.md).

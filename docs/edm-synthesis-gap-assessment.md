@@ -1,5 +1,7 @@
 # EDM synthesis capabilities and missing features
 
+**Implementation update — November 3, 2026:** [Version 0.9](instrument-workshop.md) implements layered synthesis, persistent instrument saving, sample import and synth-to-sample baking. Both EDM and game-score directions remain active. The assessment below is the retained research baseline; the implementation guide lists actual capabilities and remaining advanced DSP work.
+
 November 3, 2026. Audit of Way Music 0.8 at commit `c788a4e`. Original analysis: MIT. This is a research and engineering assessment; it does not add the proposed synthesis features.
 
 Way's editor has advanced faster than its sound engine. Several sound-design methods used in EDM remain unavailable, so more experimentation with the current controls cannot reach every reference sound. The next substantial improvement should expand synthesis, modulation, processing and performance behavior together.

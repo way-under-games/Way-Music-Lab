@@ -7,6 +7,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import { compose } from './src/composer.mjs';
 import { exportMidi } from './src/midi.mjs';
+import {createLibraryStore,LibraryNotFound,LibraryConflict} from './src/library-store.mjs';
+import {factoryInstruments} from './src/instrument-factory.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.wav': 'audio/wav' };
@@ -14,21 +16,23 @@ const ALLOWED = new Set(['/web/index.html', '/web/integration.html', '/web/style
 ALLOWED.add('/src/samples.mjs'); ALLOWED.add('/samples/vsco-ce/manifest.json');
 for (const route of ['/src/director.mjs', '/web/director.html', '/web/director-app.mjs']) ALLOWED.add(route);
 for (const route of ['/src/studio.mjs', '/src/studio-audio.mjs', '/src/studio-midi.mjs', '/web/studio.html', '/web/studio.css', '/web/studio-app.mjs']) ALLOWED.add(route);
+for(const route of ['/src/instrument-rack.mjs','/src/instrument-library.mjs','/src/instrument-factory.mjs','/src/rack-audio.mjs','/src/instrument-bake.mjs','/src/library-client.mjs','/web/instrument-workshop.mjs','/web/instrument-workshop.css'])ALLOWED.add(route);
 ALLOWED.add('/src/studio-host.mjs');ALLOWED.add('/src/instrument-design.mjs');
 for(const route of ['/web/meter-builder.mjs','/web/instrument-editor.mjs','/web/instrument-editor.css','/web/way-shell.css'])ALLOWED.add(route);
 
-async function readJson(request) {
+async function readJson(request, limit=16_384) {
   let bytes = 0;
   const chunks = [];
   for await (const chunk of request) {
     bytes += chunk.length;
-    if (bytes > 16_384) throw new RangeError('Request body exceeds 16 KB');
+    if (bytes > limit) throw new RangeError('Request body exceeds its byte limit');
     chunks.push(chunk);
   }
   try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { throw new TypeError('Body must be valid JSON'); }
 }
 
-export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') } = {}) {
+export function createMusicServer({ artifactRoot = path.join(root, 'artifacts'), libraryRoot=path.join(root,'library') } = {}) {
+  const library=createLibraryStore({root:libraryRoot,factory:factoryInstruments()});
   // Revalidate local edits on every request; retain at most 16 MiB of source/sample bytes.
   const cache=new Map(),inflight=new Map(),budget=16*1024*1024;let cachedBytes=0;
   async function readShared(file,etag){
@@ -73,7 +77,23 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
     const sendJson = (status, data) => { response.writeHead(status, { 'Content-Type': TYPES['.json'] }); response.end(JSON.stringify(data)); };
     try {
       const url = new URL(request.url, 'http://localhost');
-      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.8.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
+      if(url.pathname.startsWith('/api/v1/library/')){
+        const origin=request.headers.origin,host=request.headers.host;
+        if(!/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host??'')||origin&&origin!=='http://'+host)return sendJson(403,{error:'The local library is available only from this server origin'});
+        const route=url.pathname.slice('/api/v1/library/'.length),method=request.method;
+        if(!['GET','HEAD'].includes(method)&&!/^application\/json(?:;|$)/.test(request.headers['content-type']??''))return sendJson(400,{error:'Use application/json for library changes'});
+        if(route==='instruments'&&method==='GET')return sendJson(200,await library.list());
+        if(route==='instruments'&&method==='POST')return sendJson(201,await library.save(await readJson(request,1024*1024)));
+        if(route==='assets'&&method==='GET')return sendJson(200,await library.listAssets());
+        if(route==='assets'&&method==='POST'){const body=await readJson(request,24*1024*1024);return sendJson(201,await library.putAsset(body.base64,body.metadata));}
+        if(route==='import'&&method==='POST')return sendJson(201,await library.importPackage(await readJson(request,48*1024*1024)));
+        const instrument=/^instruments\/([a-zA-Z0-9._-]+)(\/package)?$/.exec(route);
+        if(instrument){const id=instrument[1];if(instrument[2]&&method==='GET')return sendJson(200,await library.exportPackage(id));if(!instrument[2]){if(method==='GET')return sendJson(200,await library.get(id));if(method==='PUT')return sendJson(200,await library.save(await readJson(request,1024*1024),id));if(method==='DELETE')return sendJson(200,await library.remove(id));}}
+        const asset=/^assets\/([a-f0-9]{64})(\.wav)?$/.exec(route);
+        if(asset&&['GET','HEAD'].includes(method)){if(!asset[2])return sendJson(200,await library.getAsset(asset[1]));await library.getAsset(asset[1]);await serveFile(request,response,library.assetPath(asset[1]),'audio/wav');return;}
+        return sendJson(405,{error:'Unsupported library operation'});
+      }
+      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.9.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
       if (url.pathname === '/api/v1/renders/wav') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with rendered WAV bytes' });
         if (request.headers['content-type'] !== 'audio/wav') return sendJson(400, { error: 'Content-Type must be audio/wav' });
@@ -111,6 +131,8 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
     } catch (error) {
       if(response.headersSent||response.destroyed){response.destroy();return;}
       response.removeHeader('Content-Length');response.removeHeader('Content-Range');
+      if(error instanceof LibraryNotFound)return sendJson(404,{error:error.message});
+      if(error instanceof LibraryConflict)return sendJson(409,{error:error.message});
       if(error.code==='ENOENT')return sendJson(404,{error:'File not found'});
       if (error instanceof RangeError || error instanceof TypeError) sendJson(400, { error: error.message });
       else sendJson(500, { error: 'Request failed' });
