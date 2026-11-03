@@ -23,6 +23,15 @@ test('HTTP adapter serves the demo, deterministic scores and MIDI; rejects inval
   assert.equal(bank.license, 'CC0-1.0');
   const sample = await fetch(base + '/samples/vsco-ce/' + bank.regions[0].url);
   assert.equal(sample.status, 200); assert.equal(sample.headers.get('content-type'), 'audio/wav');
+  const bytes=Buffer.from(await sample.arrayBuffer()),etag=sample.headers.get('etag'),sampleUrl=base+'/samples/vsco-ce/'+bank.regions[0].url;
+  assert.ok(etag);assert.equal(sample.headers.get('cache-control'),'private, no-cache');
+  const unchanged=await fetch(sampleUrl,{headers:{'If-None-Match':etag}});assert.equal(unchanged.status,304);assert.equal((await unchanged.arrayBuffer()).byteLength,0);
+  const head=await fetch(sampleUrl,{method:'HEAD'});assert.equal(Number(head.headers.get('content-length')),bytes.length);assert.equal((await head.arrayBuffer()).byteLength,0);
+  const range=await fetch(sampleUrl,{headers:{Range:'bytes=0-15'}});assert.equal(range.status,206);assert.equal(range.headers.get('content-range'),`bytes 0-15/${bytes.length}`);assert.deepEqual(Buffer.from(await range.arrayBuffer()),bytes.subarray(0,16));
+  const suffix=await fetch(sampleUrl,{headers:{Range:'bytes=-5'}});assert.equal(suffix.status,206);assert.deepEqual(Buffer.from(await suffix.arrayBuffer()),bytes.subarray(-5));
+  for(const value of ['bytes=999999999-','bytes=4-1','bytes=-0','bytes=0-1,4-5','bytes=99999999999999999999999-'])assert.equal((await fetch(sampleUrl,{headers:{Range:value}})).status,416,value);
+  const ifRange=await fetch(sampleUrl,{headers:{Range:'bytes=0-5','If-Range':etag}});assert.equal(ifRange.status,200,'Weak If-Range requires the full representation');await ifRange.arrayBuffer();
+  assert.equal((await fetch(base+'/samples/vsco-ce/missing.wav')).status,404);
   assert.equal((await fetch(base + '/samples/vsco-ce/../../package.json')).status, 404);
   const input = { seed: '世界', scene: 'battle', intensity: 0.8, bars: 2, startBar: 3 };
   const score = await request('/api/v1/compose', input); assert.deepEqual(await score.json(), compose(input));
@@ -51,6 +60,8 @@ test('render export saves validated WAV bytes without accepting arbitrary paths 
   const response = await upload(wav); assert.equal(response.status, 201); const saved = await response.json();
   assert.match(saved.filename, /^score-[0-9a-f-]{36}\.wav$/); assert.deepEqual(await readFile(path.join(artifactRoot, saved.filename)), wav);
   const download = await fetch(base + saved.url); assert.equal(download.status, 200); assert.deepEqual(Buffer.from(await download.arrayBuffer()), wav);
+  const slice=await fetch(base+saved.url,{headers:{Range:'bytes=40-47'}});assert.equal(slice.status,206);assert.deepEqual(Buffer.from(await slice.arrayBuffer()),wav.subarray(40,48));
+  const head=await fetch(base+saved.url,{method:'HEAD'});assert.equal(head.status,200);assert.equal(Number(head.headers.get('content-length')),wav.length);
   const second = await (await upload(wav)).json(); assert.notEqual(second.filename, saved.filename);
   assert.equal((await upload(Buffer.from('invalid'))).status, 400);
   assert.equal((await fetch(base + '/api/v1/renders/wav', { method: 'POST', body: wav })).status, 400);

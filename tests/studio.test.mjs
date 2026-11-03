@@ -13,6 +13,51 @@ function context() {
 }
 const note=(extra={})=>({id:'authored-note',midi:62,velocity:91,start:300,duration:650,...extra});
 
+test('audio caches harmonic waves and snapshots while keeping active amplitude envelopes stable',()=>{
+  const c=context(),e=new StudioEngine(c),p=preset();p.oscillators[1].shape='harmonic';
+  e.noteOn('a',60,90,'part',p);e.noteOn('b',64,90,'part',p);
+  assert.equal(e.waveCache.size,2);assert.equal(e.voices.get('a').patch,e.voices.get('b').patch);
+  const v=e.voices.get('a'),oldRelease=p.release;p.release=4;p.frames[0][2]=.9;p.oscillators[0].detune=64;
+  assert.equal(v.patch.release,oldRelease,'Input mutations cannot alter a voice snapshot');
+  e.update('part',p,p.macros);assert.equal(v.patch.release,4);assert.equal(v.amplitude.release,oldRelease);assert.equal(v.sources[0].spec.detune,0,'Held oscillator detune stays fixed until a new attack');
+  e.release('a',.4);assert.equal(v.end,.4+oldRelease+.03);
+  e.noteOn('c',67,90,'part',p);assert.equal(e.waveCache.size,4,'A changed normalization invalidates both frame waves');
+  const steady=e.voices.get('b'),count=steady.pan.pan.events.length;e.updateVoice(steady,.1);e.updateVoice(steady,.2);
+  assert.equal(steady.pan.pan.events.length,count,'Unchanged pan does not append automation');
+  e.update('part',p,{...p.macros,width:1});e.updateVoice(steady,.3);assert.equal(steady.pan.pan.events.length,count+1);
+  e.dispose();assert.equal(e.waveCache.size,0);
+});
+
+test('idle players do not create buses, and zero drive is an actual linear bypass',()=>{
+  const c=context(),e=new StudioEngine(c),p=newProject(),player=new StudioPlayer(e,p);
+  player.tick();assert.equal(e.buses.size,0);
+  const patch=p.parts[0].patch;patch.effects.drive=0;patch.oscillators[1].level=0;
+  e.noteOn('a',60,90,'part',patch);assert.equal(e.buses.get('part').drive.curve,null);assert.equal(e.buses.get('part').drive.oversample,'none');
+  assert.equal(e.voices.get('a').sources.length,patch.frames.length,'Silent oscillator is not allocated');
+  patch.effects.drive=.8;e.update('part',patch,patch.macros);const curve=e.buses.get('part').drive.curve;assert.equal(curve[512],0);assert.equal(curve[0],-curve[1024]);
+  player.stop();player.tick();assert.equal(e.buses.size,0);
+});
+
+test('game smoothing uses elapsed audio time and the winning mapping duration',()=>{
+  const c=context(),e=new StudioEngine(c),p=newProject();
+  p.mappings=[{source:'danger',target:'brightness',min:.9,max:.9,smoothing:5,enabled:true},{source:'story',target:'brightness',min:.9,max:.9,smoothing:.1,enabled:true}];
+  const player=new StudioPlayer(e,p);player.gameEnabled=true;player.tick();let expected=.45+(.9-.45)*(1-Math.exp(-.025/.1));assert.ok(Math.abs(player.smoothed.get('part-0').brightness-expected)<1e-12);
+  c.currentTime=.1;player.tick();expected+=(.9-expected)*(1-Math.exp(-.1/.1));assert.ok(Math.abs(player.smoothed.get('part-0').brightness-expected)<1e-12);
+});
+
+test('stop cancels browser host starts pending resume and sample preload',async t=>{
+  const previousAudio=globalThis.AudioContext,previousDocument=globalThis.document;let resume;
+  const c=context();c.resume=()=>new Promise(resolve=>resume=resolve);c.close=async()=>{};
+  globalThis.AudioContext=class{constructor(){return c;}};globalThis.document={addEventListener(){},removeEventListener(){}};
+  t.after(()=>{globalThis.AudioContext=previousAudio;globalThis.document=previousDocument;});
+  const p=newProject();p.parts[0].patch.source='orchestra';const host=new BrowserStudio(p);
+  let loads=0;host.engine.ensureSampleBank=async()=>{loads++;};const pending=host.start();host.stop();resume();await pending;
+  assert.equal(host.player.running,false);assert.equal(loads,0);
+  c.resume=async()=>{};let releaseBank,reachedBank;const reached=new Promise(resolve=>reachedBank=resolve);
+  host.engine.ensureSampleBank=()=>{reachedBank();return new Promise(resolve=>releaseBank=resolve);};
+  const loading=host.start();await reached;host.stop();releaseBank();await loading;assert.equal(host.player.running,false);assert.equal(host.timer,null);await host.dispose();
+});
+
 test('studio projects start without generated hooks; serialization preserves overlapping authored parts and expression',()=>{
   const p=newProject();assert.ok(p.parts.every(p=>p.notes.length===0));p.parts[0].notes=[note({expression:[{tick:10,value:.7},{tick:220,value:-.25}]})];p.parts[1].notes=[note({id:'answer',midi:67,start:330})];
   assert.deepEqual(validateProject(JSON.parse(JSON.stringify(p))),p);

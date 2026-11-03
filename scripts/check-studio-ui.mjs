@@ -36,7 +36,7 @@ const saved=()=>JSON.parse(localStorage.getItem('way-studio-v1'));
 assert.equal(document.querySelectorAll('#parts .part').length,3);assert.equal(document.querySelectorAll('#keyboard button').length,24);
 await click('add-note');assert.equal(saved().parts[0].notes.length,1);const original=structuredClone(saved().parts[0].notes);
 await click('vary');assert.deepEqual(saved().parts[0].notes,original,'Sound variation preserves notes');
-$('explore-listen').checked=false;
+document.querySelector('[data-tab="sound"]').click();await flush();$('explore-listen').checked=false;
 const startingPatch=structuredClone(saved().parts[0].patch);
 document.querySelector('[data-world="swarm"]').click();await flush();
 assert.equal(saved().parts[0].patch.name,'Ion swarm');assert.deepEqual(saved().parts[0].notes,original);

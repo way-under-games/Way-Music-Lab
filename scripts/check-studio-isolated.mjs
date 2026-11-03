@@ -29,7 +29,12 @@ const recorded=structuredClone(p);recorded.parts[0].patch.source='orchestra';rec
 const soundWorldAudio=[];
 for(const world of SOUND_WORLDS){const probe=newProject();probe.tempo=120;probe.loopTicks=1920;probe.parts[0].patch=soundWorld(world.id);probe.parts[0].notes=[{id:'world-probe',midi:60,start:0,duration:1920,velocity:90}];const rendered=new DataView(await renderStudioWav(probe));let worldPeak=0,energy=0,tail=0,crossings=0,last=0;for(let frame=0;frame<(rendered.byteLength-44)/4;frame++){const v=rendered.getInt16(44+frame*4,true)/32768;worldPeak=Math.max(worldPeak,Math.abs(v));if(frame<24000)energy+=v*v;if(frame>=36000&&frame<48000)tail+=v*v;if(frame<24000&&v*last<0)crossings++;last=v;}assert(worldPeak>.001&&worldPeak<.99,'World silent or clipping: '+world.id+' '+worldPeak);soundWorldAudio.push({world:world.id,peak:worldPeak,firstSecondRms:Math.sqrt(energy/24000),sustainRms:Math.sqrt(tail/12000),crossings});}
 assert(Math.max(...soundWorldAudio.map(w=>w.crossings))>Math.min(...soundWorldAudio.map(w=>w.crossings))*1.5,'Sound worlds lack spectral contrast');
-await report('PASS '+JSON.stringify({nativeAudio:true,peak,soundWorldAudio,rms:Math.sqrt(sum/count),recordedPeak,bytes:bytes.byteLength,duration:(bytes.byteLength-44)/96000,parts:d.querySelectorAll('#parts .part').length,keys:24,scenes:7}));
+const clean=newProject();clean.tempo=120;clean.loopTicks=1920;clean.parts[0].notes=[{id:'fidelity-probe',midi:69,start:0,duration:1920,velocity:127}];Object.assign(clean.parts[0].patch,{oscillators:[{shape:'sine',level:.8,detune:0},{shape:'sine',level:0,detune:0}],attack:.001,decay:.001,sustain:1,release:.01,cutoff:18000,resonance:.1,filterEnv:0,routes:[],macros:{brightness:.45,motion:0,width:0,space:0},effects:{drive:0,delay:0,feedback:0}});
+const cleanWav=new DataView(await renderStudioWav(clean,{sampleRate:48000}));assert(cleanWav.getUint32(24,true)===48000,'Full-quality WAV rate missing');
+const magnitude=(wav,harmonic)=>{let real=0,imaginary=0;for(let i=12000;i<36000;i++){const value=wav.getInt16(44+i*4,true)/32768,phase=2*Math.PI*440*harmonic*i/48000;real+=value*Math.cos(phase);imaginary+=value*Math.sin(phase);}return Math.hypot(real,imaginary);};
+const cleanThirdHarmonic=magnitude(cleanWav,3)/magnitude(cleanWav,1);clean.parts[0].patch.effects.drive=1;const driven=new DataView(await renderStudioWav(clean,{sampleRate:48000}));const drivenThirdHarmonic=magnitude(driven,3)/magnitude(driven,1);assert(cleanThirdHarmonic<.002,'Zero drive distorts a sine: '+cleanThirdHarmonic);assert(drivenThirdHarmonic>cleanThirdHarmonic+.01,'Drive no longer adds harmonics');
+clean.parts[0].patch.macros.space=1;clean.parts[0].patch.effects={drive:0,delay:1,feedback:.7};const longTail=await renderStudioWav(clean);const highFeedbackDuration=(longTail.byteLength-44)/96000;assert(highFeedbackDuration>11,'High-feedback delay tail was truncated');
+await report('PASS '+JSON.stringify({nativeAudio:true,peak,soundWorldAudio,cleanThirdHarmonic,drivenThirdHarmonic,fullQualitySampleRate:48000,highFeedbackDuration,rms:Math.sqrt(sum/count),recordedPeak,bytes:bytes.byteLength,duration:(bytes.byteLength-44)/96000,parts:d.querySelectorAll('#parts .part').length,keys:24,scenes:7}));
 }catch(error){await report('FAIL '+error.stack);}
 </script></body></html>`;
 let finishResult;const resultPromise=new Promise(resolve=>finishResult=resolve);
@@ -67,7 +72,7 @@ try{
   await writeFile(path.join(cache,'layouts.json'),JSON.stringify(layouts,null,2));console.log('Viewport results: '+JSON.stringify(layouts));
   if(layouts.some(l=>l.scrollWidth>l.width+1))throw new Error('A studio workspace overflows the viewport');
   await command('Emulation.setDeviceMetricsOverride',{width:1500,height:1200,deviceScaleFactor:1,mobile:false});
-  const planet=await evaluate(`document.querySelector('[data-tab="sound"]').click();document.getElementById('explore-listen').checked=false;document.getElementById('sound-planet').scrollIntoView({block:'center'});(()=>{const r=document.getElementById('sound-planet').getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};})()`);
+  const planet=await evaluate(`(async()=>{document.querySelector('[data-tab="sound"]').click();document.getElementById('explore-listen').checked=false;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));document.getElementById('sound-planet').scrollIntoView({block:'center'});await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));const r=document.getElementById('sound-planet').getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};})()`);
   await command('Input.dispatchMouseEvent',{type:'mousePressed',x:planet.x+planet.width*.2,y:planet.y+planet.height*.2,button:'left',buttons:1,clickCount:1});
   await command('Input.dispatchMouseEvent',{type:'mouseMoved',x:planet.x+planet.width*.8,y:planet.y+planet.height*.7,buttons:1});
   await command('Input.dispatchMouseEvent',{type:'mouseReleased',x:planet.x+planet.width*.8,y:planet.y+planet.height*.7,button:'left',clickCount:1});
@@ -98,7 +103,16 @@ try{
     const deadline=performance.now()+10000;while(!$('recording-status').textContent.includes('ready')){if(performance.now()>deadline)throw new Error('Recorded source did not preload: '+$('message').textContent);await wait(20);}
     $('record').click();await wait(90);document.body.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyQ',bubbles:true}));await wait(120);document.body.dispatchEvent(new KeyboardEvent('keyup',{code:'KeyQ',bubbles:true}));await wait(20);$('record').click();await wait(20);$('keep-take').click();await wait(20);$('stop').click();await wait(30);
     const recorded=JSON.parse(localStorage.getItem('way-studio-v1'));if(recorded.parts[0].notes.length!==before+2||recorded.parts[0].notes.at(-1).midi!==60||recorded.parts[0].patch.source!=='orchestra')throw new Error('Recorded keyboard source or custom mapping failed');
-    return {nativePlayground:true,nativeRecording:true,midi:note.midi,durationTicks:note.duration,recordedKeyboard:true,customKeyboard:true,voices:$('voice-state').textContent};
+    let exported=null,bankRequests=0;const originalClick=HTMLAnchorElement.prototype.click,originalFetch=window.fetch;
+    HTMLAnchorElement.prototype.click=function(){if(this.download==='way-authored.wav')exported=this.href;else originalClick.call(this);};
+    window.fetch=(...args)=>{if(String(args[0]).includes('/samples/')){bankRequests++;throw new Error('Export decoded an already loaded bank again');}return originalFetch(...args);};
+    let exportedSampleRate;try{
+      if($('export-rate').value!=='48000')throw new Error('Studio did not default to full-quality export');
+      $('export-wav').click();if(!$('export-wav').disabled)throw new Error('Concurrent export was not blocked');
+      const exportDeadline=performance.now()+10000;while(!exported){if(performance.now()>exportDeadline)throw new Error('Export did not finish: '+$('message').textContent);await wait(20);}
+      const wav=new DataView(await(await originalFetch(exported)).arrayBuffer());exportedSampleRate=wav.getUint32(24,true);if(exportedSampleRate!==48000||bankRequests||$('export-wav').disabled)throw new Error('Export rate, sample reuse or cleanup failed');
+    }finally{HTMLAnchorElement.prototype.click=originalClick;window.fetch=originalFetch;}
+    return {nativePlayground:true,nativeRecording:true,exportedSampleRate,exportBankRequests:bankRequests,midi:note.midi,durationTicks:note.duration,recordedKeyboard:true,customKeyboard:true,voices:$('voice-state').textContent};
   })()`);console.log('Performance results: '+JSON.stringify(performance));await writeFile(path.join(cache,'performance.json'),JSON.stringify(performance,null,2));
   if(exceptions.length)throw new Error('Uncaught page exceptions: '+exceptions.join('\n'));
   console.log('Screenshots: '+cache);console.log('Only a dedicated headless process with an isolated test profile was used. No existing browser or desktop input.');

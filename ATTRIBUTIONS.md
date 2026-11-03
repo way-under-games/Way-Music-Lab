@@ -85,3 +85,5 @@ These projects informed the comparison in [music-research.md](docs/music-researc
 The maintained ComfyUI toolkit referenced in the parent Way workspace generates visual assets. It is not used to compose, render or package this music project; no ComfyUI, Qwen model, model weight or generated visual asset is bundled here. The music lab uses system fonts and original HTML/CSS, with no downloaded font or icon package.
 
 The cosmic Sound playground, six sound-world parameter recipes, harmonic morphing, mutation controls, and original CSS/SVG interface are original Way code and data under MIT. No commercial synthesizer code, factory preset, waveform recording, font, icon pack, or new runtime dependency was imported for this update.
+
+The 0.6.1 drive correction, audio caching/smoothing, export refinements, frontend optimizations, HTTP caching/range support and measurement scripts are original MIT implementation work; no new dependency or third-party asset was added.

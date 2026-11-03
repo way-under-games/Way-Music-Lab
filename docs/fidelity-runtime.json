@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-02",
+  "runtime": "v24.22.1",
+  "method": "Deterministic counters using scripts/measure-runtime.mjs; not a timing or device-latency benchmark",
+  "before": {
+    "idleBuses": 3,
+    "attacks": {
+      "periodicWaveBuilds": 400,
+      "structuredClones": 100,
+      "automationCalls": 1400
+    },
+    "held": {
+      "structuredClones": 1600,
+      "automationCalls": 18500
+    },
+    "backend": {
+      "conditionalStatus": 200,
+      "repeatBodyBytes": 20501
+    }
+  },
+  "after": {
+    "idleBuses": 0,
+    "attacks": {
+      "periodicWaveBuilds": 2,
+      "structuredClones": 1,
+      "automationCalls": 1103
+    },
+    "held": {
+      "structuredClones": 0,
+      "automationCalls": 7936
+    },
+    "backend": {
+      "conditionalStatus": 304,
+      "repeatBodyBytes": 0
+    }
+  }
+}

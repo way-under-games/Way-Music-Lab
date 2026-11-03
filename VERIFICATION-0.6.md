@@ -4,7 +4,7 @@ November 2, 2026. Verified in the standalone Way-Music-Lab checkout. Browser che
 
 ## Passed checks
 
-- `node --test tests/*.test.mjs`: **65 tests pass**, including the existing regressions and three sound-playground tests for contrasting recipes, bounded blends, locks, deterministic mutation, and protected hooks.
+- `node --test tests/*.test.mjs`: **69 tests pass**, including the existing regressions and sound-playground and optimization tests for contrasting recipes, bounded blends, locks, deterministic mutation, protected hooks, wave reuse, stable envelopes, elapsed-time smoothing, and pending-start cancellation.
 - `node scripts/check-studio-ui.mjs`: isolated in-memory DOM checks pass note entry, protected hooks, meter edits, variations, recording/keeping a take, undo/redo, and part creation. This check uses canvas/audio doubles and a pinned development-only LinkeDOM worker.
 - `node scripts/check-studio-isolated.mjs "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"`: real-page and native Web Audio checks pass. The fixture waits for actual audio completion rather than advancing a virtual clock past rendering.
 - New modules parse, local documentation links resolve, and `git diff --check` passes.
@@ -14,8 +14,8 @@ November 2, 2026. Verified in the standalone Way-Music-Lab checkout. Browser che
 | Check | Observed result |
 | --- | --- |
 | Designed instrument WAV | 784,848 bytes, 24 kHz stereo 16-bit PCM, 8.175 seconds including note release and delay decay. |
-| Synth peak and RMS | Peak 0.0615234, RMS approximately 0.00550101; non-silent and below clipping. |
-| Recorded flute WAV | Peak 0.0178528; non-silent and below clipping after the local bank was verified and decoded. |
+| Synth peak and RMS | Peak 0.0390930, RMS approximately 0.00348918; non-silent and below clipping. |
+| Recorded flute WAV | Peak 0.0113220; non-silent and below clipping after the local bank was verified and decoded. |
 | Filter edit | Changing cutoff changes the rendered PCM. |
 | Cross-loop release | The fixture's note extends beyond the loop and its full release remains in the WAV. |
 | Native keyboard recording | A C4 / MIDI 60 event records and keeps a timed note through the real interface and native AudioContext. |
@@ -29,7 +29,9 @@ Screenshots of all six workspace/viewport combinations were generated and inspec
 
 ## Sound playground verification
 
-Six native WAV probes render the same C4 note through all six worlds: non-silent peaks range from 0.0128 to 0.1249, below clipping for this test. First-second zero-crossing counts range from 491 to 1119; crystal sustain RMS is approximately 0.00022 versus drone sustain RMS 0.00930. These are basic contrast/signal checks, not perceptual quality or loudness matching. A real pointer drag commits the final planet coordinates and restores the initial patch; native card audition, slider/mutation persistence, restoration, and note protection pass. All six responsive workspace checks remain free of horizontal overflow.
+Six native WAV probes render the same C4 note through all six worlds: non-silent peaks range from 0.00976 to 0.10962, below clipping for this test. First-second zero-crossing counts range from 348 to 1118. These are basic contrast/signal checks, not perceptual quality or loudness matching. A real pointer drag commits final planet coordinates and restores the initial patch; native card audition, slider/mutation persistence, restoration, and note protection pass. All six responsive workspace checks remain free of horizontal overflow.
+
+Version 0.6.1 adds native proof of a clean zero-drive sine (third-harmonic ratio approximately 0.000145 versus 0.02644 with drive), 48 kHz studio export with no bank requests after preload, and an 11.31-second high-feedback test render including its extended delay tail. Read the [fidelity and performance report](docs/fidelity-and-performance.md) and [before/after work counts](docs/fidelity-runtime.json).
 
 ## Requirement audit
 

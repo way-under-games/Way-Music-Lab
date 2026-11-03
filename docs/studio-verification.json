@@ -2,58 +2,62 @@
   "date": "2026-11-02",
   "runtime": "v24.22.1",
   "unitTests": {
-    "passed": 65,
+    "passed": 69,
     "failed": 0
   },
   "native": {
     "nativeAudio": true,
-    "peak": 0.0615234375,
+    "peak": 0.039093017578125,
     "soundWorldAudio": [
       {
         "world": "crystal",
-        "peak": 0.0128173828125,
-        "firstSecondRms": 0.001653070357517212,
-        "sustainRms": 0.00021912138214668118,
-        "crossings": 492
+        "peak": 0.009765625,
+        "firstSecondRms": 0.001197138747311323,
+        "sustainRms": 0.000166710912275337,
+        "crossings": 348
       },
       {
         "world": "sub",
-        "peak": 0.030059814453125,
-        "firstSecondRms": 0.00840488968474306,
-        "sustainRms": 0.0018461246026063212,
-        "crossings": 491
+        "peak": 0.019378662109375,
+        "firstSecondRms": 0.005388353719878917,
+        "sustainRms": 0.0011827110271147119,
+        "crossings": 480
       },
       {
         "world": "acid",
-        "peak": 0.09619140625,
-        "firstSecondRms": 0.02089764075361049,
-        "sustainRms": 0.004858131009957333,
+        "peak": 0.0816650390625,
+        "firstSecondRms": 0.017549287328609945,
+        "sustainRms": 0.00407494770167451,
         "crossings": 793
       },
       {
         "world": "arcade",
-        "peak": 0.02276611328125,
-        "firstSecondRms": 0.01460697818721455,
-        "sustainRms": 0.003191898621382477,
+        "peak": 0.0145263671875,
+        "firstSecondRms": 0.009327364058131244,
+        "sustainRms": 0.0020378319308292448,
         "crossings": 518
       },
       {
         "world": "swarm",
-        "peak": 0.124847412109375,
-        "firstSecondRms": 0.03718835007262525,
-        "sustainRms": 0.015220111946682593,
-        "crossings": 1119
+        "peak": 0.109619140625,
+        "firstSecondRms": 0.032487886080086834,
+        "sustainRms": 0.013270967780246683,
+        "crossings": 1118
       },
       {
         "world": "drone",
-        "peak": 0.02044677734375,
-        "firstSecondRms": 0.003432410073622726,
-        "sustainRms": 0.00930420948369329,
-        "crossings": 761
+        "peak": 0.013885498046875,
+        "firstSecondRms": 0.002330399369259284,
+        "sustainRms": 0.006317327364500689,
+        "crossings": 719
       }
     ],
-    "rms": 0.005501012473197006,
-    "recordedPeak": 0.017852783203125,
+    "cleanThirdHarmonic": 0.00014475166060005243,
+    "drivenThirdHarmonic": 0.026442714171131428,
+    "fullQualitySampleRate": 48000,
+    "highFeedbackDuration": 11.31,
+    "rms": 0.003489177558651382,
+    "recordedPeak": 0.011322021484375,
     "bytes": 784848,
     "duration": 8.175041666666667,
     "parts": 3,
@@ -63,8 +67,10 @@
   "performance": {
     "nativePlayground": true,
     "nativeRecording": true,
+    "exportedSampleRate": 48000,
+    "exportBankRequests": 0,
     "midi": 60,
-    "durationTicks": 102.05866666666661,
+    "durationTicks": 111.87200000000001,
     "recordedKeyboard": true,
     "customKeyboard": true,
     "voices": "0 voices"
@@ -80,7 +86,7 @@
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 1988,
+      "height": 2025,
       "tab": "perform",
       "overflow": []
     },
@@ -101,14 +107,14 @@
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 4818,
+      "height": 4855,
       "tab": "sound",
       "overflow": []
     },
     {
       "width": 430,
       "scrollWidth": 415,
-      "height": 3505,
+      "height": 3542,
       "tab": "game",
       "overflow": []
     }

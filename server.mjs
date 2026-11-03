@@ -1,5 +1,7 @@
 import { createServer } from 'node:http';
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, stat } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
 import { randomUUID } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
@@ -26,13 +28,51 @@ async function readJson(request) {
 }
 
 export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') } = {}) {
+  // Revalidate local edits on every request; retain at most 16 MiB of source/sample bytes.
+  const cache=new Map(),inflight=new Map(),budget=16*1024*1024;let cachedBytes=0;
+  async function readShared(file,etag){
+    let pending=inflight.get(file);if(pending?.etag!==etag){pending={etag,promise:readFile(file)};inflight.set(file,pending);}
+    try{return await pending.promise;}finally{if(inflight.get(file)===pending)inflight.delete(file);}
+  }
+  async function serveFile(request,response,file,type,{cached=false}={}) {
+    const info=await stat(file);if(!info.isFile()){response.writeHead(404).end();return;}
+    const etag=`W/"${info.size.toString(16)}-${info.mtimeMs}-${info.ctimeMs}"`;
+    response.setHeader('Cache-Control','private, no-cache');response.setHeader('ETag',etag);
+    response.setHeader('Content-Type',type);response.setHeader('Accept-Ranges','bytes');
+    if(request.headers['if-none-match']?.split(',').map(s=>s.trim()).some(s=>s===etag||s==='*')){response.writeHead(304).end();return;}
+    let start=0,end=info.size-1,status=200;
+    const range=request.headers.range;
+    // Weak validators cannot satisfy If-Range; send the full representation in that case.
+    if(range&&request.method==='GET'&&!request.headers['if-range']) {
+      const match=/^bytes=(\d*)-(\d*)$/.exec(range);
+      if(!match||!match[1]&&!match[2]||match.slice(1).some(v=>v&&!Number.isSafeInteger(Number(v)))){response.writeHead(416,{'Content-Range':`bytes */${info.size}`}).end();return;}
+      if(match[1]){start=Number(match[1]);if(match[2])end=Math.min(Number(match[2]),end);}
+      else start=Math.max(0,info.size-Number(match[2]));
+      if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start>end||start>=info.size){response.writeHead(416,{'Content-Range':`bytes */${info.size}`}).end();return;}
+      status=206;response.setHeader('Content-Range',`bytes ${start}-${end}/${info.size}`);
+    }
+    response.setHeader('Content-Length',Math.max(0,end-start+1));
+    if(request.method==='HEAD'){response.writeHead(status).end();return;}
+    if(cached&&info.size<=budget){
+      let entry=cache.get(file);if(entry?.etag!==etag){if(entry){cache.delete(file);cachedBytes-=entry.bytes.length;}entry={etag,bytes:await readShared(file,etag)};
+        // A concurrent request may have populated the same file while readFile awaited.
+        const previous=cache.get(file);if(previous){cachedBytes-=previous.bytes.length;cache.delete(file);}
+        while(cachedBytes+entry.bytes.length>budget&&cache.size){const oldest=cache.keys().next().value;cachedBytes-=cache.get(oldest).bytes.length;cache.delete(oldest);}
+        cache.set(file,entry);cachedBytes+=entry.bytes.length;
+      }else{cache.delete(file);cache.set(file,entry);}
+      response.writeHead(status);response.end(entry.bytes.subarray(start,end+1));return;
+    }
+    response.writeHead(status);
+    if(!info.size){response.end();return;}
+    await pipeline(createReadStream(file,{start,end}),response);
+  }
   return createServer(async (request, response) => {
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Cache-Control', 'no-store');
     const sendJson = (status, data) => { response.writeHead(status, { 'Content-Type': TYPES['.json'] }); response.end(JSON.stringify(data)); };
     try {
       const url = new URL(request.url, 'http://localhost');
-      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.6.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
+      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.6.1', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
       if (url.pathname === '/api/v1/renders/wav') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with rendered WAV bytes' });
         if (request.headers['content-type'] !== 'audio/wav') return sendJson(400, { error: 'Content-Type must be audio/wav' });
@@ -49,13 +89,11 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
         await writeFile(path.join(artifactRoot, filename), wav, { flag: 'wx' });
         return sendJson(201, { filename, url: `/artifacts/${filename}`, bytes: wav.length, duration: (wav.length - 44) / wav.readUInt32LE(28) });
       }
-      if (/^\/artifacts\/score-[0-9a-f-]{36}\.wav$/.test(url.pathname) && request.method === 'GET') {
+      if (/^\/artifacts\/score-[0-9a-f-]{36}\.wav$/.test(url.pathname) && ['GET','HEAD'].includes(request.method)) {
         const filename = path.basename(url.pathname);
         try {
-          const wav = await readFile(path.join(artifactRoot, filename));
-          response.writeHead(200, { 'Content-Type': 'audio/wav' });
-          return response.end(wav);
-        } catch { return sendJson(404, { error: 'Render not found' }); }
+          await serveFile(request,response,path.join(artifactRoot,filename),'audio/wav');return;
+        } catch(error) { if(response.headersSent){response.destroy();return;}if(error.code==='ENOENT')return sendJson(404,{error:'Render not found'});throw error; }
       }
       if (url.pathname === '/api/v1/compose' || url.pathname === '/api/v1/midi') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with JSON settings' });
@@ -68,10 +106,11 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts') 
       const route = url.pathname === '/' ? '/web/studio.html' : url.pathname;
       if (!ALLOWED.has(route) && !/^\/samples\/vsco-ce\/[a-zA-Z0-9_-]+\.wav$/.test(route)) return sendJson(404, { error: 'Not found' });
       const file = path.join(root, route.slice(1));
-      const contents = await readFile(file);
-      response.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] });
-      response.end(request.method === 'HEAD' ? undefined : contents);
+      await serveFile(request,response,file,TYPES[path.extname(file)],{cached:true});
     } catch (error) {
+      if(response.headersSent||response.destroyed){response.destroy();return;}
+      response.removeHeader('Content-Length');response.removeHeader('Content-Range');
+      if(error.code==='ENOENT')return sendJson(404,{error:'File not found'});
       if (error instanceof RangeError || error instanceof TypeError) sendJson(400, { error: error.message });
       else sendJson(500, { error: 'Request failed' });
     }
