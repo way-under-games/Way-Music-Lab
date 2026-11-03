@@ -4,6 +4,34 @@ November 3, 2026. Audit of Way Music 0.8 at commit `c788a4e`. Original analysis:
 
 Way's editor has advanced faster than its sound engine. Several sound-design methods used in EDM remain unavailable, so more experimentation with the current controls cannot reach every reference sound. The next substantial improvement should expand synthesis, modulation, processing and performance behavior together.
 
+## User reference tracks and revised priorities
+
+The user subsequently supplied **Stardew Valley**, **Donkey Kong Country — Simian Segue**, and **Vampire Survivors — Reincarnated Echoes** as the sound references. These direct the next implementation toward a hybrid retro-game instrument palette. The broad EDM feature gaps below remain valid, but the priority order for these references is now sample/instrument variety, playable layering, articulation, spatial/tone processing, and arrangement support, followed by deeper oscillator synthesis.
+
+Use the original Stardew Valley soundtrack as the broad reference, the original SNES world-map version of Simian Segue as the working version, and poncle's original Reincarnated Echoes upload. The exact Stardew track remains unspecified. The following palette descriptions are proposed design targets, not a transcription or a claim to have identified the original presets.
+
+| Reference | Proposed target for Way | Main capability need |
+| --- | --- | --- |
+| Stardew Valley | Warm keys/plucks, woodwind-like voices, gentle synthetic pads and small percussion, with distinct seasonal moods. | A wider sample/synth palette, responsive instrument envelopes, room/reverb and phrase dynamics. |
+| Simian Segue | Characterful compact sample voices, clear percussive attacks, melodic counterlines and controlled echo. | General sample-instrument creation, looping/tuning controls, pitch/envelope articulation and purposeful layering. |
+| Reincarnated Echoes | An energetic melodic ensemble with an assertive lead, driving bass and drums, and contrasting retro/acoustic textures. | Distinct playable instrument roles, lead articulation, stronger rhythm/bass sounds and cohesive effects. |
+
+### Source evidence
+
+- [ConcernedApe's official soundtrack](https://concernedape.bandcamp.com/album/stardew-valley-ost) identifies the original reference. In [his NPR interview, carried by KNKX](https://www.knkx.org/2024-12-19/the-creator-of-video-game-stardew-valley-talks-its-legacy-and-future), Barone discusses expressing the seasons and making synthesizer/computer music feel organic. [Reason Studios](https://www.reasonstudios.com/news/post/the-reason-livestream-returns) confirms that the soundtrack was made in Reason. This does not establish an exact patch list for each song.
+- [David Wise's first-person DKC interview](https://vgmonline.net/davidwiseinterview/) describes tiny waveform samples and programmed sequences inspired by the Korg Wavestation. This establishes an approach used in the series, not the exact construction or authorship of Simian Segue. The [track reference](https://www.mariowiki.com/Simian_Segue) distinguishes the original world-map cue from the GBA naming ambiguity.
+- [Poncle's official Reincarnated Echoes upload](https://www.youtube.com/watch?v=dwx2DtyqSLc) credits Daniele Zandara as composer/arranger. Original sound-library and patch details are not established here.
+
+### User-specific implementation sequence
+
+1. **Expand the source palette.** Provide a curated, appropriately licensed set of keys, plucked/mallet tones, winds, strings/brass, organ-like voices, basses and drums. Keep the current orchestra; supplement its limited range with the instruments needed for these references.
+2. **Make one instrument a deliberate rack of layers.** A sampled attack, a sustained sample or synth body, and an optional bass/air layer should have independent gain, tuning, envelopes and pan. Display which layers are sounding. This is different from replacing a patch with the planet or stacking separately authored musical parts.
+3. **Add general sample-instrument editing.** Import a recording with root-note/key-range mapping, loop points/crossfades, envelope and tuning controls. Preserve source provenance and memory budgets. Sampling and synthesizing should be usable together in one instrument rather than the current mutually exclusive source choice.
+4. **Improve expression and processing.** Reverb, EQ and chorus, flexible effect ordering, useful mono/legato/glide behavior, independent envelopes and velocity/key-dependent behavior will help the instruments sit together and respond musically.
+5. **Broaden synthesis where it serves a reference.** Richer custom wavetables, FM/PM and true stereo unison remain important, especially for evolving leads and synthetic colors. They should be evaluated against concrete instrument examples rather than treated as a universal solution.
+
+Acceptance should include three original short ensemble demonstrations in the reference directions, using user-authored test melodies and separate lead/counterline/bass/percussion roles. Evaluate an isolated patch as well as the ensemble: instrument construction, orchestration and rhythmic articulation all contribute to the result. These proposed targets do not require copying the reference melodies or redistributing their instrument samples.
+
 ## How distinctive electronic instruments are made
 
 A source sound is shaped over time, processed, and often recorded and edited again. The audible result can include separate low-end, midrange and attack layers, plus automation and mix processing. A preset's oscillator is only part of that result.
@@ -50,7 +78,7 @@ All voices in a part feed its shared saturation/delay bus. Saturating a chord to
 
 This mapping is an engineering inference from the audited implementation and documented techniques. Exact priorities depend on the reference recordings and passages the user wants to approach.
 
-## Recommended implementation order
+## General EDM capability roadmap
 
 1. **Stronger sound generation and playing behavior.** Add true stereo unison with phase/detune controls, independent oscillator octave tuning, a clean sub source, and mono/legato/glide. Add a bounded two-operator FM/PM path with frequency ratios, depth and an independent modulation envelope. These provide recognizable changes in sound rather than another way to move the same few parameters.
 2. **A broader modulation system.** Multiple independent envelopes/LFOs, one-shot and transport/per-note modes, seeded random/sample-and-hold, and destinations for volume, pan, resonance, oscillator interaction and effects. Expose a few descriptive macros above the full matrix.
