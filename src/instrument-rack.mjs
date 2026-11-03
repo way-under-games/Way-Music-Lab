@@ -66,7 +66,7 @@ export function validateRack(input){
   }
   return r;
 }
-export function layerSourceCost(layer){return layer.kind==='synth'?layer.synth.unison*(layer.synth.engine==='fm'||layer.synth.engine==='wavetable'?2:1):1;}
+export function layerSourceCost(layer){return layer.kind==='synth'?layer.synth.unison*(layer.synth.engine==='wavetable'?layer.synth.frames.length:layer.synth.engine==='fm'?2:1):1;}
 export function rackAssetIds(rack){return [...new Set(rack.layers.filter(l=>l.kind==='sample').map(l=>l.sample.assetId))];}
 export function rackNeedsOrchestra(rack){return rack.layers.some(l=>l.enabled&&l.kind==='orchestra');}
 export function rackTail(rack){return Math.max(...rack.layers.filter(l=>l.enabled).map(l=>l.envelope.release),0)+Math.min(12,rack.effects.filter(e=>e.enabled).reduce((sum,e)=>sum+(e.type==='reverb'?e.duration:e.type==='delay'?Math.max(e.time,e.beats*1.5)*(e.feedback>0?Math.ceil(Math.log(.001)/Math.log(e.feedback)):1):0),0));}

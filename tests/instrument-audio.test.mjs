@@ -25,3 +25,8 @@ test('runtime source budget rejects allocation before creating another oversized
   const c=context(),e=new StudioEngine(c),p=patch();p.rack.layers[0].synth.engine='fm';p.rack.layers[0].synth.unison=7;
   for(let i=0;i<18;i++)assert.equal(e.noteOn(String(i),60,100,'part',p),true);const count=c.nodes.length;assert.equal(e.noteOn('overflow',60,100,'part',p),false);assert.equal(c.nodes.length,count);assert.equal(e.dropped,1);e.dispose();
 });
+
+test('wavetable morph schedules fixed frame gains with honest source counts for offline parity',()=>{
+  const c=context(),e=new StudioEngine(c),p=patch(),l=p.rack.layers[0];l.synth.engine='wavetable';l.synth.frames=[[1,0,0,0],[0,1,0,0],[0,0,1,0]];l.synth.unison=2;
+  e.noteOn('wave',60,100,'part',p);const v=e.voices.get('wave'),sources=v.rackVoice.layers[0].sources;assert.equal(sources.length,6);assert.equal(v.rackVoice.cost,6);const waves=sources.map(s=>s.osc.wave);p.rack.layers[0].synth.position=1;e.update('part',p,p.macros);e.updateVoice(v,.5);assert.deepEqual(sources.map(s=>s.osc.wave),waves,'Future control changes cannot replace the wave of an already scheduled offline oscillator');assert.equal(last(sources[0].level.gain),0);assert.equal(last(sources[2].level.gain),1/Math.sqrt(2));e.dispose();
+});

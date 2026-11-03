@@ -12,7 +12,7 @@ export async function renderInstrumentNote(patch,{midi=60,velocity=100,hold=1.5,
   }finally{engine.dispose();}
 }
 export async function bakeInstrument(patch,{roots=[48,60,72],hold=1.5,velocity=100,sampleRate=48000,sampleBank=null,customAssets=null,author='You',license='LicenseRef-UserSupplied',sourceUrl='',attribution='',onProgress=()=>{}}={}){
-  patch=validatePatch(patch);roots=[...new Set(roots)].sort((a,b)=>a-b);if(!roots.length||roots.length>6||roots.some(m=>!Number.isInteger(m)||m<0||m>127))throw new TypeError('Bake one to six valid root notes');
+  patch=validatePatch(patch);if(!Number.isInteger(velocity)||velocity<24||velocity>127)throw new TypeError('Sample baking velocity must be 24–127 for bounded playback gain');roots=[...new Set(roots)].sort((a,b)=>a-b);if(!roots.length||roots.length>6||roots.some(m=>!Number.isInteger(m)||m<0||m>127))throw new TypeError('Bake one to six valid root notes');
   const result=preset(patch.name+' · sampled');result.macros={brightness:.45,motion:0,width:0,space:0};result.rack=newRack();result.rack.effects=[];result.rack.layers=[];
   for(const [i,midi]of roots.entries()){
     onProgress(`Rendering root ${midi} (${i+1}/${roots.length})…`);const bytes=await renderInstrumentNote(patch,{midi,velocity,hold,sampleRate,sampleBank,customAssets});

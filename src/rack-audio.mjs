@@ -64,12 +64,15 @@ export class RackAudio {
         const s=l.synth,count=s.unison;for(let u=0;u<count;u++){
           const spread=count===1?0:(u/(count-1)*2-1),stereo=c.createStereoPanner(),level=c.createGain();stereo.pan.value=spread*s.spread;level.gain.value=1/Math.sqrt(count);level.connect(stereo).connect(gain);state.nodes.push(level,stereo);
           const phase=s.randomPhase?rng():s.phase,osc=c.createOscillator(),spec={detune:spread*s.detune};osc.frequency.value=frequency(midi+l.tune);osc.detune.value=l.fine+spec.detune;
-          if(s.engine==='fm')osc.type='sine';else if(s.engine==='wavetable'||s.shape==='harmonic')osc.setPeriodicWave(this.wave(s.frames[0],phase));else if(phase||s.randomPhase)osc.setPeriodicWave(this.wave(this.shape(s),phase));else osc.type=s.shape;
+          if(s.engine==='fm'){if(phase)osc.setPeriodicWave(this.wave([1,0,0,0],phase));else osc.type='sine';}else if(s.engine==='wavetable'||s.shape==='harmonic')osc.setPeriodicWave(this.wave(s.frames[0],phase));else if(phase||s.randomPhase)osc.setPeriodicWave(this.wave(this.shape(s),phase));else osc.type=s.shape;
           osc.connect(level);osc.start(time);voice.sources.push({oscillator:osc,spec});const source={osc,detune:spec.detune,phase,level};ls.sources.push(source);
           if(s.engine==='fm'){
             const mod=c.createOscillator(),envelope=c.createGain(),depth=c.createGain();mod.type='sine';mod.frequency.value=frequency(midi+l.tune)*s.fm.ratio;mod.connect(envelope).connect(depth).connect(osc.frequency);startEnvelope(envelope.gain,s.fm.envelope,time,1);mod.start(time);state.nodes.push(envelope,depth);voice.sources.push({oscillator:mod,spec});source.fm={mod,envelope,depth};ls.envelopes.push({param:envelope.gain,e:s.fm.envelope,level:1});
           }else if(s.engine==='wavetable'){
-            const second=c.createOscillator(),secondLevel=c.createGain();second.frequency.value=osc.frequency.value;second.detune.value=osc.detune.value;second.setPeriodicWave(this.wave(s.frames[Math.min(1,s.frames.length-1)],phase));second.connect(secondLevel).connect(stereo);secondLevel.gain.value=0;second.start(time);state.nodes.push(secondLevel);voice.sources.push({oscillator:second,spec});source.second=second;source.secondLevel=secondLevel;source.baseLevel=1/Math.sqrt(count);
+            source.tableFrame=0;source.frameTotal=s.frames.length;source.baseLevel=1/Math.sqrt(count);
+            for(let frame=1;frame<s.frames.length;frame++){
+              const other=c.createOscillator(),frameLevel=c.createGain();other.frequency.value=osc.frequency.value;other.detune.value=osc.detune.value;other.setPeriodicWave(this.wave(s.frames[frame],phase));other.connect(frameLevel).connect(stereo);frameLevel.gain.value=0;other.start(time);state.nodes.push(frameLevel);voice.sources.push({oscillator:other,spec});ls.sources.push({osc:other,detune:spec.detune,phase,level:frameLevel,tableFrame:frame,frameTotal:s.frames.length,baseLevel:1/Math.sqrt(count)});
+            }
           }
         }
       }else{
@@ -102,7 +105,7 @@ export class RackAudio {
         if(s.sample){this.smooth(s.osc.playbackRate,s.percussion?1:2**((midi-s.root+detune/100)/12),time);continue;}
         const hz=frequency(midi);this.smooth(s.osc.frequency,hz,time);this.smooth(s.osc.detune,detune,time);
         if(s.fm){this.smooth(s.fm.mod.frequency,Math.min(hz*l.synth.fm.ratio,this.context.sampleRate*.4),time);this.smooth(s.fm.mod.detune,detune,time);const index=Math.min(clamp(l.synth.fm.index+delta.fmIndex*12,0,12),Math.max(0,this.context.sampleRate*.45/hz-l.synth.fm.ratio-1));this.smooth(s.fm.depth.gain,hz*index,time);}
-        if(s.second){const p=position*(l.synth.frames.length-1),frame=Math.floor(p),mix=p-frame;if(s.frame!==frame){if(s.frame!==undefined&&Math.abs(s.frame-frame)===1){[s.osc,s.second]=[s.second,s.osc];[s.level,s.secondLevel]=[s.secondLevel,s.level];}s.osc.setPeriodicWave(this.wave(l.synth.frames[frame],s.phase));s.second.setPeriodicWave(this.wave(l.synth.frames[Math.min(frame+1,l.synth.frames.length-1)],s.phase));s.frame=frame;}this.smooth(s.level.gain,(1-mix)*s.baseLevel,time);this.smooth(s.secondLevel.gain,mix*s.baseLevel,time);this.smooth(s.second.frequency,hz,time);this.smooth(s.second.detune,detune,time);}
+        if(s.tableFrame!==undefined){const weight=Math.max(0,1-Math.abs(position*(s.frameTotal-1)-s.tableFrame));this.smooth(s.level.gain,weight*s.baseLevel,time);}
       }
     }
   }
