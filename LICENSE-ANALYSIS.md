@@ -66,3 +66,7 @@ This is an engineering assessment of the materials actually included, not a guar
 ## 0.8 instrument-workbench update
 
 The new portable curve/partial functions, browser editing controls, tests and research analysis are original repository work covered by MIT. This update adds no runtime dependency or external instrument asset. Vital, Pigments, Phase Plant and Serum are cited as interface/workflow references; their software, factory content and visual assets are not distributed here. Their vendor licenses are not being applied to the original Way implementation. Any future import of external engine code or factory content needs its own license/provenance review. The existing CC0 recording and separately CC BY-SA theory-document notices remain unchanged.
+
+## 0.15 interface update
+
+The interface changes and verification code are original MIT work. Ableton Live, FL Studio and Cubase documentation are cited as organizational references; no vendor software, manual text or visual assets are redistributed. This update adds no runtime dependency or instrument asset and does not change the existing sample/document licenses. The original software remains MIT; the existing CC0 recordings and separately identified CC BY-SA research document retain their own terms.

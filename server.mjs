@@ -17,7 +17,7 @@ ALLOWED.add('/src/samples.mjs'); ALLOWED.add('/samples/vsco-ce/manifest.json');
 for (const route of ['/src/director.mjs', '/web/director.html', '/web/director-app.mjs']) ALLOWED.add(route);
 for (const route of ['/src/studio.mjs', '/src/studio-audio.mjs', '/src/studio-midi.mjs', '/web/studio.html', '/web/studio.css', '/web/studio-app.mjs']) ALLOWED.add(route);
 for(const route of ['/src/instrument-rack.mjs','/src/instrument-library.mjs','/src/instrument-factory.mjs','/src/rack-audio.mjs','/src/instrument-bake.mjs','/src/library-client.mjs','/web/instrument-workshop.mjs','/web/instrument-workshop.css'])ALLOWED.add(route);
-ALLOWED.add('/src/theme-harmony.mjs');ALLOWED.add('/src/music-presets.mjs');ALLOWED.add('/src/waveform.mjs');ALLOWED.add('/src/theme-rhythm.mjs');ALLOWED.add('/src/studio-host.mjs');ALLOWED.add('/src/instrument-design.mjs');
+ALLOWED.add('/web/workflow.css');ALLOWED.add('/web/workflow.mjs');ALLOWED.add('/src/theme-harmony.mjs');ALLOWED.add('/src/music-presets.mjs');ALLOWED.add('/src/waveform.mjs');ALLOWED.add('/src/theme-rhythm.mjs');ALLOWED.add('/src/studio-host.mjs');ALLOWED.add('/src/instrument-design.mjs');
 for(const route of ['/web/meter-builder.mjs','/web/instrument-editor.mjs','/web/instrument-editor.css','/web/way-shell.css'])ALLOWED.add(route);
 
 async function readJson(request, limit=16_384) {
@@ -93,7 +93,7 @@ export function createMusicServer({ artifactRoot = path.join(root, 'artifacts'),
         if(asset&&['GET','HEAD'].includes(method)){if(!asset[2])return sendJson(200,await library.getAsset(asset[1]));await library.getAsset(asset[1]);await serveFile(request,response,library.assetPath(asset[1]),'audio/wav');return;}
         return sendJson(405,{error:'Unsupported library operation'});
       }
-      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.14.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
+      if (url.pathname === '/api/v1/health' && request.method === 'GET') return sendJson(200, { ok: true, version: '0.15.0', scoreSchemaVersion: 2, studioProjectVersion: 1, audioRenderer: 'client-owned' });
       if (url.pathname === '/api/v1/renders/wav') {
         if (request.method !== 'POST') return sendJson(405, { error: 'Use POST with rendered WAV bytes' });
         if (request.headers['content-type'] !== 'audio/wav') return sendJson(400, { error: 'Content-Type must be audio/wav' });

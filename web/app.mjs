@@ -1,3 +1,4 @@
+import {setupWorkflow} from '/web/workflow.mjs';
 import {MUSIC_PRESETS,musicPreset,presetScoreSettings} from '/src/music-presets.mjs';
 import {createMeterBuilder} from '/web/meter-builder.mjs';
 import { compose, normalizeSettings, TRACKS, DEFAULTS, PPQ } from '/src/composer.mjs';
@@ -219,5 +220,8 @@ window.addEventListener('pagehide',()=>meterBuilder.destroy());
 
 function showPreset(){element('seed').value=settings.seed;element('key').value=settings.key;element('tempo').value=settings.tempo;element('tempo-value').textContent=settings.tempo+' BPM';element('intensity').value=Math.round(settings.intensity*100);element('energy-value').textContent=Math.round(settings.intensity*100)+'%';element('meter-cycle').value=formatMeterCycle(settings.meterCycle);meterBuilder.set(element('meter-cycle').value);element('meter-preset').value=settings.rhythm==='math-rock'?'math-rock':'4/4';}
 for(const item of MUSIC_PRESETS){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;element('music-preset').append(option);}
-element('music-preset-description').textContent=musicPreset().scoreDescription;showPreset();
-element('music-preset').addEventListener('change',()=>{stop();update(presetScoreSettings(element('music-preset').value));showPreset();document.querySelectorAll('[data-scene]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.scene===settings.scene)));element('music-preset-description').textContent=musicPreset(element('music-preset').value).scoreDescription;});
+element('music-preset-description').textContent=presetCaption();showPreset();
+element('music-preset').addEventListener('change',()=>{stop();update(presetScoreSettings(element('music-preset').value));showPreset();document.querySelectorAll('[data-scene]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.scene===settings.scene)));element('music-preset-description').textContent=presetCaption(element('music-preset').value);});
+
+function presetCaption(id){const p=musicPreset(id);return p.key+' · '+p.tempo+' BPM · '+p.meter.replace(/:[^,]*/g,'').replaceAll(',',' → ');}
+setupWorkflow();

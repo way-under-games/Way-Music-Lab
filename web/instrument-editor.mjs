@@ -9,27 +9,27 @@ export function createInstrumentEditor({getPatch,getFrame,setFrame,onBegin,onCom
   const listen=(n,event,fn)=>n.addEventListener(event,e=>{try{const pending=fn(e);pending?.catch?.(error=>report(error.message));}catch(error){report(error.message);}});
   const edit=fn=>{onBegin();fn(getPatch());onCommit();};
   const button=(root,text,fn,attrs={})=>{const b=make('button',text,{type:'button',...attrs});listen(b,'click',fn);root.append(b);return b;};
-  const movement=$('movement-designer');movement.append(make('p','Draw a repeating gesture, then connect it to a sound control.',{class:'quiet'}));
+  const movement=$('movement-designer');
   const shapes=make('div','',{class:'curve-recipes'});movement.append(shapes);
-  for(const name of ['sine','rise','fall','gate','bounce','steps'])button(shapes,name[0].toUpperCase()+name.slice(1),()=>{edit(p=>{p.lfoCurve=movementCurve(name);p.lfoShape='custom';});report('Movement shape: '+name+'. Choose a connection below to hear what it does.');},{'data-movement-shape':name});
+  for(const name of ['sine','rise','fall','gate','bounce','steps'])button(shapes,name[0].toUpperCase()+name.slice(1),()=>{edit(p=>{p.lfoCurve=movementCurve(name);p.lfoShape='custom';});report('Movement shape: '+name+'');},{'data-movement-shape':name});
   const curve=svg('svg',{id:'movement-curve',viewBox:'0 0 480 160',role:'group','aria-label':'Draw a repeating movement curve; use the point sliders for keyboard editing'});movement.append(curve);
   const pointDetails=make('details','',{class:'curve-points'});pointDetails.append(make('summary','Edit individual movement points'));const points=make('div','',{class:'curve-point-inputs'});pointDetails.append(points);movement.append(pointDetails);
   const connections=make('div','',{class:'visual-connections'}),sources=make('div','',{class:'mod-sources'}),targets=make('div','',{class:'mod-targets'});connections.append(sources,make('span','→',{class:'connection-arrow','aria-hidden':'true'}),targets);movement.append(connections);
-  for(const[source,label]of [['lfo','Movement curve'],['velocity','How hard you play']]){
+  for(const[source,label]of [['lfo','Movement curve'],['velocity','Velocity']]){
     const b=button(sources,label,()=>arm(armed===source?null:source),{draggable:'true','data-mod-source':source,'aria-pressed':'false'});
     listen(b,'dragstart',e=>{arm(source);e.dataTransfer?.setData('text/way-modulation',source);});listen(b,'dragend',()=>arm(null));
   }
-  function arm(source){armed=source;for(const b of sources.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.modSource===source));targets.classList.toggle('choosing-target',!!source);if(source)report('Now select a destination, or drag this source onto one.');}
+  function arm(source){armed=source;for(const b of sources.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.modSource===source));targets.classList.toggle('choosing-target',!!source);if(source)report('Source · '+source);}
   function connect(source,target){
     if(!['lfo','velocity'].includes(source)){report('Choose Movement curve or How hard you play first.');return;}
     edit(p=>{const route=p.routes.find(r=>r.source===source&&r.target===target);if(route)route.amount=.65;else{if(p.routes.length>=8)throw new Error('Eight connections are already used. Remove one in Fine-tune connections first.');p.routes.push({source,target,amount:.65});}if(source==='lfo'){p.lfoDepth=Math.max(.6,p.lfoDepth);p.macros.motion=Math.max(.7,p.macros.motion);}});
-    arm(null);report((source==='lfo'?'Movement':'Playing strength')+' connected to '+{cutoff:'tone brightness',position:'waveform blend',pitch:'pitch'}[target]+'. Fine-tune its depth below.');onPreview();
+    arm(null);report((source==='lfo'?'Movement':'Playing strength')+' connected to '+{cutoff:'tone brightness',position:'waveform blend',pitch:'pitch'}[target]);onPreview();
   }
   for(const[target,label]of [['cutoff','Tone brightness'],['position','Waveform blend'],['pitch','Pitch']]){
     const b=button(targets,label,()=>connect(armed,target),{'data-mod-target':target});listen(b,'dragover',e=>e.preventDefault());listen(b,'drop',e=>{e.preventDefault();connect(e.dataTransfer?.getData('text/way-modulation')||armed,target);});
   }
-  movement.append(make('p','Choose a source, then a destination. Drag-and-drop also works. Waveform blend needs the harmonic source with more than one frame.',{class:'quiet'}),make('p','',{id:'modulation-live',class:'modulation-live'}),make('p','Ready to sculpt an instrument.',{id:'designer-status',role:'status',class:'quiet'}));
-  const columns=make('div','',{class:'movement-workbench'}),curveColumn=make('div'),routeColumn=make('div'),movementItems=[...movement.children];curveColumn.append(...movementItems.slice(0,4));routeColumn.append(...movementItems.slice(4));columns.append(curveColumn,routeColumn);movement.append(columns);
+  movement.append(make('p','',{id:'modulation-live',class:'modulation-live'}),make('p','Ready',{id:'designer-status',role:'status',class:'quiet'}));
+  const columns=make('div','',{class:'movement-workbench'}),curveColumn=make('div'),routeColumn=make('div'),movementItems=[...movement.children];curveColumn.append(...movementItems.slice(0,3));routeColumn.append(...movementItems.slice(3));columns.append(curveColumn,routeColumn);movement.append(columns);
   const tools=$('frame-tools');
   for(const operation of ['sine','saw','square','bell','brighten','soften','hollow','invert'])button(tools,operation[0].toUpperCase()+operation.slice(1),()=>{edit(p=>{if(p.source!=='synth')throw new Error('Choose Designed synthesizer to edit waveform frames.');p.oscillators[0].shape='harmonic';p.frames[getFrame()]=sculptFrame(p.frames[getFrame()],operation);});report('Frame '+(getFrame()+1)+' · '+operation+'. The first oscillator uses your edited waveform on its next attack.');onPreview();},{'data-frame-tool':operation});
   button(tools,'Copy frame',()=>edit(p=>{if(p.frames.length>=16)throw new Error('This instrument already has sixteen frames.');p.frames.splice(getFrame()+1,0,[...p.frames[getFrame()]]);setFrame(getFrame()+1);}),{id:'copy-frame'});

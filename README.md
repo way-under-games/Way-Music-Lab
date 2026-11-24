@@ -1,5 +1,7 @@
 # Way Music
 
+Version **0.15** simplifies the interface around a shared project menu, persistent transport, focused composition/instrument editors and a scene matrix. All existing controls remain available, without tutorial panels. The [three-pass interface review](docs/ui-clarity-review.md) records the music-software references, capability checks and desktop/mobile verification.
+
 Version **0.14** refines the instrument palette: a rounder tuned mallet, tighter lead and bass, quieter upper layers, restrained organs/keys and more natural recorded-string balance. Classic presets and sound worlds also start with less automatic pitch motion, detuning, drive and echo. Load a factory recipe again to hear revision 2; saved sounds and compositions remain intact. Read the [voicing changes, checks and listening method](docs/instrument-polish.md).
 
 Version **0.13** follows a [critical review of the actual music theory](docs/theory-scrutiny.md): independent preset melodies, native additive-meter rhythms, directed tonal/modal arrivals, melody-aware accompaniment and stable authored hook pitches. Saved projects remain unchanged; reload an example to hear the revisions. Tests verify musical intent constraints and functionality, not artistic quality.

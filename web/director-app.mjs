@@ -1,3 +1,4 @@
+import {setupWorkflow} from '/web/workflow.mjs';
 import {MUSIC_PRESETS,musicPreset,presetTheme} from '/src/music-presets.mjs';
 import { ScoreDirector } from '/src/director.mjs';
 import { BrowserMusic } from '/src/browser-player.mjs';
@@ -69,6 +70,9 @@ document.querySelectorAll('[data-cue]').forEach(button => button.addEventListene
 window.addEventListener('pagehide', () => { epoch++; clearInterval(timer); music?.dispose(); });
 
 for(const item of MUSIC_PRESETS){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;el('story-preset').append(option);}
-el('story-preset-description').textContent=musicPreset(selectedPreset).scoreDescription;
+el('story-preset-description').textContent=presetCaption(selectedPreset);
 el('position').textContent='Fixed theme: '+director.theme.id+' · '+director.theme.key;
 el('story-preset').addEventListener('change',()=>{selectedPreset=el('story-preset').value;el('story-preset-description').textContent=musicPreset(selectedPreset).scoreDescription;el('reset').click();});
+
+function presetCaption(id){const p=musicPreset(id);return p.key+' · '+p.tempo+' BPM · '+p.meter.replace(/:[^,]*/g,'').replaceAll(',',' → ');}
+setupWorkflow();

@@ -1,9 +1,47 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Way Music · Browser game API example</title><link rel="stylesheet" href="/web/styles.css"><link rel="stylesheet" href="/web/way-shell.css"></head>
-<body class="legacy-tool"><main><header><a class="wordmark" href="/">WAY <span>/ GAME EXAMPLE</span></a></header><nav class="tool-nav" aria-label="Music tools"><a href="/" data-tool-link="studio" ><span class="tool-icon" aria-hidden="true">✧</span><span><strong>Music Studio</strong><small>Play & record your own music</small></span></a><a href="/web/index.html" data-tool-link="chamber" ><span class="tool-icon" aria-hidden="true">☾</span><span><strong>Score generator</strong><small>Astral Chamber · generated music</small></span></a><a href="/web/director.html" data-tool-link="director"><span class="tool-icon" aria-hidden="true">◇</span><span><strong>Story demo</strong><small>Hear adaptive music in action</small></span></a></nav>
-<section class="intro"><p class="eyebrow">EMBEDDABLE PLAYER</p><h1>The game controls the score.</h1><p>A small standalone host using the public BrowserMusic API.</p></section>
-<section class="guide-card"><p>Press Start / resume to hear the Lantern trail theme with recorded instruments. The bank loads on the first start. Battle and Exploration simulate a game changing the score. Pause keeps your place; Stop returns to the beginning; End session releases audio resources.</p></section><section class="console"><p id="state" role="status">Ready</p><p id="metrics">No audio started</p>
-<button id="load">Load recorded orchestra</button> <button id="start">Start / resume</button> <button id="battle">Enter battle</button> <button id="explore">Return to exploration</button> <button id="pause">Pause</button> <button id="stop">Stop</button> <button id="dispose">End session</button></section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Way Music · Browser game API example</title>
+<link rel="stylesheet" href="/web/styles.css">
+<link rel="stylesheet" href="/web/way-shell.css">
+<link href="/web/workflow.css" rel="stylesheet">
+</head>
+<body class="legacy-tool">
+<main>
+<header>
+<a class="wordmark" href="/">WAY <span>/ GAME EXAMPLE</span>
+</a>
+</header>
+<nav class="tool-nav" aria-label="Music tools">
+<a href="/" data-tool-link="studio">
+<span class="tool-icon" aria-hidden="true">✧</span>
+<span>
+<strong>Studio</strong>
+</span>
+</a>
+<a href="/web/index.html" data-tool-link="chamber">
+<span class="tool-icon" aria-hidden="true">☾</span>
+<span>
+<strong>Generator</strong>
+</span>
+</a>
+<a href="/web/director.html" data-tool-link="director">
+<span class="tool-icon" aria-hidden="true">◇</span>
+<span>
+<strong>Story</strong>
+</span>
+</a>
+</nav>
+<section class="intro">
+<h1>The game controls the score.</h1>
+</section>
+<section class="console">
+<p id="state" role="status">Ready</p>
+<p id="metrics">No audio started</p>
+<button id="load">Load recorded orchestra</button> <button id="start">Start / resume</button> <button id="battle">Enter battle</button> <button id="explore">Return to exploration</button> <button id="pause">Pause</button> <button id="stop">Stop</button> <button id="dispose">End session</button>
+</section>
 <script type="module">
 import {presetScoreSettings} from '/src/music-presets.mjs';
 import { BrowserMusic } from '/src/browser-player.mjs';
@@ -22,4 +60,7 @@ action('stop', () => {startEpoch++; music.stop(); state.textContent = 'Stopped';
 action('dispose', async () => {startEpoch++; await music.dispose(); state.textContent = 'Session disposed'; });
 const statusTimer = setInterval(() => { const status = music.getStatus(); metrics.textContent = `${status.running ? 'Running' : 'Idle'} · ${status.audioState} · ${status.voices} voices · ${status.droppedEvents} late notes · ${status.voiceLimitHits} voice-limit hits · ${status.bankId ?? 'synthesized sketch'} · ${status.sampledEvents} recorded notes`; }, 100);
 window.addEventListener('pagehide', () => { clearInterval(statusTimer); music.dispose(); });
-</script></main></body></html>
+</script>
+</main>
+</body>
+</html>

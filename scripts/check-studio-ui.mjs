@@ -45,7 +45,7 @@ document.querySelector('[data-meter-tick="0:1"]').click();await flush();
 document.querySelector('#meter-builder .meter-actions .primary').click();await flush();assert.match(saved().meter,/^7\/4:1\+1\+2\+3$/);
 document.querySelector('#meter-builder .meter-fit input').checked=true;document.querySelector('#meter-builder .meter-actions .primary').click();await flush();assert.equal(saved().loopTicks,7*480);
 assert.deepEqual(saved().parts[0].notes,original,'Visual rhythm edits never rewrite authored notes');
-document.querySelector('[data-workspace-link="sound"]').click();await flush();assert.equal($('sound').hidden,false,'Quick start opens the selected workspace');
+document.querySelector('[data-tab="sound"]').click();await flush();assert.equal($('sound').hidden,false,'Primary navigation opens the selected workspace');
 document.querySelector('[data-tab="sound"]').click();await flush();$('explore-listen').checked=false;
 const startingPatch=structuredClone(saved().parts[0].patch);
 document.querySelector('[data-world="swarm"]').click();await flush();
