@@ -12,6 +12,7 @@ const PROGRESSIONS = Object.freeze({
 // A contrasting third phrase returns to the original plan in phrase four.
 const CONTRAST = {explore:[0,0,3,3,5,1,4,0],battle:[0,0,3,3,5,1,4,0],tension:[0,0,5,5,3,3,4,4],victory:[0,0,5,5,4,4,0,0]};
 const progressionFor=(scene,section)=>section%4===2?CONTRAST[scene]:PROGRESSIONS[scene];
+export const progressionDegrees=(scene,section=0)=>[...progressionFor(scene,section)];
 const PHRASE_GAIN = [0.86, 0.9, 0.9, 0.94, 1, 1.06, 1.02, 0.82];
 export const pitchClass = midi => ((midi % 12) + 12) % 12;
 
@@ -62,18 +63,18 @@ export function voiceTriad(chordNotes, previous, { low = 55, high = 79, tonic } 
 
 // Reconstruct the whole eight-bar phrase even for a one-bar request. This gives
 // voice leading context without mutable history or dependence on request size.
-export function planPhrase({ root, scene, motif, section=0 }) {
+export function planPhrase({ root, scene, motif, section=0, harmonicPlan }) {
   const frames = [],progression=progressionFor(scene,section);
   let previous;
   for (let phase = 0; phase < 8; phase++) {
-    const scale = scaleForBar(scene, phase,section), chordDegree = progression[phase];
+    const scale = harmonicPlan?.[phase].scale??scaleForBar(scene, phase,section), chordDegree = harmonicPlan?.[phase].degree??progression[phase];
     const chordNotes = [0, 2, 4].map(offset => degreeMidi(root, scale, chordDegree + offset));
     const rootMidi = degreeMidi(root, scale, chordDegree);
     const voicing = voiceTriad(chordNotes, previous, { low: root + 7, high: root + 28, tonic: chordDegree === 0 ? root : undefined });
     const bassMidi = root + pitchClass(rootMidi - root) - 12;
     frames.push({ phase, scale, chordDegree, chordNotes, voicing, rootMidi, bassMidi,
       gain: PHRASE_GAIN[phase], ending: phase === 7, resolved: phase === 7 && chordDegree === 0,
-      cadentialLead: chordDegree === 4 && progression[(phase + 1) % 8] === 0,
+      cadentialLead: chordDegree === 4 && (harmonicPlan?.[(phase+1)%8].degree??progression[(phase + 1) % 8]) === 0,
       // Repeat a two-bar idea; continuation lifts and then reduces the contour.
       targets: Array.from({ length: 4 }, (_, index) => degreeMidi(root, scale,
         7 + motif[(phase % 2) * 4 + index] + (phase === 4 || phase === 5 ? 1 : 0))) });

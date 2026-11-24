@@ -9,12 +9,22 @@ export function normalizeThemeRhythm(input=DEFAULT_THEME_RHYTHM){
     previous=note.position;return Object.freeze({position:note.position,duration:note.duration});
   }));
 }
-export function themeNotesForBar({bar,beats,motif,rhythm,quiet,degree,playful}){
+export function themeNotesForBar({bar,beats,motif,rhythm,quiet,degree,playful,gridTicks=null}){
   const span=quiet?4:2,phase=bar%span;
-  return rhythm.flatMap((note,index)=>{
+  const notes=rhythm.flatMap((note,index)=>{
     const at=note.position*span;
     return Math.floor(at)!==phase?[]:[{beat:(at-phase)*beats,duration:note.duration*span*beats*(quiet ? .68 : playful ? .65 : 1),midi:degree(7+motif[index]),accent:index===0||index===4}];
   });
+  // Explicit preset opt-in: preserve an eighth/sixteenth pulse in changing meters.
+  // If a bar is too short to fit distinct grid positions, retain its authored timing.
+  const grid=gridTicks/480;
+  if(gridTicks&&Math.floor((beats-1/480)/grid)+1>=notes.length){
+    for(let i=0;i<notes.length;i++){
+      const lower=i?notes[i-1].beat+grid:0,upper=Math.floor((beats-1/480)/grid)*grid-(notes.length-1-i)*grid;
+      notes[i].beat=Math.max(lower,Math.min(upper,Math.round(notes[i].beat/grid)*grid));
+    }
+  }
+  return notes;
 }
 export function arrangementForBar(bar){
   const section=Math.floor(bar/8)%4,phase=bar%8;

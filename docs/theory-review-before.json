@@ -1,0 +1,2404 @@
+{
+  "format": "way-contextual-theory-review",
+  "version": 1,
+  "scope": "Original preset data and generated notes. Non-chord tones and off-grid rhythms are observations, not automatic mistakes. No listening/preference claim.",
+  "results": [
+    {
+      "id": "lantern-trail",
+      "demoLeadNotes": 28,
+      "demoLeadOffSixteenthGrid": 0,
+      "pitchFingerprint": [
+        74,
+        77,
+        81,
+        79,
+        77,
+        74,
+        76,
+        77,
+        81,
+        84,
+        81,
+        79,
+        76,
+        72,
+        79,
+        82,
+        81,
+        77,
+        77,
+        74,
+        70,
+        76,
+        73,
+        76,
+        73,
+        74,
+        69,
+        74
+      ],
+      "generated": [
+        {
+          "scene": "explore",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 1,
+              "midi": 65,
+              "duration": 0.3645833333333333,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 65,
+              "duration": 0.46875,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 62,
+              "duration": 0.46875,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1,
+              "midi": 65,
+              "duration": 0.3645833333333333,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "tension",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 1,
+              "midi": 65,
+              "duration": 0.5604166666666667,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.8,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 65,
+              "duration": 0.7208333333333333,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 62,
+              "duration": 0.7208333333333333,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1,
+              "midi": 65,
+              "duration": 0.5604166666666667,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 65,
+              "duration": 0.7208333333333333,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 1,
+              "midi": 62,
+              "duration": 0.5604166666666667,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 3.25,
+              "midi": 62,
+              "duration": 0.36041666666666666,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            }
+          ]
+        },
+        {
+          "scene": "battle",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 1,
+              "midi": 65,
+              "duration": 0.5604166666666667,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.8,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 65,
+              "duration": 0.7208333333333333,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                67,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 62,
+              "duration": 0.7208333333333333,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1,
+              "midi": 65,
+              "duration": 0.5604166666666667,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "victory",
+          "pitchAlterations": [
+            {
+              "index": 1,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 4,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 9,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 12,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 17,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 20,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 25,
+              "actual": 66,
+              "expected": 65
+            },
+            {
+              "index": 28,
+              "actual": 66,
+              "expected": 65
+            }
+          ],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                66,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                66,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 1,
+              "midi": 66,
+              "duration": 0.5604166666666667,
+              "triad": [
+                62,
+                67,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 69,
+              "duration": 0.8,
+              "triad": [
+                62,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 66,
+              "duration": 0.7208333333333333,
+              "triad": [
+                62,
+                67,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 0,
+              "midi": 62,
+              "duration": 0.7208333333333333,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1,
+              "midi": 66,
+              "duration": 0.5604166666666667,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 66,
+              "duration": 0.7208333333333333,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 1,
+              "midi": 62,
+              "duration": 0.5604166666666667,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 3.25,
+              "midi": 62,
+              "duration": 0.36041666666666666,
+              "triad": [
+                61,
+                64,
+                69
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                66,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                66,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clockwork-grove",
+      "demoLeadNotes": 28,
+      "demoLeadOffSixteenthGrid": 15,
+      "pitchFingerprint": [
+        74,
+        77,
+        81,
+        79,
+        77,
+        74,
+        76,
+        77,
+        81,
+        84,
+        81,
+        79,
+        76,
+        72,
+        79,
+        82,
+        81,
+        77,
+        77,
+        74,
+        70,
+        76,
+        73,
+        76,
+        73,
+        74,
+        69,
+        74
+      ],
+      "generated": [
+        {
+          "scene": "explore",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.625,
+              "midi": 72,
+              "duration": 0.20416666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.325,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 0.75,
+              "midi": 71,
+              "duration": 0.3645833333333333,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.41041666666666665,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2.1875,
+              "midi": 66,
+              "duration": 0.45416666666666666,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 0.46875,
+              "midi": 71,
+              "duration": 0.22708333333333333,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.25,
+              "midi": 67,
+              "duration": 0.325,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.46875,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 1.5,
+              "midi": 67,
+              "duration": 0.3645833333333333,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.5208333333333334,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 64,
+              "duration": 0.41041666666666665,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1.75,
+              "midi": 67,
+              "duration": 0.45416666666666666,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 2.625,
+              "midi": 72,
+              "duration": 0.20416666666666666,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.325,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "tension",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.625,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 0.75,
+              "midi": 71,
+              "duration": 0.5604166666666667,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 2,
+              "midi": 67,
+              "duration": 0.8,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.6291666666666667,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 1.3125,
+              "midi": 67,
+              "duration": 0.4895833333333333,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2.1875,
+              "midi": 66,
+              "duration": 0.7,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 0.46875,
+              "midi": 71,
+              "duration": 0.35,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.7208333333333333,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.8,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 64,
+              "duration": 0.6291666666666667,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1.75,
+              "midi": 67,
+              "duration": 0.7,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 2.625,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 0.9375,
+              "midi": 67,
+              "duration": 0.35,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2.1875,
+              "midi": 64,
+              "duration": 0.225,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            }
+          ]
+        },
+        {
+          "scene": "battle",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.625,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 0.75,
+              "midi": 71,
+              "duration": 0.5604166666666667,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.6291666666666667,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2.1875,
+              "midi": 66,
+              "duration": 0.7,
+              "triad": [
+                64,
+                67,
+                72
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 0.46875,
+              "midi": 71,
+              "duration": 0.35,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.25,
+              "midi": 67,
+              "duration": 0.5,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.7208333333333333,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 1.5,
+              "midi": 67,
+              "duration": 0.5604166666666667,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.8,
+              "triad": [
+                64,
+                69,
+                72
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 64,
+              "duration": 0.6291666666666667,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1.75,
+              "midi": 67,
+              "duration": 0.7,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 2.625,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "victory",
+          "pitchAlterations": [
+            {
+              "index": 2,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 3,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 5,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 10,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 11,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 13,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 18,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 19,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 21,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 26,
+              "actual": 68,
+              "expected": 67
+            },
+            {
+              "index": 27,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 29,
+              "actual": 68,
+              "expected": 67
+            }
+          ],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.625,
+              "midi": 73,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                68,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                68,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 0.75,
+              "midi": 71,
+              "duration": 0.5604166666666667,
+              "triad": [
+                64,
+                69,
+                73
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 2,
+              "midi": 68,
+              "duration": 0.8,
+              "triad": [
+                64,
+                69,
+                73
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 71,
+              "duration": 0.6291666666666667,
+              "triad": [
+                64,
+                69,
+                73
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 1.3125,
+              "midi": 68,
+              "duration": 0.4895833333333333,
+              "triad": [
+                64,
+                69,
+                73
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2.1875,
+              "midi": 66,
+              "duration": 0.7,
+              "triad": [
+                64,
+                69,
+                73
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 0,
+              "midi": 64,
+              "duration": 0.45,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.25,
+              "midi": 68,
+              "duration": 0.5,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.875,
+              "midi": 73,
+              "duration": 0.225,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 1.5,
+              "midi": 68,
+              "duration": 0.5604166666666667,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 3.5,
+              "midi": 64,
+              "duration": 0.36041666666666666,
+              "triad": [
+                63,
+                66,
+                71
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 2.625,
+              "midi": 73,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                68,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5625,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                68,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neon-tide",
+      "demoLeadNotes": 28,
+      "demoLeadOffSixteenthGrid": 12,
+      "pitchFingerprint": [
+        74,
+        77,
+        81,
+        79,
+        77,
+        74,
+        76,
+        77,
+        81,
+        84,
+        81,
+        79,
+        76,
+        72,
+        79,
+        82,
+        81,
+        77,
+        77,
+        74,
+        70,
+        76,
+        73,
+        76,
+        73,
+        74,
+        69,
+        74
+      ],
+      "generated": [
+        {
+          "scene": "explore",
+          "pitchAlterations": [
+            {
+              "index": 27,
+              "actual": 80,
+              "expected": 79
+            }
+          ],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.46875,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.5208333333333334,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.3645833333333333,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.5,
+              "midi": 72,
+              "duration": 0.3645833333333333,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.5208333333333334,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.3645833333333333,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.5208333333333334,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 69,
+              "duration": 0.46875,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1.5,
+              "midi": 72,
+              "duration": 0.3645833333333333,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.46875,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise resolution candidate"
+            }
+          ]
+        },
+        {
+          "scene": "tension",
+          "pitchAlterations": [
+            {
+              "index": 27,
+              "actual": 80,
+              "expected": 79
+            }
+          ],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 1.5,
+              "midi": 72,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.8,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.8,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.8,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 69,
+              "duration": 0.7208333333333333,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1.5,
+              "midi": 72,
+              "duration": 0.5604166666666667,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.8,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 3.5,
+              "midi": 69,
+              "duration": 0.36041666666666666,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            }
+          ]
+        },
+        {
+          "scene": "battle",
+          "pitchAlterations": [
+            {
+              "index": 27,
+              "actual": 80,
+              "expected": 79
+            }
+          ],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.8,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.5,
+              "midi": 72,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.8,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.8,
+              "triad": [
+                69,
+                74,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 0,
+              "midi": 69,
+              "duration": 0.7208333333333333,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 1.5,
+              "midi": 72,
+              "duration": 0.5604166666666667,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise resolution candidate"
+            }
+          ]
+        },
+        {
+          "scene": "victory",
+          "pitchAlterations": [
+            {
+              "index": 1,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 3,
+              "actual": 80,
+              "expected": 79
+            },
+            {
+              "index": 4,
+              "actual": 78,
+              "expected": 77
+            },
+            {
+              "index": 6,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 9,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 11,
+              "actual": 80,
+              "expected": 79
+            },
+            {
+              "index": 12,
+              "actual": 78,
+              "expected": 77
+            },
+            {
+              "index": 14,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 17,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 19,
+              "actual": 80,
+              "expected": 79
+            },
+            {
+              "index": 20,
+              "actual": 78,
+              "expected": 77
+            },
+            {
+              "index": 22,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 25,
+              "actual": 73,
+              "expected": 72
+            },
+            {
+              "index": 27,
+              "actual": 80,
+              "expected": 79
+            },
+            {
+              "index": 28,
+              "actual": 78,
+              "expected": 77
+            },
+            {
+              "index": 30,
+              "actual": 73,
+              "expected": 72
+            }
+          ],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 80,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                73,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 78,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                73,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 1.5,
+              "midi": 73,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                74,
+                78
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 2.5,
+              "midi": 76,
+              "duration": 0.8,
+              "triad": [
+                69,
+                74,
+                78
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 80,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                74,
+                78
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                74,
+                78
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 2.5,
+              "midi": 73,
+              "duration": 0.8,
+              "triad": [
+                69,
+                74,
+                78
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 0,
+              "midi": 69,
+              "duration": 0.7208333333333333,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 1.5,
+              "midi": 73,
+              "duration": 0.5604166666666667,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 78,
+              "duration": 0.7208333333333333,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 73,
+              "duration": 0.8,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 3.5,
+              "midi": 69,
+              "duration": 0.36041666666666666,
+              "triad": [
+                68,
+                71,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 80,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                73,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 78,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                73,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sourceCommit": "ee88406aa3861ab97bccf8dc278a4ffc9711c5b1",
+  "sourceFilesModified": false,
+  "sourceHashes": {
+    "src/music-presets.mjs": "118b694433c0d5db5458ba0babb5bb2a452876e3e5476541b2bb344fdcf74382",
+    "src/composer.mjs": "01e2ce4d61024bc69e8c320a66ca5e94e87e2a3ca855c13621b9638fbc4e65c7",
+    "src/theory.mjs": "158574b1e17a4b1811997fc22354f7f17446a1691bb1c0d962578ae31550b968",
+    "src/theme-rhythm.mjs": "30aa07935cce2e8fcdc240f1b2c2372082a27f86895a840719772617ae801c66",
+    "src/director.mjs": "254b937493230d3a90d4fc0af577648226803efd0b9f00f3b17e50806a84fc6c"
+  }
+}

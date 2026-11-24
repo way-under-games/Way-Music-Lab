@@ -1,5 +1,8 @@
 # Attribution and provenance
 
+Version 0.13's [theory scrutiny](docs/theory-scrutiny.md) uses Hutchinson's non-chord-tone, cadence, sentence and harmonic-rhythm chapters and Alan Belkin's harmony/line essays as conceptual references. It adds original MIT composition data and a melody-first accompaniment heuristic, without copying source notation, musical examples, prose or implementation. Existing asset/document licenses remain separate.
+
+
 Version 0.12's [musical presets](docs/musical-presets.md) add original MIT note compositions, authored theme rhythms and curated arrangements/recipes. No soundtrack quotations, vendor presets, third-party code, new samples or runtime dependencies are included. Existing recorded-instrument and research-document licenses remain unchanged.
 
 

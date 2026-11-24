@@ -1,5 +1,7 @@
 # Way Music
 
+Version **0.13** follows a [critical review of the actual music theory](docs/theory-scrutiny.md): independent preset melodies, native additive-meter rhythms, directed tonal/modal arrivals, melody-aware accompaniment and stable authored hook pitches. Saved projects remain unchanged; reload an example to hear the revisions. Tests verify musical intent constraints and functionality, not artistic quality.
+
 Version **0.12** puts original ready-to-play music across the tools: **Lantern trail** (fantasy), **Clockwork grove** (shifting meters) and **Neon tide** (melodic EDM). Fresh Studio sessions open with a five-part example; saved projects remain unchanged. Load examples or a blank score from the sidebar, hear musical instrument previews, and choose matching generator/story palettes. Read the [preset guide and verification](docs/musical-presets.md).
 
 Version **0.11** implements the research: complete quiet themes with rhythmic identity, a 32-bar contrast/return arrangement, phase-preserving waveform drawing, and mapped movement, stereo spread and effect-space controls. Load a factory recipe again to try the instrument changes; existing saved sounds and authored hooks remain intact. Read the [implemented behavior, API contracts, verification and remaining limits](docs/musicality-update.md).
@@ -85,7 +87,7 @@ Use `WAY_MUSIC_PORT` to change the local port. The server binds to loopback only
 
 The portable theory layer chooses bounded chord inversions with less voice movement, repeats and develops motif contours, emphasizes chord-tone melodic anchors, adds short stepwise ornaments, shapes phrase dynamics, and leaves space at endings. Minor-key V chords use the raised seventh; Explore/Battle resolve to tonic while Tension ends on dominant. These are tonal style heuristics rather than a universal musical scoring system. See [the source-linked theory and sound study](docs/music-theory-and-sound.md) for algorithms, listening criteria, and further development.
 
-Generator 0.6.0 adds authored rhythmic identity and section arrangements while preserving score schema version 2. Earlier saved scores remain playable. Theme replay must retain generator version or the actual score. The director adds narrative policy and phrase-boundary changes; harmonic transition bridges and cross-bar melodic continuity still need further development.
+Generator 0.7.0 adds melody-aware accompaniment and stable theme modes alongside authored rhythmic identity and section arrangements while preserving score schema version 2. Earlier saved scores remain playable. Theme replay must retain generator version or the actual score. The director adds narrative policy and phrase-boundary changes; harmonic transition bridges and cross-bar melodic continuity still need further development.
 
 ## Browser game API
 

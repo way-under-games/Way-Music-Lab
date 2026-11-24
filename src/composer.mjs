@@ -1,6 +1,7 @@
+import {harmonizeTheme} from './theme-harmony.mjs';
 import {normalizeThemeRhythm,themeNotesForBar,arrangementForBar} from './theme-rhythm.mjs';
 import { PPQ, DEFAULT_METER, normalizeMeterCycle, makeBarMap, scoreBarMap } from './meter.mjs';
-import { planPhrase, melodyForBar, degreeMidi } from './theory.mjs';
+import { planPhrase, melodyForBar, degreeMidi,MINOR_SCALE,MAJOR_SCALE } from './theory.mjs';
 export { PPQ } from './meter.mjs';
 // Legacy 4/4 constant; all current scheduling uses the explicit bar map.
 export const BAR_TICKS = PPQ * 4;
@@ -43,9 +44,11 @@ export function normalizeSettings(input = {}) {
   if (!SCORE_STYLES.includes(scoreStyle)) throw new TypeError('Unknown scoreStyle');
   const themeMotif = settings.themeMotif ?? null;
   const themeRhythm = normalizeThemeRhythm(settings.themeRhythm);
+  const themeGridTicks=settings.themeGridTicks??null;if(themeGridTicks!==null&&![60,120,240].includes(themeGridTicks))throw new TypeError('Theme grid must be 60, 120 or 240 ticks');
+  const themeMode=settings.themeMode??'minor';if(!['minor','major'].includes(themeMode))throw new TypeError('themeMode must be minor or major');
   if (themeMotif !== null && (!Array.isArray(themeMotif) || themeMotif.length !== 8 || themeMotif.some(degree => !Number.isInteger(degree) || degree < 0 || degree > 6))) throw new TypeError('themeMotif must contain eight scale degrees from 0–6');
   if (!Array.isArray(settings.muted) || settings.muted.some(id => !TRACKS.some(t => t.id === id))) throw new TypeError('muted must be an array of known track IDs');
-  return Object.freeze({ seed: settings.seed, scene: settings.scene, intensity: settings.intensity, tempo: settings.tempo, key: settings.key, muted: Object.freeze([...new Set(settings.muted)]), rhythm: settings.rhythm, meterCycle, scoreStyle, themeRhythm, themeMotif: themeMotif && Object.freeze([...themeMotif]) });
+  return Object.freeze({ seed: settings.seed, scene: settings.scene, intensity: settings.intensity, tempo: settings.tempo, key: settings.key, muted: Object.freeze([...new Set(settings.muted)]), rhythm: settings.rhythm, meterCycle, scoreStyle, themeRhythm, themeMode,themeGridTicks,themeMotif: themeMotif && Object.freeze([...themeMotif]) });
 }
 
 // Stateless per-bar random streams make partial generation and seeking reproducible.
@@ -72,8 +75,10 @@ export function compose(input = {}) {
   const root = KEYS[settings.key];
   const identity = randomStream(settings.seed);
   const motif = settings.themeMotif ?? [0, 2 + Math.floor(identity() * 2), 4, 2, 1, 0, 4, 2 + Math.floor(identity() * 2)];
+  const narrative=settings.scoreStyle!=='ensemble'&&settings.themeMotif,quiet=['contemplative','loss'].includes(settings.scoreStyle);
+  const themeScale=settings.themeMode==='major'?MAJOR_SCALE:MINOR_SCALE;
   const phrases = new Map();
-  const phraseFor=bar=>{const section=Math.floor(bar/8)%4;if(!phrases.has(section))phrases.set(section,planPhrase({root,scene:settings.scene,motif,section}));return phrases.get(section);};
+  const phraseFor=bar=>{const section=Math.floor(bar/8)%4;if(!phrases.has(section))phrases.set(section,planPhrase({root,scene:settings.scene,motif,section,harmonicPlan:narrative?harmonizeTheme({root,scene:settings.scene,motif,rhythm:settings.themeRhythm,quiet,section,mode:settings.themeMode}):undefined}));return phrases.get(section);};
   const events = [], harmony = [];
   for (const measure of barMap) {
     const bar = measure.bar, beats = measure.durationTicks / PPQ;
@@ -95,9 +100,7 @@ export function compose(input = {}) {
         durationTicks: Math.max(1, Math.min(Math.round(duration * PPQ), measure.startTick + measure.durationTicks - startTick)),
         midi, velocity: Math.max(1, Math.min(127, Math.round(velocity * styleGain * (track === 'percussion' ? 1 : frame.gain)))) });
     };
-    const narrative = settings.scoreStyle !== 'ensemble' && settings.themeMotif;
-    const quiet = ['contemplative', 'loss'].includes(settings.scoreStyle);
-    const melody = narrative ? themeNotesForBar({bar,beats,motif,rhythm:settings.themeRhythm,quiet,degree,playful:settings.scoreStyle==='playful'}) : melodyForBar({ frame, measure, root, rhythm: settings.rhythm, intensity });
+    const melody = narrative ? themeNotesForBar({bar,beats,motif,rhythm:settings.themeRhythm,quiet,gridTicks:settings.themeGridTicks,degree:n=>degreeMidi(root,themeScale,n),playful:settings.scoreStyle==='playful'}) : melodyForBar({ frame, measure, root, rhythm: settings.rhythm, intensity });
     for (const note of melody) {
       add(settings.scoreStyle === 'title' ? 'harp' : 'woodwind', note.beat, note.duration, note.midi, (note.accent ? 57 : 43) + random() * 5);
     }
@@ -159,7 +162,7 @@ export function compose(input = {}) {
   }
   events.sort((a, b) => a.startTick - b.startTick || a.track.localeCompare(b.track) || a.midi - b.midi);
   const startTick = barMap[0].startTick, last = barMap.at(-1);
-  return { schemaVersion: 2, generatorVersion: '0.6.0', ppq: PPQ, startBar, bars, startTick,
+  return { schemaVersion: 2, generatorVersion: '0.7.0', ppq: PPQ, startBar, bars, startTick,
     durationTicks: last.startTick + last.durationTicks - startTick, barMap,
     settings: { ...settings, muted: [...settings.muted] }, tracks: TRACKS.map(t => ({ ...t })), harmony, events };
 }

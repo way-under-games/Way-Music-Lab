@@ -1,0 +1,1367 @@
+{
+  "sourceCommit": "ee88406aa3861ab97bccf8dc278a4ffc9711c5b1",
+  "sourceFilesModified": true,
+  "sourceHashes": {
+    "src/music-presets.mjs": "01ce21c4960d0c2ea9712485af36aa01e3cadc8b8e633be65b6f6c4f2d4829d0",
+    "src/composer.mjs": "089cd2035385bc2b6fe53cac8f6029f82e049b21902c0df30748065455787e7e",
+    "src/theory.mjs": "551f0cc3568e8489ddf7b080baf5c4eba5a620126419bc0f5e09d9eb5b0d4295",
+    "src/theme-rhythm.mjs": "b3a2fbbbf680ce7efc6bcf5e547a860d0304111f0fce188408492a5d4b5726e6",
+    "src/director.mjs": "77913ebb165664e98b64e98d80696bc3d97eebbc26b44ff35bf585f915ed1d61",
+    "src/theme-harmony.mjs": "e3386143206caa98c9102a9a723bb881873cd98415e97b1b0db71ecccfb03a03"
+  },
+  "format": "way-contextual-theory-review",
+  "version": 1,
+  "scope": "Original preset data and generated notes. Non-chord tones and off-grid rhythms are observations, not automatic mistakes. No listening/preference claim.",
+  "results": [
+    {
+      "id": "lantern-trail",
+      "demoLeadNotes": 33,
+      "demoLeadOffSixteenthGrid": 0,
+      "pitchFingerprint": [
+        74,
+        77,
+        81,
+        79,
+        77,
+        74,
+        77,
+        74,
+        70,
+        79,
+        82,
+        81,
+        79,
+        77,
+        76,
+        73,
+        76,
+        74,
+        77,
+        81,
+        84,
+        81,
+        82,
+        81,
+        79,
+        77,
+        74,
+        76,
+        73,
+        71,
+        69,
+        73,
+        74
+      ],
+      "generated": [
+        {
+          "scene": "explore",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.23333333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.5208333333333334,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "tension",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "battle",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                70
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "victory",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 67,
+              "duration": 0.36041666666666666,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 2,
+              "midi": 64,
+              "duration": 0.8,
+              "triad": [
+                62,
+                65,
+                69
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clockwork-grove",
+      "demoLeadNotes": 33,
+      "demoLeadOffSixteenthGrid": 0,
+      "pitchFingerprint": [
+        74,
+        81,
+        77,
+        76,
+        74,
+        77,
+        74,
+        70,
+        79,
+        82,
+        86,
+        84,
+        82,
+        76,
+        73,
+        69,
+        74,
+        81,
+        77,
+        76,
+        74,
+        77,
+        82,
+        81,
+        79,
+        77,
+        74,
+        73,
+        76,
+        71,
+        69,
+        73,
+        74
+      ],
+      "generated": [
+        {
+          "scene": "explore",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.20416666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.325,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3,
+              "midi": 72,
+              "duration": 0.23333333333333334,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 66,
+              "duration": 0.45416666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 2,
+              "midi": 72,
+              "duration": 0.14583333333333334,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.5208333333333334,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.20416666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.325,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "tension",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3,
+              "midi": 72,
+              "duration": 0.36041666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 66,
+              "duration": 0.7,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 2,
+              "midi": 72,
+              "duration": 0.225,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.8,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "battle",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3,
+              "midi": 72,
+              "duration": 0.36041666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 66,
+              "duration": 0.7,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 2,
+              "midi": 72,
+              "duration": 0.225,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.8,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "victory",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 1,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3,
+              "midi": 72,
+              "duration": 0.36041666666666666,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 2,
+              "midi": 66,
+              "duration": 0.7,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 2,
+              "midi": 72,
+              "duration": 0.225,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 2.5,
+              "midi": 66,
+              "duration": 0.8,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 2.5,
+              "midi": 72,
+              "duration": 0.3145833333333333,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 7,
+              "beat": 1.5,
+              "midi": 66,
+              "duration": 0.5,
+              "triad": [
+                64,
+                67,
+                71
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neon-tide",
+      "demoLeadNotes": 33,
+      "demoLeadOffSixteenthGrid": 0,
+      "pitchFingerprint": [
+        69,
+        72,
+        74,
+        69,
+        65,
+        69,
+        74,
+        72,
+        69,
+        69,
+        72,
+        77,
+        76,
+        74,
+        76,
+        79,
+        76,
+        69,
+        72,
+        74,
+        77,
+        65,
+        69,
+        70,
+        69,
+        67,
+        64,
+        62,
+        64,
+        67,
+        65,
+        64,
+        62
+      ],
+      "generated": [
+        {
+          "scene": "explore",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.46875,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.3645833333333333,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.46875,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.23333333333333334,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.46875,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "tension",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 5,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "battle",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise resolution candidate"
+            },
+            {
+              "bar": 3,
+              "beat": 1,
+              "midi": 76,
+              "duration": 0.5604166666666667,
+              "triad": [
+                69,
+                72,
+                77
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        },
+        {
+          "scene": "victory",
+          "pitchAlterations": [],
+          "nonChord": [
+            {
+              "bar": 0,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 1,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 2,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 3,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 4,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 5,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            },
+            {
+              "bar": 6,
+              "beat": 3.5,
+              "midi": 79,
+              "duration": 0.36041666666666666,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "needs contextual review"
+            },
+            {
+              "bar": 7,
+              "beat": 0,
+              "midi": 77,
+              "duration": 0.7208333333333333,
+              "triad": [
+                69,
+                72,
+                76
+              ],
+              "candidate": "stepwise embellishment candidate"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
