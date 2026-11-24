@@ -2,8 +2,8 @@
   "format": "way-composition-audit",
   "version": 1,
   "researchDate": "2026-11-23",
-  "sourceFilesModified": true,
-  "sourceCommit": "3cdedee339258198e7f3ca3afa16f6136ad29735",
+  "sourceFilesModified": false,
+  "sourceCommit": "0188a6b969f4a2ee053c81b9bd1dded87d487bcf",
   "sourceHashes": {
     "src/composer.mjs": "01e2ce4d61024bc69e8c320a66ca5e94e87e2a3ca855c13621b9638fbc4e65c7",
     "src/theory.mjs": "158574b1e17a4b1811997fc22354f7f17446a1691bb1c0d962578ae31550b968",
