@@ -7,8 +7,8 @@ test('sound worlds have contrasting oscillator, envelope, filter and movement id
   for(const p of patches)assert.deepEqual(validatePatch(p),p);
   assert.equal(new Set(patches.map(p=>JSON.stringify(p))).size,6);
   assert.ok(soundWorld('drone').attack>soundWorld('crystal').attack*100);
-  assert.ok(soundWorld('crystal').cutoff>soundWorld('sub').cutoff*30);
-  assert.ok(soundWorld('swarm').effects.drive>soundWorld('crystal').effects.drive+.7);
+  assert.ok(soundWorld('crystal').cutoff>soundWorld('sub').cutoff*8);
+  assert.notEqual(soundWorld('swarm').oscillators[0].shape,soundWorld('crystal').oscillators[0].shape);
   assert.equal(soundWorld('arcade').lfoShape,'square');
   assert.throws(()=>soundWorld('missing'));
 });

@@ -1,5 +1,8 @@
 # Attribution and provenance
 
+Version 0.14's [instrument polish](docs/instrument-polish.md) adds original MIT voicing revisions and comparison phrases, using official Ableton instrument/effect documentation as conceptual references. No vendor preset, code, audio, new sample or runtime dependency was imported. Existing recorded-asset and research-document licenses remain unchanged.
+
+
 Version 0.13's [theory scrutiny](docs/theory-scrutiny.md) uses Hutchinson's non-chord-tone, cadence, sentence and harmonic-rhythm chapters and Alan Belkin's harmony/line essays as conceptual references. It adds original MIT composition data and a melody-first accompaniment heuristic, without copying source notation, musical examples, prose or implementation. Existing asset/document licenses remain separate.
 
 

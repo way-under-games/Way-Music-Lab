@@ -1,5 +1,7 @@
 # Way Music
 
+Version **0.14** refines the instrument palette: a rounder tuned mallet, tighter lead and bass, quieter upper layers, restrained organs/keys and more natural recorded-string balance. Classic presets and sound worlds also start with less automatic pitch motion, detuning, drive and echo. Load a factory recipe again to hear revision 2; saved sounds and compositions remain intact. Read the [voicing changes, checks and listening method](docs/instrument-polish.md).
+
 Version **0.13** follows a [critical review of the actual music theory](docs/theory-scrutiny.md): independent preset melodies, native additive-meter rhythms, directed tonal/modal arrivals, melody-aware accompaniment and stable authored hook pitches. Saved projects remain unchanged; reload an example to hear the revisions. Tests verify musical intent constraints and functionality, not artistic quality.
 
 Version **0.12** puts original ready-to-play music across the tools: **Lantern trail** (fantasy), **Clockwork grove** (shifting meters) and **Neon tide** (melodic EDM). Fresh Studio sessions open with a five-part example; saved projects remain unchanged. Load examples or a blank score from the sidebar, hear musical instrument previews, and choose matching generator/story palettes. Read the [preset guide and verification](docs/musical-presets.md).

@@ -21,29 +21,55 @@ export function classicToRack(input){
 export function factoryInstruments(){
   const result=[];
   function add(id,name,tags,description,build){
-    const p=preset(name);p.rack=newRack();const r=p.rack;build(r);
-    const primary=r.layers[0];
-    const movement=newModulator();Object.assign(movement,{name:id==='cobalt'?'Growl pulse':'Living motion',sync:true,period:id==='cobalt'?1:id==='bell'?2:8,retrigger:'note',depthSource:'motion'});
-    const contour=newModulator('envelope');contour.envelope={attack:id==='canopy'?.8:.003,decay:id==='bell'?.12:.5,sustain:0,release:.3};
+    const p=preset(name);p.revision=2;p.rack=newRack();const r=p.rack;build(r);
+    const primary=r.layers[0],config={
+      prism:{motion:.1,contour:.22,velocity:.25,period:12},
+      cobalt:{motion:.55,contour:.38,velocity:.3,period:4,fmMotion:.28,fmVelocity:.025},
+      bell:{motion:.025,contour:.12,velocity:.25,period:12,fmMotion:.012,fmVelocity:.035},
+      map:{motion:.06,contour:.28,velocity:.3,period:12,position:.1},
+      canopy:{motion:.02,contour:.08,velocity:.12,period:16},
+      crypt:{motion:.02,contour:.06,velocity:.04,period:2}
+    }[id];
+    Object.assign(p.macros,{brightness:.45,motion:id==='cobalt'?.15:.1,width:id==='prism'?.55:.2,space:.25});
+    const movement=newModulator();Object.assign(movement,{name:id==='cobalt'?'Body movement':'Subtle movement',sync:true,period:config.period,retrigger:'note',depthSource:'motion'});
+    const contour=newModulator('envelope');contour.envelope={attack:id==='canopy'?.4:.005,decay:id==='bell'?.11:.3,sustain:0,release:.15};
     r.modulators.push(movement,contour);
-    if(id==='cobalt'){const slap=newEffect('delay');slap.time=.09;slap.feedback=.15;slap.mix=.06;r.effects.push(slap);}
-    if(id==='map')primary.synth.frames=[Array.from({length:32},(_,i)=>1/(i+1)**1.8),Array.from({length:32},(_,i)=>(i%2?.12:1)/(i+1)**1.3)];
     const route=(source,target,amount,layer=primary.id)=>r.routes.push({source,target,amount,layer});
-    route(movement.id,'cutoff',id==='cobalt'?.9:.35);
-    route(contour.id,'cutoff',id==='bell'?.6:.65);
-    route('velocity','cutoff',.55);
-    if(primary.synth.engine==='fm'){route(movement.id,'fmIndex',id==='cobalt'?.35:.025);route('velocity','fmIndex',id==='bell'?.12:.06);}
-    if(primary.synth.engine==='wavetable')route(movement.id,'position',.45);
-    for(const layer of r.layers.filter(l=>l.kind==='synth')){if(layer.synth.unison>1){layer.synth.spread=.1;route('width','spread',.9,layer.id);}if(layer.synth.engine==='wavetable'&&layer!==primary)route(movement.id,'position',.4,layer.id);}
-    for(const fx of r.effects)if(['reverb','delay','chorus'].includes(fx.type))fx.spaceDepth=fx.type==='reverb'?.5:.25;
+    route(movement.id,'cutoff',config.motion);route(contour.id,'cutoff',config.contour);route('velocity','cutoff',config.velocity);
+    if(primary.synth.engine==='fm'){route(movement.id,'fmIndex',config.fmMotion);route('velocity','fmIndex',config.fmVelocity);}
+    if(primary.synth.engine==='wavetable')route(movement.id,'position',config.position??.025);
+    for(const layer of r.layers.filter(l=>l.kind==='synth')){if(layer.synth.unison>1){layer.synth.spread=.1;route('width','spread',.85,layer.id);}if(layer.synth.engine==='wavetable'&&layer!==primary)route(movement.id,'position',.06,layer.id);}
+    if(id==='crypt'){movement.sync=false;movement.rate=4.8;route(movement.id,'volume',.04);}
+    for(const fx of r.effects)if(['reverb','delay','chorus'].includes(fx.type))fx.spaceDepth=fx.type==='reverb'?.24:.16;
     const ids=new Map();r.layers.forEach((l,i)=>{ids.set(l.id,'factory-'+id+'-layer-'+i);l.id=ids.get(l.id);});r.modulators.forEach((m,i)=>{ids.set(m.id,'factory-'+id+'-mod-'+i);m.id=ids.get(m.id);});r.routes.forEach(route=>{route.layer=ids.get(route.layer)??route.layer;route.source=ids.get(route.source)??route.source;});r.effects.forEach((e,i)=>e.id='factory-'+id+'-effect-'+i);
-    const record=createInstrumentRecord(p,{name,tags,author:'Way original',license:'MIT',description:description+' Motion shapes the movement depth; Space controls the room/effect blend. Brightness and velocity shape articulation.'});record.id='factory-'+id;record.createdAt=record.updatedAt='2026-11-23T00:00:00.000Z';result.push(record);
+    const record=createInstrumentRecord(p,{name,tags,author:'Way original',license:'MIT',description:description+' Motion shapes the movement depth; Space controls the room/effect blend. Brightness and velocity shape articulation.'});record.id='factory-'+id;record.revision=2;record.createdAt=record.updatedAt='2026-11-23T00:00:00.000Z';result.push(record);
   }
-  add('prism','Prism chorus',['edm','lead','unison'],'Seven detuned voices with stereo spread. Play chords or a single soaring melody.',r=>{const l=r.layers[0];l.name='Stereo saw ensemble';l.synth.unison=7;l.synth.detune=24;l.synth.randomPhase=true;l.filter.cutoff=7500;l.envelope.release=.5;const e=newEffect('chorus');e.mix=.2;r.effects.push(e);const d=newEffect('delay');d.mix=.16;r.effects.push(d);});
-  add('cobalt','Cobalt growl',['edm','bass','fm'],'Audio-rate FM and a separate brightness contour over a clean sub. Try lower octaves.',r=>{const l=r.layers[0];l.name='FM bite';l.synth.engine='fm';l.synth.fm.index=5;l.synth.fm.ratio=1;l.filter.cutoff=4500;l.envelope.release=.15;const sub=newLayer('synth','Clean sub');sub.synth.shape='sine';sub.tune=-12;sub.gain=.35;sub.bypassEffects=true;sub.envelope.release=.15;r.layers.push(sub);const e=newEffect('distortion');e.drive=.45;e.mix=.2;r.effects.push(e);r.play={mode:'mono',legato:true,glide:.08,polyphony:1};});
-  add('bell','Lantern mallet',['game','edm','mallet','fm'],'Original FM bell recipe for gentle authored hooks. Bake this into a tuned sample library.',r=>{const l=r.layers[0];l.name='Struck glass';l.synth.engine='fm';l.synth.fm.ratio=3.5;l.synth.fm.index=2.4;l.synth.fm.envelope={attack:.001,decay:.18,sustain:0,release:.1};l.envelope={attack:.002,decay:1.2,sustain:0,release:.9};const e=newEffect('reverb');e.duration=1.3;e.mix=.18;r.effects.push(e);});
-  add('map','Map room',['game','keys','warm'],'Soft harmonic keys with a plucked upper layer, suited to contemplative exploration.',r=>{const l=r.layers[0];l.name='Warm keys';l.synth.engine='wavetable';l.synth.frames=[[1,.25,.08,.02,0,0,0,0],[1,.05,.15,0,.03,0,0,0]];l.envelope={attack:.012,decay:.7,sustain:.12,release:.7};l.filter.cutoff=3800;l.synth.position=.45;const pluck=newLayer('synth','Upper pluck');pluck.synth.shape='triangle';pluck.tune=12;pluck.gain=.12;pluck.envelope={attack:.002,decay:.22,sustain:0,release:.18};r.layers.push(pluck);const e=newEffect('reverb');e.mix=.2;r.effects.push(e);});
-  add('canopy','Canopy strings',['game','hybrid','orchestra'],'CC0 recorded strings with an original airy synth layer. Requires the bundled VSCO bank.',r=>{const l=r.layers[0];l.name='Recorded strings';l.kind='orchestra';l.orchestra.instrument='strings';l.envelope={attack:.25,decay:.6,sustain:.8,release:1.2};const air=newLayer('synth','Harmonic air');air.synth.engine='wavetable';air.gain=.18;air.tune=12;air.synth.frames=[[1,0,.18,0,.04,0,0,0],[.35,.3,.05,.12,0,.06,0,.02]];air.synth.position=.4;air.envelope={attack:.5,decay:.8,sustain:.6,release:1.3};r.layers.push(air);const e=newEffect('reverb');e.mix=.25;e.duration=2;r.effects.push(e);});
-  add('crypt','Crypt organ',['game','organ','hybrid'],'Original additive organ with an octave reed, a sharp attack and a small room.',r=>{const l=r.layers[0];l.name='Drawbar organ';l.synth.shape='harmonic';l.synth.engine='wavetable';l.synth.frames=[[1,.5,.35,.15,.08,0,.05,0]];l.envelope={attack:.006,decay:.1,sustain:.8,release:.12};const reed=newLayer('synth','Octave reed');reed.synth.shape='square';reed.tune=12;reed.gain=.12;reed.filter.cutoff=3500;r.layers.push(reed);const e=newEffect('reverb');e.duration=.8;e.mix=.15;r.effects.push(e);});
+  add('prism','Prism chorus',['edm','lead','unison'],'A focused, warm five-voice lead with a quieter central body. Width opens the stereo image; Space introduces restrained echoes.',r=>{
+    const l=r.layers[0];l.name='Warm saw stack';l.gain=.8;l.synth.unison=5;l.synth.detune=9;l.synth.randomPhase=true;l.filter={type:'lowpass',cutoff:5200,resonance:.55};l.envelope={attack:.012,decay:.28,sustain:.62,release:.22};
+    const body=newLayer('synth','Focused center');body.synth.shape='triangle';body.gain=.1;body.filter.cutoff=2200;body.envelope={...l.envelope};r.layers.push(body);
+    const e=newEffect('chorus');e.mix=.06;e.depth=.12;e.rate=.35;r.effects.push(e);const d=newEffect('delay');d.mix=.09;d.sync=true;d.beats=.75;d.feedback=.17;r.effects.push(d);
+  });
+  add('cobalt','Cobalt growl',['edm','bass','fm'],'A centered harmonic FM bass with a clean fundamental at the played pitch. Short articulation and restrained glide; Motion adds body rather than an automatic fast wobble.',r=>{
+    const l=r.layers[0];l.name='Harmonic bass body';l.gain=.42;l.synth.engine='fm';l.synth.fm.index=1.1;l.synth.fm.ratio=1;l.synth.fm.envelope={attack:.006,decay:.16,sustain:.22,release:.1};l.filter={type:'lowpass',cutoff:1600,resonance:.65};l.envelope={attack:.008,decay:.15,sustain:.7,release:.09};
+    const sub=newLayer('synth','Clean fundamental');sub.synth.shape='sine';sub.tune=0;sub.gain=.35;sub.bypassEffects=true;sub.envelope={...l.envelope};r.layers.push(sub);
+    const e=newEffect('distortion');e.drive=.12;e.mix=.1;r.effects.push(e);const d=newEffect('delay');d.time=.12;d.mix=0;d.feedback=.12;r.effects.push(d);r.play={mode:'mono',legato:true,glide:.025,polyphony:1};
+  });
+  add('bell','Lantern mallet',['game','edm','mallet','fm'],'A rounded, tuned FM tine with a brief wooden attack and a controlled release. Harder playing adds brightness without turning every note into a metallic clang.',r=>{
+    const l=r.layers[0];l.name='Rounded tine';l.gain=.65;l.synth.engine='fm';l.synth.fm.ratio=2;l.synth.fm.index=.85;l.synth.fm.envelope={attack:.004,decay:.11,sustain:.015,release:.06};l.filter={type:'lowpass',cutoff:7600,resonance:.55};l.envelope={attack:.004,decay:.65,sustain:.045,release:.26};
+    const wood=newLayer('synth','Soft attack');wood.synth.shape='triangle';wood.gain=.045;wood.filter.cutoff=2600;wood.envelope={attack:.003,decay:.07,sustain:0,release:.04};r.layers.push(wood);
+    const e=newEffect('reverb');e.duration=.85;e.mix=.09;r.effects.push(e);
+  });
+  add('map','Map room',['game','keys','warm'],'A warm, clear harmonic keyboard with a quiet upper transient. A solid fundamental and short room leave space for chords and counterlines.',r=>{
+    const l=r.layers[0];l.name='Warm keys';l.synth.engine='wavetable';l.synth.frames=[Array.from({length:32},(_,i)=>[1,.22,.09,.035,.015,.008,.004,.002][i]??0),Array.from({length:32},(_,i)=>[1,.25,.12,.05,.022,.01,.005,.002][i]??0)];l.synth.position=.15;l.envelope={attack:.008,decay:.48,sustain:.18,release:.23};l.filter={type:'lowpass',cutoff:3000,resonance:.55};
+    const pluck=newLayer('synth','Quiet upper transient');pluck.synth.shape='triangle';pluck.tune=12;pluck.gain=.035;pluck.filter.cutoff=2800;pluck.envelope={attack:.004,decay:.12,sustain:0,release:.06};r.layers.push(pluck);const e=newEffect('reverb');e.mix=.08;e.duration=.9;r.effects.push(e);
+  });
+  add('canopy','Canopy strings',['game','hybrid','orchestra'],'Recorded strings lead the sound; a very quiet unison synth supports the body without an obvious synthetic octave. Requires the bundled CC0 VSCO bank.',r=>{
+    const l=r.layers[0];l.name='Recorded strings';l.kind='orchestra';l.gain=.72;l.orchestra.instrument='strings';l.filter={type:'lowpass',cutoff:8200,resonance:.55};l.envelope={attack:.12,decay:.5,sustain:.85,release:.55};
+    const air=newLayer('synth','Quiet body support');air.synth.engine='wavetable';air.gain=.04;air.tune=0;air.synth.frames=[[1,.12,.035,.012,.003,0,0,0],[1,.1,.05,.015,.005,0,0,0]];air.synth.position=.3;air.filter.cutoff=3200;air.envelope={attack:.6,decay:.8,sustain:.55,release:1};r.layers.push(air);const e=newEffect('reverb');e.mix=.12;e.duration=1.35;r.effects.push(e);
+  });
+  add('crypt','Crypt organ',['game','organ','hybrid'],'A restrained drawbar registration with a soft upper stop. Stable tuning, softened key-on and a small room replace the bright fairground edge.',r=>{
+    const l=r.layers[0];l.name='Warm drawbars';l.synth.shape='harmonic';l.synth.engine='wavetable';l.synth.frames=[[1,.3,.12,.06,.04,0,.015,0]];l.filter={type:'lowpass',cutoff:4600,resonance:.55};l.envelope={attack:.012,decay:.1,sustain:.8,release:.16};
+    const reed=newLayer('synth','Soft upper stop');reed.synth.shape='triangle';reed.tune=12;reed.gain=.025;reed.filter.cutoff=2300;reed.envelope={...l.envelope};r.layers.push(reed);const e=newEffect('reverb');e.duration=1.1;e.mix=.1;r.effects.push(e);
+  });
   return result;
 }

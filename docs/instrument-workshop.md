@@ -1,5 +1,7 @@
 # Instrument workshop: EDM design and reusable game instruments
 
+The [0.14 voicing pass](instrument-polish.md) revises factory starting sounds, classic presets and sound worlds while retaining these authoring capabilities.
+
 Version 0.9, November 3, 2026. Original implementation and recipes are MIT. This update implements the combined direction in the [EDM assessment](edm-synthesis-gap-assessment.md): distinctive electronic instruments and game-score sample instruments share one layered format. It does not copy the named games' melodies, instruments or recordings.
 
 ## Start here

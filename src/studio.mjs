@@ -13,18 +13,18 @@ const label = v => { if (typeof v !== 'string' || !v.trim() || v.length > 100) t
 export const id = () => globalThis.crypto.randomUUID();
 export const noteName = midi => ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi % 12] + (Math.floor(midi / 12) - 1);
 const base = () => ({ version: 1, name: 'Glass lantern', author: 'Way original', revision: 1, source: 'synth', instrument: 'woodwind', articulation: 'sustain',
-  oscillators: [{ shape: 'harmonic', level: .7, detune: 0 }, { shape: 'sine', level: .2, detune: 5 }],
+  oscillators: [{ shape: 'harmonic', level: .7, detune: 0 }, { shape: 'sine', level: .14, detune: 0 }],
   frames: [[1, .32, .12, .08, .03, 0, 0, 0], [1, .08, .4, .04, .16, .02, .08, 0]],
-  position: .1, attack: .008, decay: .45, sustain: .25, release: .8, cutoff: 4200, resonance: .8,
-  filterEnv: .3, lfoRate: .4, lfoSync: false, lfoShape: 'sine', lfoCurve:movementCurve('sine'), lfoDepth: .15,
-  routes: [{ source: 'lfo', target: 'position', amount: .2 }],
-  macros: { brightness: .45, motion: .25, width: .25, space: .3 },
-  effects: { drive: .1, delay: .12, feedback: .25 }, locks: [] });
+  position: .1, attack: .008, decay: .4, sustain: .22, release: .3, cutoff: 3600, resonance: .65,
+  filterEnv: .15, lfoRate: .25, lfoSync: false, lfoShape: 'sine', lfoCurve:movementCurve('sine'), lfoDepth: .08,
+  routes: [{ source: 'lfo', target: 'position', amount: .1 }],
+  macros: { brightness: .45, motion: .12, width: .2, space: .25 },
+  effects: { drive: 0, delay: .06, feedback: .18 }, locks: [] });
 export function preset(name = 'Glass lantern') {
   const p = base(); p.name = name;
-  if (name === 'Paper sky') Object.assign(p, { attack: .65, decay: .8, sustain: .7, release: 1.8, cutoff: 2000, position: .5, lfoDepth: .35 });
-  if (name === 'Copper wire') { Object.assign(p, { attack: .012, decay: .2, sustain: .65, release: .22, cutoff: 3600 }); p.oscillators[1] = { shape: 'sawtooth', level: .2, detune: -7 }; }
-  if (name === 'Moss bass') { Object.assign(p, { attack: .005, decay: .25, sustain: .5, release: .18, cutoff: 700, filterEnv: .6 }); p.oscillators[0].shape = 'triangle'; }
+  if (name === 'Paper sky') Object.assign(p, { attack: .25, decay: .8, sustain: .65, release: .7, cutoff: 2800, position: .25, lfoDepth: .12 });
+  if (name === 'Copper wire') { Object.assign(p, { attack: .012, decay: .2, sustain: .65, release: .18, cutoff: 2400 }); p.oscillators[1] = { shape: 'sawtooth', level: .08, detune: -3 }; }
+  if (name === 'Moss bass') { Object.assign(p, { attack: .005, decay: .25, sustain: .5, release: .18, cutoff: 650, filterEnv: .2 }); p.oscillators[0].shape = 'triangle'; }
   return p;
 }
 export function validatePatch(input) {
@@ -58,22 +58,22 @@ export function varyPatch(p, random = Math.random) {
 }
 // Original sound recipes. These are portable patch data, independent of an audio host.
 export const SOUND_WORLDS = [
-  {id:'crystal',name:'Crystal rain',hint:'Tiny glass strikes · bright, delicate',icon:'✧'},
+  {id:'crystal',name:'Crystal rain',hint:'Rounded glass keys · clear, delicate',icon:'✧'},
   {id:'sub',name:'Gravity well',hint:'Round sub bass · deep, compact',icon:'◉'},
   {id:'acid',name:'Solar acid',hint:'Biting saw · resonant filter sweep',icon:'☀'},
-  {id:'arcade',name:'Pixel comet',hint:'Hollow square · fast stepped motion',icon:'▦'},
-  {id:'swarm',name:'Ion swarm',hint:'Detuned saws · wide, fierce sustain',icon:'≋'},
+  {id:'arcade',name:'Pixel comet',hint:'Rounded pulse keys · stable pitch',icon:'▦'},
+  {id:'swarm',name:'Ion swarm',hint:'Warm detuned saws · broad sustain',icon:'≋'},
   {id:'drone',name:'Velvet nebula',hint:'Slow harmonic cloud · long, drifting',icon:'☁'}
 ];
 export function soundWorld(world) {
   if(!SOUND_WORLDS.some(w=>w.id===world))throw new TypeError('Unknown sound world');
   const p=preset();p.name=SOUND_WORLDS.find(w=>w.id===world).name;
-  if(world==='crystal')Object.assign(p,{frames:[[1,0,.07,0,.6,0,0,.3],[.4,0,.5,0,.1,0,.7,0]],attack:.002,decay:.18,sustain:.015,release:1.4,cutoff:14000,filterEnv:0,macros:{brightness:.7,motion:.15,width:.65,space:.8},effects:{drive:0,delay:.55,feedback:.48}});
-  if(world==='sub')Object.assign(p,{oscillators:[{shape:'sine',level:.85,detune:0},{shape:'triangle',level:.12,detune:0}],attack:.006,decay:.2,sustain:.8,release:.12,cutoff:220,filterEnv:.05,macros:{brightness:.1,motion:0,width:0,space:0},effects:{drive:.08,delay:0,feedback:0},routes:[]});
-  if(world==='acid')Object.assign(p,{oscillators:[{shape:'sawtooth',level:.65,detune:0},{shape:'square',level:.12,detune:-7}],attack:.002,decay:.12,sustain:.18,release:.08,cutoff:450,resonance:9,filterEnv:1,lfoRate:3,lfoDepth:.75,routes:[{source:'lfo',target:'cutoff',amount:.8}],macros:{brightness:.55,motion:.85,width:.12,space:.1},effects:{drive:.65,delay:.12,feedback:.2}});
-  if(world==='arcade')Object.assign(p,{oscillators:[{shape:'square',level:.48,detune:0},{shape:'triangle',level:.18,detune:0}],attack:.001,decay:.045,sustain:.35,release:.025,cutoff:10000,filterEnv:0,lfoShape:'square',lfoRate:9,lfoDepth:1,routes:[{source:'lfo',target:'pitch',amount:.5}],macros:{brightness:.6,motion:1,width:0,space:.18},effects:{drive:.15,delay:.16,feedback:.2}});
-  if(world==='swarm')Object.assign(p,{oscillators:[{shape:'sawtooth',level:.48,detune:-38},{shape:'sawtooth',level:.48,detune:38}],attack:.035,decay:.4,sustain:.8,release:.55,cutoff:7400,resonance:2.4,filterEnv:.2,lfoRate:5,lfoDepth:.6,routes:[{source:'lfo',target:'cutoff',amount:.5}],macros:{brightness:.8,motion:.8,width:1,space:.45},effects:{drive:.85,delay:.35,feedback:.38}});
-  if(world==='drone')Object.assign(p,{frames:[[1,.05,.3,0,.12,0,.04,0],[.2,.6,.08,.3,0,.1,0,.15]],oscillators:[{shape:'harmonic',level:.65,detune:-12},{shape:'harmonic',level:.25,detune:12}],attack:1.3,decay:1.5,sustain:.8,release:2.6,cutoff:1800,filterEnv:.3,lfoRate:.16,lfoDepth:1,routes:[{source:'lfo',target:'position',amount:.8},{source:'lfo',target:'cutoff',amount:.35}],macros:{brightness:.4,motion:1,width:.9,space:1},effects:{drive:.04,delay:.65,feedback:.6}});
+  if(world==='crystal')Object.assign(p,{frames:[[1,.08,.08,.015,.04,0,.01,0],[1,.05,.11,.02,.035,.008,.008,0]],attack:.004,decay:.36,sustain:.04,release:.35,cutoff:8000,filterEnv:.12,macros:{brightness:.5,motion:.1,width:.2,space:.3},effects:{drive:0,delay:.12,feedback:.18}});
+  if(world==='sub')Object.assign(p,{oscillators:[{shape:'sine',level:.72,detune:0},{shape:'triangle',level:.18,detune:0}],attack:.008,decay:.2,sustain:.75,release:.1,cutoff:450,filterEnv:.08,macros:{brightness:.4,motion:0,width:0,space:0},effects:{drive:0,delay:0,feedback:0},routes:[]});
+  if(world==='acid')Object.assign(p,{oscillators:[{shape:'sawtooth',level:.6,detune:0},{shape:'square',level:.06,detune:0}],attack:.006,decay:.16,sustain:.22,release:.1,cutoff:650,resonance:2.8,filterEnv:.55,lfoRate:1.5,lfoDepth:.45,routes:[{source:'lfo',target:'cutoff',amount:.45}],macros:{brightness:.48,motion:.45,width:.1,space:.2},effects:{drive:.25,delay:.08,feedback:.16}});
+  if(world==='arcade')Object.assign(p,{oscillators:[{shape:'square',level:.3,detune:0},{shape:'triangle',level:.28,detune:0}],attack:.004,decay:.12,sustain:.35,release:.08,cutoff:4800,filterEnv:.1,lfoShape:'square',lfoRate:4,lfoDepth:.35,routes:[{source:'lfo',target:'cutoff',amount:.18}],macros:{brightness:.45,motion:.25,width:.12,space:.2},effects:{drive:0,delay:.08,feedback:.15}});
+  if(world==='swarm')Object.assign(p,{oscillators:[{shape:'sawtooth',level:.38,detune:-7},{shape:'sawtooth',level:.38,detune:7}],attack:.02,decay:.3,sustain:.65,release:.25,cutoff:5000,resonance:1.2,filterEnv:.12,lfoRate:.3,lfoDepth:.25,routes:[{source:'lfo',target:'cutoff',amount:.2}],macros:{brightness:.55,motion:.3,width:.75,space:.25},effects:{drive:.12,delay:.1,feedback:.18}});
+  if(world==='drone')Object.assign(p,{frames:[[1,.05,.12,0,.035,0,.01,0],[1,.1,.1,.025,0,.012,0,.005]],oscillators:[{shape:'harmonic',level:.6,detune:-3},{shape:'harmonic',level:.18,detune:3}],attack:.55,decay:.9,sustain:.72,release:1.1,cutoff:2400,filterEnv:.1,lfoRate:.12,lfoDepth:.3,routes:[{source:'lfo',target:'position',amount:.25},{source:'lfo',target:'cutoff',amount:.12}],macros:{brightness:.4,motion:.25,width:.45,space:.4},effects:{drive:0,delay:.14,feedback:.25}});
   return validatePatch(p);
 }
 function partials(p,o,frame) {

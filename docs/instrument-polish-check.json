@@ -1,0 +1,333 @@
+{
+  "format": "way-instrument-polish-check",
+  "version": 1,
+  "baselineCommit": "442d65548ec3f0df11640613794f0683f837d80b",
+  "sourceHashes": {
+    "src/studio.mjs": "bcae838be815a0b5f2d1a303f19a03ecb27a95ff7d0ffc8e0ae187541910a23d",
+    "src/instrument-factory.mjs": "087e6efadb364c9e02f52e078e6c745e4ebcf615eb51c811caf8c049282a44e4",
+    "src/rack-audio.mjs": "ce1a582a0e40289cd0e3656f6c4b29b29142b4d73acf46534f83dd316b8c09b3"
+  },
+  "scope": "Six factory sounds, three role-appropriate registers at velocities 50 and 110; native 48 kHz rendering. Default-note peaks use MIDI 60, velocity 100 and .5 second hold. No artistic-preference claim.",
+  "defaultNotePeaksBefore": [
+    {
+      "name": "Prism chorus",
+      "peak": 0.01336669921875,
+      "stereo": 0.0004158039285998861
+    },
+    {
+      "name": "Cobalt growl",
+      "peak": 0.076385498046875,
+      "stereo": 0
+    },
+    {
+      "name": "Lantern mallet",
+      "peak": 0.027862548828125,
+      "stereo": 0.0008782873382386003
+    },
+    {
+      "name": "Map room",
+      "peak": 0.0146484375,
+      "stereo": 0.00041029408386873575
+    },
+    {
+      "name": "Canopy strings",
+      "peak": 0.025238037109375,
+      "stereo": 0.0007030175650333171
+    },
+    {
+      "name": "Crypt organ",
+      "peak": 0.019500732421875,
+      "stereo": 0.00031462338817927506
+    }
+  ],
+  "defaultNotePeaksAfter": [
+    {
+      "name": "Prism chorus",
+      "peak": 0.01824951171875,
+      "stereo": 0.0008778261039919031
+    },
+    {
+      "name": "Cobalt growl",
+      "peak": 0.03179931640625,
+      "stereo": 0
+    },
+    {
+      "name": "Lantern mallet",
+      "peak": 0.0244140625,
+      "stereo": 0.00013407448190632073
+    },
+    {
+      "name": "Map room",
+      "peak": 0.01885986328125,
+      "stereo": 0.00006207414769933924
+    },
+    {
+      "name": "Canopy strings",
+      "peak": 0.024871826171875,
+      "stereo": 0.00021912975043422627
+    },
+    {
+      "name": "Crypt organ",
+      "peak": 0.01812744140625,
+      "stereo": 0.00016140857083743685
+    }
+  ],
+  "registerMetrics": [
+    {
+      "id": "factory-prism",
+      "midi": 60,
+      "velocity": 50,
+      "peak": 0.00921630859375,
+      "activeRms": 0.0023869446231332154
+    },
+    {
+      "id": "factory-prism",
+      "midi": 60,
+      "velocity": 110,
+      "peak": 0.0201416015625,
+      "activeRms": 0.005246151891687204
+    },
+    {
+      "id": "factory-prism",
+      "midi": 72,
+      "velocity": 50,
+      "peak": 0.0064697265625,
+      "activeRms": 0.0020720111101797858
+    },
+    {
+      "id": "factory-prism",
+      "midi": 72,
+      "velocity": 110,
+      "peak": 0.01446533203125,
+      "activeRms": 0.0045518122221878
+    },
+    {
+      "id": "factory-prism",
+      "midi": 84,
+      "velocity": 50,
+      "peak": 0.009002685546875,
+      "activeRms": 0.00259924263608254
+    },
+    {
+      "id": "factory-prism",
+      "midi": 84,
+      "velocity": 110,
+      "peak": 0.019683837890625,
+      "activeRms": 0.005705732503615102
+    },
+    {
+      "id": "factory-cobalt",
+      "midi": 36,
+      "velocity": 50,
+      "peak": 0.01483154296875,
+      "activeRms": 0.007459206737163185
+    },
+    {
+      "id": "factory-cobalt",
+      "midi": 36,
+      "velocity": 110,
+      "peak": 0.032806396484375,
+      "activeRms": 0.016431569390486567
+    },
+    {
+      "id": "factory-cobalt",
+      "midi": 48,
+      "velocity": 50,
+      "peak": 0.011810302734375,
+      "activeRms": 0.006516830004589691
+    },
+    {
+      "id": "factory-cobalt",
+      "midi": 48,
+      "velocity": 110,
+      "peak": 0.026275634765625,
+      "activeRms": 0.014439790980237639
+    },
+    {
+      "id": "factory-cobalt",
+      "midi": 60,
+      "velocity": 50,
+      "peak": 0.015899658203125,
+      "activeRms": 0.008711232716561249
+    },
+    {
+      "id": "factory-cobalt",
+      "midi": 60,
+      "velocity": 110,
+      "peak": 0.03497314453125,
+      "activeRms": 0.0191790090917631
+    },
+    {
+      "id": "factory-bell",
+      "midi": 60,
+      "velocity": 50,
+      "peak": 0.01220703125,
+      "activeRms": 0.007215254697005796
+    },
+    {
+      "id": "factory-bell",
+      "midi": 60,
+      "velocity": 110,
+      "peak": 0.02685546875,
+      "activeRms": 0.01586575543799036
+    },
+    {
+      "id": "factory-bell",
+      "midi": 72,
+      "velocity": 50,
+      "peak": 0.01226806640625,
+      "activeRms": 0.007189460713344816
+    },
+    {
+      "id": "factory-bell",
+      "midi": 72,
+      "velocity": 110,
+      "peak": 0.027008056640625,
+      "activeRms": 0.01580478300064219
+    },
+    {
+      "id": "factory-bell",
+      "midi": 84,
+      "velocity": 50,
+      "peak": 0.01251220703125,
+      "activeRms": 0.007242981701742832
+    },
+    {
+      "id": "factory-bell",
+      "midi": 84,
+      "velocity": 110,
+      "peak": 0.027496337890625,
+      "activeRms": 0.015904444524198355
+    },
+    {
+      "id": "factory-map",
+      "midi": 60,
+      "velocity": 50,
+      "peak": 0.009429931640625,
+      "activeRms": 0.005484683241500975
+    },
+    {
+      "id": "factory-map",
+      "midi": 60,
+      "velocity": 110,
+      "peak": 0.020721435546875,
+      "activeRms": 0.012057990232391883
+    },
+    {
+      "id": "factory-map",
+      "midi": 72,
+      "velocity": 50,
+      "peak": 0.00970458984375,
+      "activeRms": 0.0056678230265401666
+    },
+    {
+      "id": "factory-map",
+      "midi": 72,
+      "velocity": 110,
+      "peak": 0.02130126953125,
+      "activeRms": 0.012436431879516428
+    },
+    {
+      "id": "factory-map",
+      "midi": 84,
+      "velocity": 50,
+      "peak": 0.0108642578125,
+      "activeRms": 0.005823137838664105
+    },
+    {
+      "id": "factory-map",
+      "midi": 84,
+      "velocity": 110,
+      "peak": 0.0233154296875,
+      "activeRms": 0.012704457421044021
+    },
+    {
+      "id": "factory-canopy",
+      "midi": 60,
+      "velocity": 50,
+      "peak": 0.00531005859375,
+      "activeRms": 0.001076555123893967
+    },
+    {
+      "id": "factory-canopy",
+      "midi": 60,
+      "velocity": 110,
+      "peak": 0.02044677734375,
+      "activeRms": 0.005770698722990851
+    },
+    {
+      "id": "factory-canopy",
+      "midi": 72,
+      "velocity": 50,
+      "peak": 0.003662109375,
+      "activeRms": 0.0008685173362031621
+    },
+    {
+      "id": "factory-canopy",
+      "midi": 72,
+      "velocity": 110,
+      "peak": 0.026153564453125,
+      "activeRms": 0.00612852236489354
+    },
+    {
+      "id": "factory-canopy",
+      "midi": 84,
+      "velocity": 50,
+      "peak": 0.006317138671875,
+      "activeRms": 0.001079165357747764
+    },
+    {
+      "id": "factory-canopy",
+      "midi": 84,
+      "velocity": 110,
+      "peak": 0.02783203125,
+      "activeRms": 0.0060202098941485975
+    },
+    {
+      "id": "factory-crypt",
+      "midi": 60,
+      "velocity": 50,
+      "peak": 0.0089111328125,
+      "activeRms": 0.004728278018856942
+    },
+    {
+      "id": "factory-crypt",
+      "midi": 60,
+      "velocity": 110,
+      "peak": 0.019622802734375,
+      "activeRms": 0.01040137899707689
+    },
+    {
+      "id": "factory-crypt",
+      "midi": 72,
+      "velocity": 50,
+      "peak": 0.00885009765625,
+      "activeRms": 0.00473285795120791
+    },
+    {
+      "id": "factory-crypt",
+      "midi": 72,
+      "velocity": 110,
+      "peak": 0.019439697265625,
+      "activeRms": 0.01040956173242002
+    },
+    {
+      "id": "factory-crypt",
+      "midi": 84,
+      "velocity": 50,
+      "peak": 0.009674072265625,
+      "activeRms": 0.004887209343164091
+    },
+    {
+      "id": "factory-crypt",
+      "midi": 84,
+      "velocity": 110,
+      "peak": 0.02117919921875,
+      "activeRms": 0.010742034287877301
+    }
+  ],
+  "malletHalfPartialRatio": 0.00004438589618061105,
+  "bassSubharmonicRatio": 0.000016621655802453607,
+  "motionMacroDifference": 0.001572102757078481,
+  "spaceMacroDifference": 0.0005316845127328282
+}
