@@ -1,3 +1,4 @@
+import {MUSIC_PRESETS,musicPreset,presetScoreSettings} from '/src/music-presets.mjs';
 import {createMeterBuilder} from '/web/meter-builder.mjs';
 import { compose, normalizeSettings, TRACKS, DEFAULTS, PPQ } from '/src/composer.mjs';
 import { MATH_ROCK_METERS, parseMeterCycle, formatMeterCycle } from '/src/meter.mjs';
@@ -7,7 +8,7 @@ import { WebAudioRenderer, renderWav } from '/src/webaudio.mjs';
 
 const element = id => document.getElementById(id);
 const noteName = midi => `${['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'][midi % 12]}${Math.floor(midi / 12) - 1}`;
-let settings = normalizeSettings(DEFAULTS), context, renderer, transport, timer, resumeBar = 0, hiddenPause = false;
+let settings = presetScoreSettings(), context, renderer, transport, timer, resumeBar = 0, hiddenPause = false;
 let resumeTick;
 let sampleBank, bankPromise, playEpoch = 0;
 let barHistory = [], shownBar = null, lastStep = -1, themeCounter = 0;
@@ -141,14 +142,14 @@ element('sound-source').addEventListener('change', () => {
 });
 document.querySelectorAll('[data-scene]').forEach(button => button.addEventListener('click', () => {
   document.querySelectorAll('[data-scene]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
-  update({ scene: button.dataset.scene });
+  update({ scene: button.dataset.scene,scoreStyle:{explore:'playful',tension:'revelation',battle:'danger',victory:'resolution'}[button.dataset.scene] });
 }));
 element('intensity').addEventListener('input', event => { element('energy-value').textContent = `${event.target.value}%`; update({ intensity: Number(event.target.value) / 100 }); });
 element('tempo').addEventListener('input', event => { element('tempo-value').textContent = `${event.target.value} BPM`; update({ tempo: Number(event.target.value) }); });
 element('volume').addEventListener('input', event => { element('volume-value').textContent = `${event.target.value}%`; renderer?.setVolume(Number(event.target.value) / 100); });
-element('seed').addEventListener('change', event => update({ seed: event.target.value }));
+element('seed').addEventListener('change', event => update({ seed: event.target.value,themeMotif:null }));
 element('key').addEventListener('change', event => update({ key: event.target.value }));
-element('new-theme').addEventListener('click', () => { element('seed').value = `astral-${++themeCounter}-${Date.now().toString(36)}`; update({ seed: element('seed').value }); });
+element('new-theme').addEventListener('click', () => { element('seed').value = `astral-${++themeCounter}-${Date.now().toString(36)}`; update({ seed: element('seed').value,themeMotif:null }); });
 
 function applyMeters(meterCycle, rhythm = settings.rhythm) {
   update({ meterCycle, rhythm });
@@ -215,3 +216,8 @@ displayScore(compose({ ...settings, bars: 1 })); animate();
 
 const meterBuilder=createMeterBuilder(element('meter-builder'),{value:element('meter-cycle').value,tempo:()=>settings.tempo,onApply:text=>{applyMeters(parseMeterCycle(text));element('meter-preset').value='custom';}});
 window.addEventListener('pagehide',()=>meterBuilder.destroy());
+
+function showPreset(){element('seed').value=settings.seed;element('key').value=settings.key;element('tempo').value=settings.tempo;element('tempo-value').textContent=settings.tempo+' BPM';element('intensity').value=Math.round(settings.intensity*100);element('energy-value').textContent=Math.round(settings.intensity*100)+'%';element('meter-cycle').value=formatMeterCycle(settings.meterCycle);meterBuilder.set(element('meter-cycle').value);element('meter-preset').value=settings.rhythm==='math-rock'?'math-rock':'4/4';}
+for(const item of MUSIC_PRESETS){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;element('music-preset').append(option);}
+element('music-preset-description').textContent=musicPreset().scoreDescription;showPreset();
+element('music-preset').addEventListener('change',()=>{stop();update(presetScoreSettings(element('music-preset').value));showPreset();document.querySelectorAll('[data-scene]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.scene===settings.scene)));element('music-preset-description').textContent=musicPreset(element('music-preset').value).scoreDescription;});

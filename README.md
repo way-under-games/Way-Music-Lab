@@ -1,5 +1,7 @@
 # Way Music
 
+Version **0.12** puts original ready-to-play music across the tools: **Lantern trail** (fantasy), **Clockwork grove** (shifting meters) and **Neon tide** (melodic EDM). Fresh Studio sessions open with a five-part example; saved projects remain unchanged. Load examples or a blank score from the sidebar, hear musical instrument previews, and choose matching generator/story palettes. Read the [preset guide and verification](docs/musical-presets.md).
+
 Version **0.11** implements the research: complete quiet themes with rhythmic identity, a 32-bar contrast/return arrangement, phase-preserving waveform drawing, and mapped movement, stereo spread and effect-space controls. Load a factory recipe again to try the instrument changes; existing saved sounds and authored hooks remain intact. Read the [implemented behavior, API contracts, verification and remaining limits](docs/musicality-update.md).
 
 **Instrument research baseline, November 23:** the [instrument audit](docs/instrument-character-audit.md) records the pre-0.11 limitations, including empty factory modulation mappings, phase-losing waveform drawing and restricted source/processing interactions. Version 0.11 fixes the first two; advanced source/processing interactions remain open. The [instrument development plan](docs/instrument-development-plan.md) makes this an equal priority with composition and proposes complete sound-design studies before further broad feature expansion.

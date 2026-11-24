@@ -1,3 +1,4 @@
+import {instrumentPreviewNotes} from '../src/music-presets.mjs';
 import {cycleCoefficients,cycleValue} from '../src/waveform.mjs';
 // MIT. Instrument authoring UI. Recalling/saving touches the patch only, never part notes.
 import {newLayer,newModulator,newEffect,EFFECT_TYPES,RACK_TARGETS} from '../src/instrument-rack.mjs';
@@ -10,6 +11,8 @@ const n=(tag,attrs={},text='')=>{const node=document.createElement(tag);for(cons
 const copy=x=>structuredClone(x),note=m=>['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][m%12]+(Math.floor(m/12)-1);
 export function createInstrumentWorkshop({root,getPatch,getPartId,getPartName=getPartId,onPatch,onChange,onMessage,getEngine,download,onView=()=>{},onLive=()=>{}}){
   let layerId=null,view='library',entries=[],assets=[],query='',filter='all',category='all',loaded=new Map(),busy=false,metadataPart=null,metadata={},ready=false,previewGeneration=0,previewEngine=null;
+  const previewKeys=new Set();
+  function stopPreview(){for(const key of previewKeys)previewEngine?.kill(key);previewKeys.clear();}
   const disclosures=new Map(),controlKeys=new Map();
   function keyed(node,label){const index=controlKeys.get(label)??0;controlKeys.set(label,index+1);node.dataset.workshopFocus=label+':'+index;return node;}
   const action=(fn)=>async event=>{try{await fn(event);}catch(error){onMessage(error.message);}};
@@ -66,7 +69,9 @@ export function createInstrumentWorkshop({root,getPatch,getPartId,getPartName=ge
     const adds=n('div',{className:'buttons'});for(const type of EFFECT_TYPES)adds.append(button('＋ '+type,()=>change(()=>{if(r.effects.length>=8)throw new Error('Maximum eight effects');r.effects.push(newEffect(type));})));container.append(adds);
   }
   async function preview(entry){
-    const generation=++previewGeneration,engine=await getEngine();if(generation!==previewGeneration)return;previewEngine=engine;if(instrumentNeedsOrchestra(entry.patch))await engine.ensureSampleBank();if(generation!==previewGeneration)return;await loadInstrumentAssets(engine,entry.patch);if(generation!==previewGeneration)return;engine.kill('library-preview');const layer=entry.patch.rack?.layers.find(l=>l.enabled);if(entry.patch.rack&&!layer)throw new Error('This instrument has no enabled layers');const rootMidi=layer?.kind==='sample'?layer.sample.rootMidi:layer?.kind==='orchestra'&&layer.orchestra.instrument==='percussion'||!entry.patch.rack&&entry.patch.source==='orchestra'&&entry.patch.instrument==='percussion'?36:60,midi=Math.max(layer?.loKey??0,Math.min(layer?.hiKey??127,rootMidi)),velocity=Math.max(layer?.loVelocity??1,Math.min(layer?.hiVelocity??127,100));engine.noteOn('library-preview',midi,velocity,'library-preview',entry.patch,{eventId:entry.id});engine.release('library-preview',engine.context.currentTime+.7);onMessage('Preview: '+entry.name+'. Your current instrument is unchanged.');
+    const generation=++previewGeneration,engine=await getEngine();if(generation!==previewGeneration)return;previewEngine=engine;if(instrumentNeedsOrchestra(entry.patch))await engine.ensureSampleBank();if(generation!==previewGeneration)return;await loadInstrumentAssets(engine,entry.patch);if(generation!==previewGeneration)return;stopPreview();const layer=entry.patch.rack?.layers.find(l=>l.enabled);if(entry.patch.rack&&!layer)throw new Error('This instrument has no enabled layers');const bass=entry.tags.includes('bass'),drum=layer?.kind==='orchestra'&&layer.orchestra.instrument==='percussion'||!entry.patch.rack&&entry.patch.source==='orchestra'&&entry.patch.instrument==='percussion';const rootMidi=layer?.kind==='sample'?layer.sample.rootMidi:drum?36:bass?48:60;
+    const now=engine.context.currentTime+.02,seconds=60/110;for(const [i,note]of instrumentPreviewNotes({bass,midi:rootMidi}).entries()){const midi=drum?36:Math.max(layer?.loKey??0,Math.min(layer?.hiKey??127,note.midi)),velocity=Math.max(layer?.loVelocity??1,Math.min(layer?.hiVelocity??127,note.velocity)),key='library-preview:'+generation+':'+i;previewKeys.add(key);engine.noteOn(key,midi,velocity,'library-preview',entry.patch,{time:now+note.beat*seconds,eventId:entry.id+':'+i,tempo:110});engine.release(key,now+(note.beat+note.duration)*seconds);}
+    onMessage('Preview phrase: '+entry.name+'. Your current instrument and notes are unchanged.');
   }
   function libraryView(container){
     const top=group('Find a starting sound','Hear a recipe first, then load it onto '+getPartName()+'. Loading replaces this part’s instrument; its notes stay in place.');const search=field('Search sounds',query,()=>{},{placeholder:'Try bass, keys, strings…','data-workshop-search':''}),searchInput=search.querySelector('input'),tools=n('div',{className:'workshop-browser-tools'});
@@ -102,5 +107,5 @@ export function createInstrumentWorkshop({root,getPatch,getPartId,getPartName=ge
       }const inspector=n('div',{className:'workshop-inspector'});for(const child of [...content.children].slice(1))inspector.append(child);content.append(inspector);content.classList.add('workshop-design');
     }else if(view==='movement')movementView(content,r);else effectsView(content,r);root.append(content);onView(view);if(focus)[...root.querySelectorAll('[data-workshop-focus]')].find(n=>n.dataset.workshopFocus===focus)?.focus?.({preventScroll:true});
   }
-  render();refresh().catch(error=>onMessage('Library: '+error.message));return{render,refresh,isBusy:()=>busy,getView:()=>view,cancelPreview:()=>{previewGeneration++;previewEngine?.kill('library-preview');}};
+  render();refresh().catch(error=>onMessage('Library: '+error.message));return{render,refresh,resetContext:()=>{previewGeneration++;stopPreview();loaded.clear();metadataPart=null;layerId=null;view='library';},isBusy:()=>busy,getView:()=>view,cancelPreview:()=>{previewGeneration++;stopPreview();}};
 }

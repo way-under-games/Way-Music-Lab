@@ -1,5 +1,8 @@
 # License analysis and distribution boundaries
 
+Version 0.12's [musical presets](docs/musical-presets.md) add original MIT note compositions, authored theme rhythms and curated arrangements/recipes. No soundtrack quotations, vendor presets, third-party code, new samples or runtime dependencies are included. Existing recorded-instrument and research-document licenses remain unchanged.
+
+
 Version 0.11's [musicality update](docs/musicality-update.md) adds original MIT phrase/rhythm policies, phase-preserving cycle projection, modulation mappings and factory-recipe refinements. It introduces no new runtime dependency or third-party presets/assets. Existing MIT code, CC0 recordings and separately licensed CC BY-SA research boundaries are unchanged. Direct technique references and implementation limits are linked in the update.
 
 

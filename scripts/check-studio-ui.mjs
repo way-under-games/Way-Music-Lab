@@ -28,6 +28,7 @@ const parameter=()=>({value:0,setValueAtTime(){},linearRampToValueAtTime(){},exp
 const audioNode=()=>({gain:parameter(),frequency:parameter(),Q:parameter(),pan:parameter(),detune:parameter(),delayTime:parameter(),threshold:parameter(),ratio:parameter(),connect(n){return n;},disconnect(){},start(){},stop(){},setPeriodicWave(){}});
 const contexts=[];
 globalThis.AudioContext=class { constructor(){this.currentTime=0;this.sampleRate=48000;this.state='running';this.destination={};contexts.push(this);}async resume(){}addEventListener(){}createGain(){return audioNode();}createDynamicsCompressor(){return audioNode();}createAnalyser(){return audioNode();}createBiquadFilter(){return audioNode();}createWaveShaper(){return audioNode();}createDelay(){return audioNode();}createStereoPanner(){return audioNode();}createOscillator(){return audioNode();}createPeriodicWave(){return{};} };
+const {newProject}=await import('../src/studio.mjs');localStorage.setItem('way-studio-v1',JSON.stringify(newProject()));
 let app=await readFile(new URL('../web/studio-app.mjs',import.meta.url),'utf8');app=app.replaceAll("from '/src/",`from '${new URL('../src/',import.meta.url).href}`);app=app.replaceAll("from '/web/",`from '${new URL('../web/',import.meta.url).href}`);await writeFile(new URL('app.mjs',cache),app);await import(new URL('app.mjs',cache));
 const $=id=>document.getElementById(id),flush=()=>new Promise(resolve=>setImmediate(resolve));
 async function click(id){$(id).dispatchEvent(new window.Event('click',{bubbles:true}));await flush();}

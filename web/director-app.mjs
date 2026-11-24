@@ -1,7 +1,9 @@
+import {MUSIC_PRESETS,musicPreset,presetTheme} from '/src/music-presets.mjs';
 import { ScoreDirector } from '/src/director.mjs';
 import { BrowserMusic } from '/src/browser-player.mjs';
 const el = id => document.getElementById(id);
-let director = new ScoreDirector(), music, loadPromise, timer, cueSequence = 0, epoch = 0;
+let selectedPreset=MUSIC_PRESETS[0].id;
+let director = new ScoreDirector({theme:presetTheme(selectedPreset)}), music, loadPromise, timer, cueSequence = 0, epoch = 0;
 const describe = profile => ({ title: 'Title · the leitmotif', contemplative: 'Opening · contemplative', playful: 'Player control · playful', danger: 'Danger · battle', revelation: 'Story · revelation', loss: 'Story · loss', resolution: 'Story · resolution' })[profile];
 function host() {
   music ??= new BrowserMusic({ director, onBar: bar => {
@@ -49,8 +51,8 @@ el('control').addEventListener('click', () => {
 });
 el('reset').addEventListener('click', async () => {
   epoch++; clearInterval(timer); el('play').disabled = true; await music?.dispose(); music = null; loadPromise = null;
-  director = new ScoreDirector();
-  el('position').textContent = `Fixed theme: ${director.theme.id} · ${director.theme.key} · 0–2–4–3 / 2–0–1–0`;
+  director = new ScoreDirector({theme:presetTheme(selectedPreset)});
+  el('position').textContent = `Fixed theme: ${director.theme.id} · ${director.theme.key} · ${director.theme.motif.join('–')}`;
   for (const id of ['movement', 'danger']) { el(id).value = '0'; el(`${id}-value`).textContent = '0%'; }
   el('request').textContent = 'New game · same authored theme and motif'; el('status').textContent = 'Title · ready to introduce the same theme'; el('profile').textContent = 'Title'; el('play').textContent = 'Play title theme';
   el('decision').textContent = 'Waiting for the first downbeat.'; el('metrics').textContent = 'No audio started'; el('samples').textContent = 'Recorded CC0 orchestra · loads on Play';
@@ -65,3 +67,8 @@ document.querySelectorAll('[data-cue]').forEach(button => button.addEventListene
   director.cue({ id, kind, bars: 4 }); el('request').textContent = `${kind} requested · four-bar story cue, then return to game state`;
 }));
 window.addEventListener('pagehide', () => { epoch++; clearInterval(timer); music?.dispose(); });
+
+for(const item of MUSIC_PRESETS){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;el('story-preset').append(option);}
+el('story-preset-description').textContent=musicPreset(selectedPreset).scoreDescription;
+el('position').textContent='Fixed theme: '+director.theme.id+' · '+director.theme.key;
+el('story-preset').addEventListener('change',()=>{selectedPreset=el('story-preset').value;el('story-preset-description').textContent=musicPreset(selectedPreset).scoreDescription;el('reset').click();});
