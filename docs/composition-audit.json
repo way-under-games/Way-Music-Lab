@@ -1,0 +1,3021 @@
+{
+  "format": "way-composition-audit",
+  "version": 1,
+  "researchDate": "2026-11-23",
+  "baselineCommit": "0d8bea53e779ce7029e32afdb9f5ceb8b39f40e3",
+  "sourceHashes": {
+    "src/composer.mjs": "171d8362868976a81ccaafe40aafb63c0ec91e68b6c5142758cbf537a3000f77",
+    "src/theory.mjs": "074ab4e3687ecfd1a23444fa68bd5387a4b1d03f27db2b15b25e00b225b4eee0",
+    "src/director.mjs": "433f950c7df4d7ba1b0779a6da9242d78446a908de463acae0dfddd5866ce89d"
+  },
+  "scope": "39 deterministic 16-bar generated scores: 13 conditions × 3 seeds. Note data and code inspection, not listening or preference evidence.",
+  "exclusions": [
+    "No copyrighted score/audio transcription",
+    "No instrument or renderer evaluation",
+    "No subjective quality score",
+    "No changes to authored Studio parts"
+  ],
+  "harmonyDiversity": [
+    {
+      "scene": "explore",
+      "seeds": 3,
+      "distinctPitchPlans": 1
+    },
+    {
+      "scene": "tension",
+      "seeds": 3,
+      "distinctPitchPlans": 1
+    },
+    {
+      "scene": "battle",
+      "seeds": 3,
+      "distinctPitchPlans": 1
+    },
+    {
+      "scene": "victory",
+      "seeds": 3,
+      "distinctPitchPlans": 1
+    }
+  ],
+  "results": [
+    {
+      "name": "ensemble-explore",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "explore",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 304,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 96,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.06315789473684211,
+        "onsetCoincidesWithAnotherPartFraction": 0.625,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 96
+    },
+    {
+      "name": "ensemble-explore",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "explore",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 304,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 96,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.06315789473684211,
+        "onsetCoincidesWithAnotherPartFraction": 0.625,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 96
+    },
+    {
+      "name": "ensemble-explore",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "explore",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 304,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 96,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.06315789473684211,
+        "onsetCoincidesWithAnotherPartFraction": 0.625,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 96
+    },
+    {
+      "name": "ensemble-tension",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "tension",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 306,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 98,
+        "pitches": [
+          62,
+          64,
+          65,
+          67
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.12371134020618557,
+        "onsetCoincidesWithAnotherPartFraction": 0.6122448979591837,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 98
+    },
+    {
+      "name": "ensemble-tension",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "tension",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 306,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 98,
+        "pitches": [
+          62,
+          64,
+          65,
+          67
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.12371134020618557,
+        "onsetCoincidesWithAnotherPartFraction": 0.6122448979591837,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 98
+    },
+    {
+      "name": "ensemble-tension",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "tension",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 306,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 98,
+        "pitches": [
+          62,
+          64,
+          65,
+          67
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.12371134020618557,
+        "onsetCoincidesWithAnotherPartFraction": 0.6122448979591837,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 98
+    },
+    {
+      "name": "ensemble-battle",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "battle",
+        "intensity": 0.85,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 1004,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 96,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.06315789473684211,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 96
+    },
+    {
+      "name": "ensemble-battle",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "battle",
+        "intensity": 0.85,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 1004,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 96,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.06315789473684211,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 96
+    },
+    {
+      "name": "ensemble-battle",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "battle",
+        "intensity": 0.85,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 1004,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 96,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.06315789473684211,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 96
+    },
+    {
+      "name": "ensemble-victory",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "victory",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 332,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 92,
+        "pitches": [
+          62,
+          64,
+          66,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.1978021978021978,
+        "onsetCoincidesWithAnotherPartFraction": 0.6521739130434783,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 6,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "9111bb22dc7c8eb07754787b06be3bfe1aad2dfab53b98b1b61d72d99477fbeb"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 92
+    },
+    {
+      "name": "ensemble-victory",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "victory",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 332,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 92,
+        "pitches": [
+          62,
+          64,
+          66,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.1978021978021978,
+        "onsetCoincidesWithAnotherPartFraction": 0.6521739130434783,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 6,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "9111bb22dc7c8eb07754787b06be3bfe1aad2dfab53b98b1b61d72d99477fbeb"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 92
+    },
+    {
+      "name": "ensemble-victory",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "victory",
+        "intensity": 0.35,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 332,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 92,
+        "pitches": [
+          62,
+          64,
+          66,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          324,
+          394,
+          480
+        ],
+        "consecutiveRepeatFraction": 0.1978021978021978,
+        "onsetCoincidesWithAnotherPartFraction": 0.6521739130434783,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 6,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "9111bb22dc7c8eb07754787b06be3bfe1aad2dfab53b98b1b61d72d99477fbeb"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 92
+    },
+    {
+      "name": "story-title",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "explore",
+        "intensity": 0.18,
+        "tempo": 76,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "title",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 124,
+      "leadTrack": "harp",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 0.26666666666666666,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-title",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "explore",
+        "intensity": 0.18,
+        "tempo": 76,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "title",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 124,
+      "leadTrack": "harp",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 0.26666666666666666,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-title",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "explore",
+        "intensity": 0.18,
+        "tempo": 76,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "title",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 124,
+      "leadTrack": "harp",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 0.26666666666666666,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-contemplative",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "explore",
+        "intensity": 0.08,
+        "tempo": 64,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "contemplative",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 112,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 16,
+        "pitches": [
+          62,
+          69
+        ],
+        "durationTicks": [
+          787
+        ],
+        "consecutiveRepeatFraction": 0,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind",
+        "harp+strings"
+      ],
+      "leadOnsetCount": 16
+    },
+    {
+      "name": "story-contemplative",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "explore",
+        "intensity": 0.08,
+        "tempo": 64,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "contemplative",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 112,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 16,
+        "pitches": [
+          62,
+          69
+        ],
+        "durationTicks": [
+          787
+        ],
+        "consecutiveRepeatFraction": 0,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind",
+        "harp+strings"
+      ],
+      "leadOnsetCount": 16
+    },
+    {
+      "name": "story-contemplative",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "explore",
+        "intensity": 0.08,
+        "tempo": 64,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "contemplative",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 112,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 16,
+        "pitches": [
+          62,
+          69
+        ],
+        "durationTicks": [
+          787
+        ],
+        "consecutiveRepeatFraction": 0,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind",
+        "harp+strings"
+      ],
+      "leadOnsetCount": 16
+    },
+    {
+      "name": "story-playful",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "explore",
+        "intensity": 0.3,
+        "tempo": 96,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "playful",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 268,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          216
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-playful",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "explore",
+        "intensity": 0.3,
+        "tempo": 96,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "playful",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 268,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          216
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-playful",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "explore",
+        "intensity": 0.3,
+        "tempo": 96,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "playful",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 268,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          216
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-danger",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "battle",
+        "intensity": 0.85,
+        "tempo": 128,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "danger",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 968,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-danger",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "battle",
+        "intensity": 0.85,
+        "tempo": 128,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "danger",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 968,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-danger",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "battle",
+        "intensity": 0.85,
+        "tempo": 128,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "danger",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 968,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-revelation",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "tension",
+        "intensity": 0.45,
+        "tempo": 78,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "revelation",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 252,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-revelation",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "tension",
+        "intensity": 0.45,
+        "tempo": 78,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "revelation",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 252,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-revelation",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "tension",
+        "intensity": 0.45,
+        "tempo": 78,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "revelation",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 252,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-loss",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "tension",
+        "intensity": 0.12,
+        "tempo": 62,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "loss",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 112,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 16,
+        "pitches": [
+          62,
+          69
+        ],
+        "durationTicks": [
+          787
+        ],
+        "consecutiveRepeatFraction": 0,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind",
+        "harp+strings"
+      ],
+      "leadOnsetCount": 16
+    },
+    {
+      "name": "story-loss",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "tension",
+        "intensity": 0.12,
+        "tempo": 62,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "loss",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 112,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 16,
+        "pitches": [
+          62,
+          69
+        ],
+        "durationTicks": [
+          787
+        ],
+        "consecutiveRepeatFraction": 0,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind",
+        "harp+strings"
+      ],
+      "leadOnsetCount": 16
+    },
+    {
+      "name": "story-loss",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "tension",
+        "intensity": 0.12,
+        "tempo": 62,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "loss",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 112,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 16,
+        "pitches": [
+          62,
+          69
+        ],
+        "durationTicks": [
+          787
+        ],
+        "consecutiveRepeatFraction": 0,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ]
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 7,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "b2fb3fcc0104ca68cb2a90a4f41b147566e1c854a82d3ed4700262d078773443"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+strings+woodwind",
+        "harp+strings"
+      ],
+      "leadOnsetCount": 16
+    },
+    {
+      "name": "story-resolution",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "victory",
+        "intensity": 0.42,
+        "tempo": 84,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "resolution",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 300,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          66,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 6,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "9111bb22dc7c8eb07754787b06be3bfe1aad2dfab53b98b1b61d72d99477fbeb"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-resolution",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "victory",
+        "intensity": 0.42,
+        "tempo": 84,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "resolution",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 300,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          66,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 6,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "9111bb22dc7c8eb07754787b06be3bfe1aad2dfab53b98b1b61d72d99477fbeb"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-resolution",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "victory",
+        "intensity": 0.42,
+        "tempo": 84,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "resolution",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 300,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          66,
+          67,
+          69
+        ],
+        "durationTicks": [
+          394
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 1,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 6,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "9111bb22dc7c8eb07754787b06be3bfe1aad2dfab53b98b1b61d72d99477fbeb"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 8,
+        "identicalPitchRhythmTrackPairs": 8,
+        "fraction": 1,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "math-rock-mixed",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "explore",
+        "intensity": 0.55,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "math-rock",
+        "meterCycle": [
+          {
+            "numerator": 7,
+            "denominator": 8,
+            "groups": [
+              2,
+              2,
+              3
+            ]
+          },
+          {
+            "numerator": 5,
+            "denominator": 8,
+            "groups": [
+              3,
+              2
+            ]
+          },
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 524,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 70,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          230,
+          324,
+          346,
+          480,
+          540
+        ],
+        "consecutiveRepeatFraction": 0.057971014492753624,
+        "onsetCoincidesWithAnotherPartFraction": 0.6571428571428571,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 0,
+        "identicalPitchRhythmTrackPairs": 0,
+        "fraction": null,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 70
+    },
+    {
+      "name": "math-rock-mixed",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "explore",
+        "intensity": 0.55,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "math-rock",
+        "meterCycle": [
+          {
+            "numerator": 7,
+            "denominator": 8,
+            "groups": [
+              2,
+              2,
+              3
+            ]
+          },
+          {
+            "numerator": 5,
+            "denominator": 8,
+            "groups": [
+              3,
+              2
+            ]
+          },
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 524,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 70,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          230,
+          324,
+          346,
+          480,
+          540
+        ],
+        "consecutiveRepeatFraction": 0.057971014492753624,
+        "onsetCoincidesWithAnotherPartFraction": 0.6571428571428571,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 0,
+        "identicalPitchRhythmTrackPairs": 0,
+        "fraction": null,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 70
+    },
+    {
+      "name": "math-rock-mixed",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "explore",
+        "intensity": 0.55,
+        "tempo": 92,
+        "key": "D",
+        "muted": [],
+        "rhythm": "math-rock",
+        "meterCycle": [
+          {
+            "numerator": 7,
+            "denominator": 8,
+            "groups": [
+              2,
+              2,
+              3
+            ]
+          },
+          {
+            "numerator": 5,
+            "denominator": 8,
+            "groups": [
+              3,
+              2
+            ]
+          },
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "ensemble",
+        "themeMotif": null,
+        "bars": 16
+      },
+      "events": 524,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 70,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69,
+          73,
+          74,
+          76
+        ],
+        "durationTicks": [
+          96,
+          230,
+          324,
+          346,
+          480,
+          540
+        ],
+        "consecutiveRepeatFraction": 0.057971014492753624,
+        "onsetCoincidesWithAnotherPartFraction": 0.6571428571428571,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 0,
+        "identicalPitchRhythmTrackPairs": 0,
+        "fraction": null,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+horn+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 70
+    },
+    {
+      "name": "story-playful-mixed",
+      "seed": "astral-arcana",
+      "settings": {
+        "seed": "astral-arcana",
+        "scene": "explore",
+        "intensity": 0.3,
+        "tempo": 96,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 7,
+            "denominator": 8,
+            "groups": [
+              2,
+              2,
+              3
+            ]
+          },
+          {
+            "numerator": 5,
+            "denominator": 8,
+            "groups": [
+              3,
+              2
+            ]
+          },
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "playful",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 247,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          135,
+          189,
+          216
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 0.5166666666666667,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 0,
+        "identicalPitchRhythmTrackPairs": 0,
+        "fraction": null,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-playful-mixed",
+      "seed": "river",
+      "settings": {
+        "seed": "river",
+        "scene": "explore",
+        "intensity": 0.3,
+        "tempo": 96,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 7,
+            "denominator": 8,
+            "groups": [
+              2,
+              2,
+              3
+            ]
+          },
+          {
+            "numerator": 5,
+            "denominator": 8,
+            "groups": [
+              3,
+              2
+            ]
+          },
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "playful",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 247,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          135,
+          189,
+          216
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 0.5166666666666667,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 0,
+        "identicalPitchRhythmTrackPairs": 0,
+        "fraction": null,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    },
+    {
+      "name": "story-playful-mixed",
+      "seed": "mountain",
+      "settings": {
+        "seed": "mountain",
+        "scene": "explore",
+        "intensity": 0.3,
+        "tempo": 96,
+        "key": "D",
+        "muted": [],
+        "rhythm": "flowing",
+        "meterCycle": [
+          {
+            "numerator": 7,
+            "denominator": 8,
+            "groups": [
+              2,
+              2,
+              3
+            ]
+          },
+          {
+            "numerator": 5,
+            "denominator": 8,
+            "groups": [
+              3,
+              2
+            ]
+          },
+          {
+            "numerator": 4,
+            "denominator": 4,
+            "groups": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreStyle": "playful",
+        "themeMotif": [
+          0,
+          2,
+          4,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "bars": 16
+      },
+      "events": 247,
+      "leadTrack": "woodwind",
+      "lead": {
+        "notes": 60,
+        "pitches": [
+          62,
+          64,
+          65,
+          67,
+          69
+        ],
+        "durationTicks": [
+          135,
+          189,
+          216
+        ],
+        "consecutiveRepeatFraction": 0.11864406779661017,
+        "onsetCoincidesWithAnotherPartFraction": 0.5166666666666667,
+        "silentBars": []
+      },
+      "harmony": {
+        "pitchesPerRecord": [
+          3
+        ],
+        "changes": 8,
+        "withinBarChanges": 0,
+        "pitchPlanHash": "16688638bd127cd1a394e4d86cd28ac51621ebab698c127e5f88e78c79a3b361"
+      },
+      "repeatedEightBarsLater": {
+        "comparablePairs": 0,
+        "identicalPitchRhythmTrackPairs": 0,
+        "fraction": null,
+        "velocityIncluded": false
+      },
+      "crossBarNoteCount": 0,
+      "trackActivityPatterns": [
+        "harp+percussion+strings+woodwind"
+      ],
+      "leadOnsetCount": 60
+    }
+  ]
+}
