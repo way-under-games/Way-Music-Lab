@@ -1,5 +1,8 @@
 # License analysis and distribution boundaries
 
+Version 0.11's [musicality update](docs/musicality-update.md) adds original MIT phrase/rhythm policies, phase-preserving cycle projection, modulation mappings and factory-recipe refinements. It introduces no new runtime dependency or third-party presets/assets. Existing MIT code, CC0 recordings and separately licensed CC BY-SA research boundaries are unchanged. Direct technique references and implementation limits are linked in the update.
+
+
 ## Version 0.9 instruments and user library
 
 The original layered rack implementation, portable records, library server, interface and six original factory recipes are MIT. Existing bryc/Mulberry32 attribution and MIT fallback also cover the rack mixer. Manufacturer manuals informed general synthesis/interface techniques; no vendor implementation, artwork, presets, samples or impulses were imported. The generated room impulse is derived from seeded noise in our own adapter. No new third-party runtime dependency or external recording was added.

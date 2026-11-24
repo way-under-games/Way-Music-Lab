@@ -19,9 +19,9 @@ export class ScoreDirector {
   constructor({ theme = DEFAULT_THEME, phraseBars = 4 } = {}) {
     if (!Number.isInteger(phraseBars) || phraseBars < 1 || phraseBars > 16) throw new RangeError('phraseBars must be 1–16');
     if (typeof theme.id !== 'string' || !theme.id.trim() || theme.id.length > 64 || !Array.isArray(theme.motif)) throw new TypeError('An authored theme id and motif are required');
-    const settings = normalizeSettings({ seed: theme.seed ?? theme.id, key: theme.key ?? DEFAULT_THEME.key, tempo: theme.tempo ?? DEFAULT_THEME.tempo, themeMotif: theme.motif, meterCycle: theme.meterCycle ?? DEFAULTS.meterCycle });
+    const settings = normalizeSettings({ seed: theme.seed ?? theme.id, key: theme.key ?? DEFAULT_THEME.key, tempo: theme.tempo ?? DEFAULT_THEME.tempo, themeMotif: theme.motif, themeRhythm:theme.rhythm, meterCycle: theme.meterCycle ?? DEFAULTS.meterCycle });
     this.theme = Object.freeze({ id: theme.id, seed: settings.seed, key: settings.key, tempo: settings.tempo,
-      motif: settings.themeMotif, meterCycle: settings.meterCycle });
+      motif: settings.themeMotif, rhythm:settings.themeRhythm, meterCycle: settings.meterCycle });
     this.phraseBars = phraseBars;
     this.stage = 'title';
     this.telemetry = { movement: 0, danger: 0, hasControl: false };
@@ -94,7 +94,7 @@ export class ScoreDirector {
     this.intensity = this.intensity === null ? intensity : approach(this.intensity, intensity, this.profile === 'danger' ? 0.35 : 0.12);
     this.tempo = this.tempo === null ? tempo : approach(this.tempo, tempo, 6);
     this.lastBar = bar;
-    const settings = normalizeSettings({ seed: this.theme.seed, key: this.theme.key, themeMotif: this.theme.motif,
+    const settings = normalizeSettings({ seed: this.theme.seed, key: this.theme.key, themeMotif: this.theme.motif, themeRhythm:this.theme.rhythm,
       scoreStyle: this.profile, scene: profile.scene, tempo: this.tempo, intensity: this.intensity,
       meterCycle: this.theme.meterCycle, rhythm: this.profile === 'playful' && this.activity >= 0.5 ? 'math-rock' : 'flowing' });
     this.plan = Object.freeze({ bar, themeId: this.theme.id, stage: this.stage, profile: this.profile,

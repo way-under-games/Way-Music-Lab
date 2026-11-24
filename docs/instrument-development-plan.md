@@ -1,5 +1,7 @@
 # Instrument character development plan
 
+**Implementation follow-up:** [version 0.11](musicality-update.md) implements a bounded first pass. The remaining proposals below are not all implemented.
+
 November 23, 2026 · Proposed work, not implemented capabilities · Original Way design: MIT.
 
 Instrument creation and composition both remain active problems. The [current instrument audit](instrument-character-audit.md) identifies actual limits after the 0.9/0.10 upgrades. Coordinate this plan with [the composition studies](composition-development-plan.md); do not defer one until the other is considered complete.

@@ -32,7 +32,9 @@ test('ordinary phase changes wait for phrase boundaries and quiet scoring leaves
   const p = d.advance(4); assert.equal(p.profile, 'contemplative');
   const score = compose({ ...p.settings, bars: 8 }); validateScore(score);
   assert.ok(score.events.every(e => !['percussion', 'horn'].includes(e.track)));
-  assert.ok(score.events.filter(e => e.track === 'woodwind').every(e => Number(e.id.split(':')[0]) % 2 === 0));
+  const lead=score.events.filter(e=>e.track==='woodwind');
+  assert.equal(lead.length,16,'Two complete eight-note gestures, stretched over four bars each');
+  assert.ok(lead.reduce((sum,e)=>sum+e.durationTicks,0)<score.durationTicks*.6,'Quiet scoring retains breathing space');
 });
 
 test('danger enters next bar, threshold jitter cannot chatter, and calm waits for a safe phrase', () => {

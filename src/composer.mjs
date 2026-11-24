@@ -1,3 +1,4 @@
+import {normalizeThemeRhythm,themeNotesForBar,arrangementForBar} from './theme-rhythm.mjs';
 import { PPQ, DEFAULT_METER, normalizeMeterCycle, makeBarMap, scoreBarMap } from './meter.mjs';
 import { planPhrase, melodyForBar, degreeMidi } from './theory.mjs';
 export { PPQ } from './meter.mjs';
@@ -41,9 +42,10 @@ export function normalizeSettings(input = {}) {
   const scoreStyle = settings.scoreStyle ?? 'ensemble';
   if (!SCORE_STYLES.includes(scoreStyle)) throw new TypeError('Unknown scoreStyle');
   const themeMotif = settings.themeMotif ?? null;
+  const themeRhythm = normalizeThemeRhythm(settings.themeRhythm);
   if (themeMotif !== null && (!Array.isArray(themeMotif) || themeMotif.length !== 8 || themeMotif.some(degree => !Number.isInteger(degree) || degree < 0 || degree > 6))) throw new TypeError('themeMotif must contain eight scale degrees from 0–6');
   if (!Array.isArray(settings.muted) || settings.muted.some(id => !TRACKS.some(t => t.id === id))) throw new TypeError('muted must be an array of known track IDs');
-  return Object.freeze({ seed: settings.seed, scene: settings.scene, intensity: settings.intensity, tempo: settings.tempo, key: settings.key, muted: Object.freeze([...new Set(settings.muted)]), rhythm: settings.rhythm, meterCycle, scoreStyle, themeMotif: themeMotif && Object.freeze([...themeMotif]) });
+  return Object.freeze({ seed: settings.seed, scene: settings.scene, intensity: settings.intensity, tempo: settings.tempo, key: settings.key, muted: Object.freeze([...new Set(settings.muted)]), rhythm: settings.rhythm, meterCycle, scoreStyle, themeRhythm, themeMotif: themeMotif && Object.freeze([...themeMotif]) });
 }
 
 // Stateless per-bar random streams make partial generation and seeking reproducible.
@@ -70,15 +72,17 @@ export function compose(input = {}) {
   const root = KEYS[settings.key];
   const identity = randomStream(settings.seed);
   const motif = settings.themeMotif ?? [0, 2 + Math.floor(identity() * 2), 4, 2, 1, 0, 4, 2 + Math.floor(identity() * 2)];
-  const phrase = planPhrase({ root, scene: settings.scene, motif });
+  const phrases = new Map();
+  const phraseFor=bar=>{const section=Math.floor(bar/8)%4;if(!phrases.has(section))phrases.set(section,planPhrase({root,scene:settings.scene,motif,section}));return phrases.get(section);};
   const events = [], harmony = [];
   for (const measure of barMap) {
     const bar = measure.bar, beats = measure.durationTicks / PPQ;
     let eventIndex = 0;
     const random = randomStream(`${settings.seed}:${bar}`);
-    const frame = phrase[bar % 8], chord = frame.chordDegree, chordNotes = frame.voicing;
+    const phrase=phraseFor(bar),frame = phrase[bar % 8], chord = frame.chordDegree, chordNotes = frame.voicing;
     const degree = (n, octave = 0) => degreeMidi(root, frame.scale, n + octave * 7);
     harmony.push({ bar, rootMidi: frame.rootMidi, notes: chordNotes });
+    const texture = arrangementForBar(bar);
     const intensity = settings.intensity;
     const busy = settings.scene === 'battle' || intensity > 0.72;
     const add = (track, beat, duration, midi, velocity) => {
@@ -93,10 +97,7 @@ export function compose(input = {}) {
     };
     const narrative = settings.scoreStyle !== 'ensemble' && settings.themeMotif;
     const quiet = ['contemplative', 'loss'].includes(settings.scoreStyle);
-    const melody = narrative ? Array.from({ length: quiet ? 2 : 4 }, (_, index) => ({
-      beat: index * beats / (quiet ? 2 : 4), duration: beats / (quiet ? 2 : 4) * (settings.scoreStyle === 'playful' ? 0.45 : 0.82),
-      midi: degree(7 + motif[(bar % 2) * 4 + index * (quiet ? 2 : 1)]), accent: true
-    })).filter(note => !(frame.ending && note.beat >= beats / 2) && !(quiet && bar % 2)) : melodyForBar({ frame, measure, root, rhythm: settings.rhythm, intensity });
+    const melody = narrative ? themeNotesForBar({bar,beats,motif,rhythm:settings.themeRhythm,quiet,degree,playful:settings.scoreStyle==='playful'}) : melodyForBar({ frame, measure, root, rhythm: settings.rhythm, intensity });
     for (const note of melody) {
       add(settings.scoreStyle === 'title' ? 'harp' : 'woodwind', note.beat, note.duration, note.midi, (note.accent ? 57 : 43) + random() * 5);
     }
@@ -106,13 +107,13 @@ export function compose(input = {}) {
       for (let groupIndex = 0; groupIndex < measure.groups.length; groupIndex++) {
         const groupBeats = measure.groups[groupIndex] * unitBeats;
         // Short chord hits and tapped figures share the additive accent map.
-        for (const midi of chordNotes) add('strings', groupBeat, Math.min(0.28, groupBeats * 0.45), midi, 47 + intensity * 22);
-        add('horn', groupBeat, Math.min(0.38, groupBeats * 0.7), frame.bassMidi, 50 + intensity * 18);
+        if(!texture.thin||groupIndex===0)for (const midi of chordNotes) add('strings', groupBeat, Math.min(0.28, groupBeats * 0.45), midi, 47 + intensity * 22);
+        add('horn', groupBeat+(groupIndex%2&&intensity>.45?Math.min(.25,groupBeats/4):0), Math.min(0.38, groupBeats * 0.7), frame.bassMidi, 50 + intensity * 18);
         const steps = Math.round(groupBeats * 4);
         for (let step = 0; step < steps; step++) {
           if (step !== 0 && step % 3 !== 1 && !(intensity > 0.65 && step % 3 === 0)) continue;
           const position = groupBeat + step / 4;
-          const tap = [0, 2, 1, 2][(step + groupIndex + bar % 2) % 4];
+          const tap = [0, 2, 1, 2][(step + groupIndex + bar % 2 + Math.floor(bar/8)%4) % 4];
           add('harp', position, Math.min(0.2, groupBeat + groupBeats - position), chordNotes[tap] + 12, 53 + random() * 12);
         }
         add('percussion', groupBeat, 0.22, groupIndex % 2 ? 38 : 36, 65 + intensity * 25);
@@ -124,19 +125,24 @@ export function compose(input = {}) {
     }
     // One shared harmonic plan drives every instrument. Motif changes are phrased.
     for (const midi of chordNotes) {
-      if (busy) for (let beat = 0; beat < beats; beat += 0.5) add('strings', beat, 0.38, midi, 35 + intensity * 20 + (beat % 1 === 0 ? 7 : 0));
-      else add('strings', 0, Math.max(0.1, beats - 0.3), midi, 36 + intensity * 20);
+      if (busy) for (let beat = texture.offset; beat < beats*(texture.response ? .6 : 1); beat += texture.thin?1:.5) add('strings', beat, 0.30, midi, 35 + intensity * 20 + (beat % 1 === 0 ? 7 : 0));
+      else if(!quiet||bar%2===0)add('strings', texture.offset, Math.max(0.1, beats*(texture.response ? .45 : .85)-texture.offset), midi, 36 + intensity * 20);
     }
-    add('strings', 0, busy ? 1.75 : Math.max(0.1, beats - 0.3), frame.bassMidi, 53);
-    const harpStep = intensity > 0.65 ? 0.25 : 0.5;
-    for (let beat = 0, step = 0; beat < beats; beat += harpStep, step++) {
+    add('strings', 0, busy ? Math.min(1.75,beats*.7) : !quiet&&intensity>.25&&bar%2===1&&!texture.response ? beats*.7 : Math.max(0.1, beats - 0.3), frame.bassMidi, 53);
+    if(!quiet&&intensity>.25&&bar%2===1&&!texture.response){
+      const next=phrase[(bar+1)%8].bassMidi,approach=frame.bassMidi+Math.sign(next-frame.bassMidi)*2;
+      const bass=frame.scale.some(n=>(root+n-approach)%12===0)?approach:frame.bassMidi;
+      add('strings',beats*.75,Math.min(.45,beats*.2),bass,40+intensity*12);
+    }
+    const harpStep = texture.thin?1:intensity > 0.65 ? 0.25 : 0.5;
+    for (let beat = texture.offset, step = 0; beat < beats*(texture.response ? .5 : 1); beat += harpStep, step++) {
       if (settings.scoreStyle === 'title' || quiet && step % 4) continue;
       if (intensity < 0.2 && step % 2) continue;
-      const arp = [0, 1, 2, 1, 0, 2, 1, 2][step % 8];
+      const arp = texture.arp[(step+(bar%2)*2)%texture.arp.length];
       add('harp', beat, 0.42, chordNotes[arp] + 12, 45 + intensity * 18 + random() * 8);
     }
-    if (intensity >= 0.5 || settings.scene === 'victory') {
-      for (const beat of settings.scene === 'victory' ? [0, 2] : [0, 3]) {
+    if (texture.response && intensity > .25 || intensity >= 0.5 || settings.scene === 'victory') {
+      for (const beat of texture.response ? [beats*.55] : settings.scene === 'victory' ? [0, 2] : [0, 3]) {
         add('horn', beat, 0.8, degree(chord), 46 + intensity * 22);
         if (intensity > 0.8) add('horn', beat, 0.8, degree(chord + 4), 45);
       }
@@ -153,7 +159,7 @@ export function compose(input = {}) {
   }
   events.sort((a, b) => a.startTick - b.startTick || a.track.localeCompare(b.track) || a.midi - b.midi);
   const startTick = barMap[0].startTick, last = barMap.at(-1);
-  return { schemaVersion: 2, generatorVersion: '0.5.0', ppq: PPQ, startBar, bars, startTick,
+  return { schemaVersion: 2, generatorVersion: '0.6.0', ppq: PPQ, startBar, bars, startTick,
     durationTicks: last.startTick + last.durationTicks - startTick, barMap,
     settings: { ...settings, muted: [...settings.muted] }, tracks: TRACKS.map(t => ({ ...t })), harmony, events };
 }

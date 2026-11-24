@@ -23,7 +23,7 @@ test('library persists samples, revisions and self-contained packages across new
   const root=await directory(t),store=createLibraryStore({root,factory:factoryInstruments()}),bytes=wav();
   const metadata={name:'Original tone',origin:'generated',license:'MIT',recipe:factoryInstruments()[2].patch,render:{midi:60,velocity:100,hold:1,sampleRate:24000}};
   const asset=await store.putAsset(bytes.toString('base64'),metadata);assert.equal(asset.id,createHash('sha256').update(bytes).digest('hex'));
-  const patch=factoryInstruments()[0].patch;patch.rack.layers=[newLayer('sample')];patch.rack.layers[0].sample.assetId=asset.id;
+  const patch=factoryInstruments()[0].patch;patch.rack.layers=[newLayer('sample')];patch.rack.routes=[];patch.rack.layers[0].sample.assetId=asset.id;
   const initial=await store.save(createInstrumentRecord(patch,{name:'My playable tone'}));
   const restored=createLibraryStore({root});assert.deepEqual(await restored.get(initial.id),initial);assert.deepEqual(await restored.assetBytes(asset.id),bytes);
   const update=await restored.save({...initial,name:'Renamed'},initial.id);assert.equal(update.revision,2);await assert.rejects(restored.save(initial,initial.id),LibraryConflict);

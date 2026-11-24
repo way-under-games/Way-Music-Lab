@@ -37,7 +37,7 @@ function inspect(score,name,seed){
 const sourceHashes={};for(const file of ['src/composer.mjs','src/theory.mjs','src/director.mjs'])sourceHashes[file]=createHash('sha256').update(await readFile(new URL('../'+file,import.meta.url))).digest('hex');
 const results=cases.flatMap(c=>seeds.map(seed=>inspect(compose({bars:16,...c.settings,seed}),c.name,seed)));
 const harmonyDiversity=SCENES.map(scene=>({scene,seeds:seeds.length,distinctPitchPlans:unique(results.filter(r=>r.name==='ensemble-'+scene).map(r=>r.harmony.pitchPlanHash)).length}));
-const report={format:'way-composition-audit',version:1,researchDate:'2026-11-23',baselineCommit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),sourceHashes,
+const report={format:'way-composition-audit',version:1,researchDate:'2026-11-23',sourceFilesModified:!!execFileSync('git',['status','--porcelain','--',...Object.keys(sourceHashes)],{cwd:root,encoding:'utf8'}).trim(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),sourceHashes,
   scope:'39 deterministic 16-bar generated scores: 13 conditions × 3 seeds. Note data and code inspection, not listening or preference evidence.',
   exclusions:['No copyrighted score/audio transcription','No instrument or renderer evaluation','No subjective quality score','No changes to authored Studio parts'],
   harmonyDiversity,results};

@@ -9,11 +9,14 @@ const PROGRESSIONS = Object.freeze({
   battle: [0, 0, 5, 5, 3, 3, 4, 0],
   victory: [0, 0, 3, 3, 4, 4, 0, 0]
 });
+// A contrasting third phrase returns to the original plan in phrase four.
+const CONTRAST = {explore:[0,0,3,3,5,1,4,0],battle:[0,0,3,3,5,1,4,0],tension:[0,0,5,5,3,3,4,4],victory:[0,0,5,5,4,4,0,0]};
+const progressionFor=(scene,section)=>section%4===2?CONTRAST[scene]:PROGRESSIONS[scene];
 const PHRASE_GAIN = [0.86, 0.9, 0.9, 0.94, 1, 1.06, 1.02, 0.82];
 export const pitchClass = midi => ((midi % 12) + 12) % 12;
 
-export function scaleForBar(scene, bar) {
-  const chordDegree = PROGRESSIONS[scene][bar % 8];
+export function scaleForBar(scene, bar, section=0) {
+  const chordDegree = progressionFor(scene,section)[bar % 8];
   const scale = [...(scene === 'victory' ? MAJOR_SCALE : MINOR_SCALE)];
   // Raise degree seven only over V, avoiding simultaneous natural/raised sevenths.
   if (scene !== 'victory' && chordDegree === 4) scale[6] = 11;
@@ -59,18 +62,18 @@ export function voiceTriad(chordNotes, previous, { low = 55, high = 79, tonic } 
 
 // Reconstruct the whole eight-bar phrase even for a one-bar request. This gives
 // voice leading context without mutable history or dependence on request size.
-export function planPhrase({ root, scene, motif }) {
-  const frames = [];
+export function planPhrase({ root, scene, motif, section=0 }) {
+  const frames = [],progression=progressionFor(scene,section);
   let previous;
   for (let phase = 0; phase < 8; phase++) {
-    const scale = scaleForBar(scene, phase), chordDegree = PROGRESSIONS[scene][phase];
+    const scale = scaleForBar(scene, phase,section), chordDegree = progression[phase];
     const chordNotes = [0, 2, 4].map(offset => degreeMidi(root, scale, chordDegree + offset));
     const rootMidi = degreeMidi(root, scale, chordDegree);
     const voicing = voiceTriad(chordNotes, previous, { low: root + 7, high: root + 28, tonic: chordDegree === 0 ? root : undefined });
     const bassMidi = root + pitchClass(rootMidi - root) - 12;
     frames.push({ phase, scale, chordDegree, chordNotes, voicing, rootMidi, bassMidi,
       gain: PHRASE_GAIN[phase], ending: phase === 7, resolved: phase === 7 && chordDegree === 0,
-      cadentialLead: chordDegree === 4 && PROGRESSIONS[scene][(phase + 1) % 8] === 0,
+      cadentialLead: chordDegree === 4 && progression[(phase + 1) % 8] === 0,
       // Repeat a two-bar idea; continuation lifts and then reduces the contour.
       targets: Array.from({ length: 4 }, (_, index) => degreeMidi(root, scale,
         7 + motif[(phase % 2) * 4 + index] + (phase === 4 || phase === 5 ? 1 : 0))) });
@@ -85,7 +88,7 @@ function nearestChordTone(frame, root, desired, previous) {
   for (let midi = root + 12; midi <= root + 28; midi++) {
     if (!pcs.has(pitchClass(midi))) continue;
     const movement = Math.abs(midi - previous);
-    const candidateCost = movement + Math.max(0, movement - 5) * 4 + Math.abs(midi - desired) * 0.7;
+    const candidateCost = movement*.45 + Math.max(0, movement - 5) * 2 + Math.abs(midi - desired) * .95;
     if (candidateCost < cost) { best = midi; cost = candidateCost; }
   }
   return best;
@@ -108,7 +111,7 @@ export function melodyForBar({ frame, measure, root, rhythm, intensity }) {
   const notes = [];
   for (let index = 0; index < anchors.length; index++) {
     const anchor = anchors[index], next = anchors[index + 1];
-    const held = frame.ending ? Math.min(anchor.span, beats * 0.45) : anchor.span * (rhythm === 'math-rock' ? 0.48 : 0.82);
+    const held = frame.ending ? Math.min(anchor.span, beats * 0.45) : anchor.span * (rhythm === 'math-rock' ? [.48,.3,.65,.4][(frame.phase+index)%4] : [.82,.55,.9,.65][(frame.phase+index)%4]);
     notes.push({ beat: anchor.beat, duration: Math.max(0.05, held), midi: anchor.midi, accent: true });
     if (!next || intensity < 0.35 || anchor.span < 0.75) continue;
     const interval = next.midi - anchor.midi, direction = Math.sign(interval) || (index % 2 ? -1 : 1);

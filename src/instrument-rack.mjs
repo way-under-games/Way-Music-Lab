@@ -6,7 +6,7 @@ const choice=(value,values,name)=>{if(!values.includes(value))throw new TypeErro
 const bool=(value,name)=>{if(typeof value!=='boolean')throw new TypeError(`Invalid ${name}`);return value;};
 export const RACK_VERSION=1;
 export const LAYER_KINDS=['synth','sample','orchestra','noise'];
-export const RACK_TARGETS=['cutoff','resonance','volume','pan','pitch','position','fmIndex','drive'];
+export const RACK_TARGETS=['cutoff','resonance','volume','pan','pitch','position','fmIndex','drive','spread'];
 export const EFFECT_TYPES=['eq','distortion','chorus','delay','reverb','compressor'];
 export const assetId=value=>{if(typeof value!=='string'||!/^[a-f0-9]{64}$/.test(value))throw new TypeError('Invalid audio asset hash');return value;};
 export function envelope(input={}){
@@ -42,6 +42,7 @@ export function validateRack(input){
       if(!Number.isInteger(s.unison)||s.unison<1||s.unison>7)throw new TypeError('Unison needs 1–7 voices');number(s.detune,0,60,'Unison detune');number(s.spread,0,1,'Unison spread');number(s.position,0,1,'Table position');
       if(!Array.isArray(s.frames)||s.frames.length<1||s.frames.length>16)throw new TypeError('Wavetable needs 1–16 frames');const size=s.frames[0]?.length;
       if(!Number.isInteger(size)||size<4||size>64||s.frames.some(f=>!Array.isArray(f)||f.length!==size||f.some(v=>!Number.isFinite(v)||Math.abs(v)>1)))throw new TypeError('Frames need 4–64 equally sized bounded harmonics');
+      if(s.frameCosines!==undefined&&(!Array.isArray(s.frameCosines)||s.frameCosines.length!==s.frames.length||s.frameCosines.some(f=>!Array.isArray(f)||f.length!==size||f.some(v=>!Number.isFinite(v)||Math.abs(v)>1))))throw new TypeError('Cosine frames must match sine frames');
       number(s.fm?.ratio,.125,16,'FM ratio');number(s.fm.index,0,12,'FM index');s.fm.envelope=envelope(s.fm.envelope);
     }else if(l.kind==='sample'){
       assetId(l.sample?.assetId);l.sample.gainDb??=0;number(l.sample.gainDb,-36,36,'Sample gain');if(!Number.isInteger(l.sample.rootMidi))throw new TypeError('Sample root must be a MIDI note');number(l.sample.rootMidi,0,127,'Root note');number(l.sample.start,0,30,'Sample start');if(l.sample.end!==null)number(l.sample.end,.001,30,'Sample end');if(l.sample.end!==null&&l.sample.end<=l.sample.start)throw new TypeError('Sample trim end must follow start');
@@ -52,11 +53,11 @@ export function validateRack(input){
   if(budget>96)throw new RangeError('This instrument exceeds the 96-source per-note budget; reduce layers or unison');
   choice(r.play?.mode,['poly','mono'],'voice mode');bool(r.play.legato,'legato');number(r.play.glide,0,2,'Glide');if(!Number.isInteger(r.play.polyphony)||r.play.polyphony<1||r.play.polyphony>32)throw new TypeError('Polyphony must be 1–32');if(!Number.isInteger(r.seed)||r.seed<0||r.seed>0xffffffff)throw new TypeError('Invalid instrument seed');
   if(!Array.isArray(r.modulators)||r.modulators.length>4)throw new TypeError('Use at most four independent modulators');const mods=new Set();
-  for(const m of r.modulators){text(m.id,100,'modulator id');if(mods.has(m.id))throw new TypeError('Duplicate modulator id');mods.add(m.id);text(m.name,100,'modulator name');choice(m.type,['lfo','envelope','random'],'modulator type');number(m.rate,.01,30,'Modulator rate');number(m.period,.0625,32,'Beat period');bool(m.sync,'tempo sync');choice(m.retrigger,['note','transport'],'modulator trigger');m.envelope=envelope(m.envelope);if(!Array.isArray(m.curve)||m.curve.length<4||m.curve.length>64||m.curve.some(v=>!Number.isFinite(v)||Math.abs(v)>1))throw new TypeError('Movement needs 4–64 bounded points');}
+  for(const m of r.modulators){text(m.id,100,'modulator id');if(mods.has(m.id))throw new TypeError('Duplicate modulator id');mods.add(m.id);text(m.name,100,'modulator name');choice(m.type,['lfo','envelope','random'],'modulator type');if(m.depthSource!==undefined)choice(m.depthSource,['motion'],'modulator depth macro');number(m.rate,.01,30,'Modulator rate');number(m.period,.0625,32,'Beat period');bool(m.sync,'tempo sync');choice(m.retrigger,['note','transport'],'modulator trigger');m.envelope=envelope(m.envelope);if(!Array.isArray(m.curve)||m.curve.length<4||m.curve.length>64||m.curve.some(v=>!Number.isFinite(v)||Math.abs(v)>1))throw new TypeError('Movement needs 4–64 bounded points');}
   if(!Array.isArray(r.routes)||r.routes.length>32)throw new TypeError('Use at most 32 modulation routes');
   for(const route of r.routes){if(!['velocity','key','brightness','motion','width','space'].includes(route.source)&&!mods.has(route.source))throw new TypeError('Unknown modulation source');if(route.layer!=='*'&&!ids.has(route.layer))throw new TypeError('Unknown modulation layer');choice(route.target,RACK_TARGETS,'modulation target');number(route.amount,-1,1,'Modulation depth');}
   if(!Array.isArray(r.effects)||r.effects.length>8)throw new TypeError('Use at most eight effects');const effects=new Set();
-  for(const e of r.effects){text(e.id,100,'effect id');if(effects.has(e.id))throw new TypeError('Duplicate effect id');effects.add(e.id);choice(e.type,EFFECT_TYPES,'effect type');bool(e.enabled,'effect enabled');number(e.mix,0,1,'Effect mix');
+  for(const e of r.effects){text(e.id,100,'effect id');if(effects.has(e.id))throw new TypeError('Duplicate effect id');effects.add(e.id);choice(e.type,EFFECT_TYPES,'effect type');bool(e.enabled,'effect enabled');number(e.mix,0,1,'Effect mix');if(e.spaceDepth!==undefined)number(e.spaceDepth,-1,1,'Space macro depth');
     if(e.type==='eq'){number(e.frequency,30,20000,'EQ frequency');number(e.q,.1,18,'EQ width');number(e.gainDb,-18,18,'EQ gain');}
     if(e.type==='distortion'){choice(e.mode,['soft','hard','fold','crush'],'distortion model');number(e.drive,0,1,'Drive');}
     if(e.type==='chorus'){number(e.rate,.05,8,'Chorus rate');number(e.depth,0,1,'Chorus depth');}

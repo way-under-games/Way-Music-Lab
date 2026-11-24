@@ -1,3 +1,4 @@
+import {frameScale} from './waveform.mjs';
 import {PPQ} from './meter.mjs';
 // MIT. Web Audio adapter for the portable rack; no notes or hooks are generated here.
 import {selectSample} from './samples.mjs';
@@ -17,17 +18,18 @@ export function distortionCurve(amount,mode='soft'){
 export class RackAudio {
   constructor(engine){this.engine=engine;this.context=engine.context;this.buses=new Map();this.waves=new Map();this.reversed=new Map();this.reversedBytes=0;this.noise=null;}
   smooth(param,value,time){this.engine.smooth(param,value,time,.012);}
-  wave(frame,phase=0){const key=phase+':'+frame.join(',');if(this.waves.has(key))return this.waves.get(key);const re=new Float32Array(frame.length+1),im=new Float32Array(frame.length+1),scale=Math.max(1,frame.reduce((s,v)=>s+Math.abs(v),0));frame.forEach((v,i)=>{const a=phase*2*Math.PI*(i+1);re[i+1]=v*Math.sin(a)/scale;im[i+1]=v*Math.cos(a)/scale;});const wave=this.context.createPeriodicWave(re,im,{disableNormalization:true});if(this.waves.size>=256)this.waves.delete(this.waves.keys().next().value);this.waves.set(key,wave);return wave;}
+  wave(frame,phase=0,cosine=[]){const key=phase+':'+frame.join(',')+':'+cosine.join(',');if(this.waves.has(key))return this.waves.get(key);const re=new Float32Array(frame.length+1),im=new Float32Array(frame.length+1),scale=frameScale(frame,cosine);frame.forEach((v,i)=>{const a=phase*2*Math.PI*(i+1),b=cosine[i]??0;re[i+1]=(b*Math.cos(a)+v*Math.sin(a))/scale;im[i+1]=(v*Math.cos(a)-b*Math.sin(a))/scale;});const wave=this.context.createPeriodicWave(re,im,{disableNormalization:true});if(this.waves.size>=256)this.waves.delete(this.waves.keys().next().value);this.waves.set(key,wave);return wave;}
+
   shape(s,phase){if(s.shape==='harmonic')return s.frames[0];return Array.from({length:64},(_,i)=>{const n=i+1;return s.shape==='sine'?(n===1?1:0):s.shape==='square'?(n%2?1/n:0):s.shape==='triangle'?(n%2?(-1)**((n-1)/2)/n**2:0):(-1)**(n+1)/n;});}
   bus(partId,rack,tempo,time){
     const signature=partId+':'+JSON.stringify(rack.effects)+':'+tempo;let bus=this.buses.get(signature);if(bus){bus.last=time;return bus;}
     // Keep old tails and sounding voices connected, but bound edits during an endless session.
     for(const[key,b]of this.buses)if(b.last+15<time&&![...this.engine.voices.values()].some(v=>v.rackVoice?.bus===b)){b.dispose();this.buses.delete(key);}
     if(this.buses.size>=32)throw new RangeError('Too many simultaneous effect versions; stop playback to clear tails');
-    const c=this.context,input=c.createGain(),nodes=[input],sources=[];let output=input;
+    const c=this.context,input=c.createGain(),nodes=[input],sources=[],mixes=[];let output=input;
     const node=n=>(nodes.push(n),n);
-    for(const e of rack.effects.filter(e=>e.enabled&&e.mix>0)){
-      const split=output,dry=node(c.createGain()),wet=node(c.createGain()),sum=node(c.createGain());dry.gain.value=1-e.mix;wet.gain.value=e.mix;split.connect(dry).connect(sum);
+    for(const e of rack.effects.filter(e=>e.enabled&&(e.mix>0||e.spaceDepth))){
+      const split=output,dry=node(c.createGain()),wet=node(c.createGain()),sum=node(c.createGain());dry.gain.value=1-e.mix;wet.gain.value=e.mix;mixes.push({dry:dry.gain,wet:wet.gain,mix:e.mix,depth:e.spaceDepth??0});split.connect(dry).connect(sum);
       if(e.type==='eq'){const fx=node(c.createBiquadFilter());fx.type='peaking';fx.frequency.value=Math.min(e.frequency,c.sampleRate*.45);fx.Q.value=e.q;fx.gain.value=e.gainDb;split.connect(fx).connect(wet);}
       if(e.type==='distortion'){const fx=node(c.createWaveShaper());fx.curve=distortionCurve(e.drive,e.mode);fx.oversample=e.drive?'4x':'none';split.connect(fx).connect(wet);}
       if(e.type==='delay'){const fx=node(c.createDelay(4)),feedback=node(c.createGain());fx.delayTime.value=e.sync?Math.min(4,e.beats*60/tempo):e.time;feedback.gain.value=e.feedback;split.connect(fx).connect(wet);fx.connect(feedback).connect(fx);}
@@ -36,7 +38,7 @@ export class RackAudio {
       if(e.type==='compressor'){const fx=node(c.createDynamicsCompressor());fx.threshold.value=e.threshold;fx.ratio.value=e.ratio;fx.attack.value=e.attack;fx.release.value=e.release;split.connect(fx).connect(wet);}
       wet.connect(sum);output=sum;
     }
-    output.connect(this.engine.master);bus={input,last:time,dispose(){for(const s of sources)try{s.stop();}catch{}for(const n of nodes)n.disconnect();}};this.buses.set(signature,bus);return bus;
+    output.connect(this.engine.master);bus={input,last:time,mixes,dispose(){for(const s of sources)try{s.stop();}catch{}for(const n of nodes)n.disconnect();}};this.buses.set(signature,bus);return bus;
   }
   sampleBuffer(layer){const original=this.engine.customAssets.get(layer.sample.assetId);if(!original)throw new Error('Load the instrument samples before playing');if(!layer.sample.reverse)return original;
     const id=layer.sample.assetId;if(this.reversed.has(id))return this.reversed.get(id);const bytes=original.length*original.numberOfChannels*4;if(this.reversedBytes+bytes>128*1024*1024)throw new RangeError('Reversed sample memory exceeds 128 MiB; stop and reload the instrument');const b=this.context.createBuffer(original.numberOfChannels,original.length,original.sampleRate);for(let ch=0;ch<b.numberOfChannels;ch++)b.getChannelData(ch).set(Float32Array.from(original.getChannelData(ch)).reverse());this.reversedBytes+=bytes;this.reversed.set(id,b);return b;
@@ -64,14 +66,14 @@ export class RackAudio {
         const s=l.synth,count=s.unison;for(let u=0;u<count;u++){
           const spread=count===1?0:(u/(count-1)*2-1),stereo=c.createStereoPanner(),level=c.createGain();stereo.pan.value=spread*s.spread;level.gain.value=1/Math.sqrt(count);level.connect(stereo).connect(gain);state.nodes.push(level,stereo);
           const phase=s.randomPhase?rng():s.phase,osc=c.createOscillator(),spec={detune:spread*s.detune};osc.frequency.value=frequency(midi+l.tune);osc.detune.value=l.fine+spec.detune;
-          if(s.engine==='fm'){if(phase)osc.setPeriodicWave(this.wave([1,0,0,0],phase));else osc.type='sine';}else if(s.engine==='wavetable'||s.shape==='harmonic')osc.setPeriodicWave(this.wave(s.frames[0],phase));else if(phase||s.randomPhase)osc.setPeriodicWave(this.wave(this.shape(s),phase));else osc.type=s.shape;
-          osc.connect(level);osc.start(time);voice.sources.push({oscillator:osc,spec});const source={osc,detune:spec.detune,phase,level};ls.sources.push(source);
+          if(s.engine==='fm'){if(phase)osc.setPeriodicWave(this.wave([1,0,0,0],phase));else osc.type='sine';}else if(s.engine==='wavetable'||s.shape==='harmonic')osc.setPeriodicWave(this.wave(s.frames[0],phase,s.frameCosines?.[0]));else if(phase||s.randomPhase)osc.setPeriodicWave(this.wave(this.shape(s),phase));else osc.type=s.shape;
+          osc.connect(level);osc.start(time);voice.sources.push({oscillator:osc,spec});const source={osc,detune:spec.detune,phase,level,stereo,spread};ls.sources.push(source);
           if(s.engine==='fm'){
             const mod=c.createOscillator(),envelope=c.createGain(),depth=c.createGain();mod.type='sine';mod.frequency.value=frequency(midi+l.tune)*s.fm.ratio;mod.connect(envelope).connect(depth).connect(osc.frequency);startEnvelope(envelope.gain,s.fm.envelope,time,1);mod.start(time);state.nodes.push(envelope,depth);voice.sources.push({oscillator:mod,spec});source.fm={mod,envelope,depth};ls.envelopes.push({param:envelope.gain,e:s.fm.envelope,level:1});
           }else if(s.engine==='wavetable'){
             source.tableFrame=0;source.frameTotal=s.frames.length;source.baseLevel=1/Math.sqrt(count);
             for(let frame=1;frame<s.frames.length;frame++){
-              const other=c.createOscillator(),frameLevel=c.createGain();other.frequency.value=osc.frequency.value;other.detune.value=osc.detune.value;other.setPeriodicWave(this.wave(s.frames[frame],phase));other.connect(frameLevel).connect(stereo);frameLevel.gain.value=0;other.start(time);state.nodes.push(frameLevel);voice.sources.push({oscillator:other,spec});ls.sources.push({osc:other,detune:spec.detune,phase,level:frameLevel,tableFrame:frame,frameTotal:s.frames.length,baseLevel:1/Math.sqrt(count)});
+              const other=c.createOscillator(),frameLevel=c.createGain();other.frequency.value=osc.frequency.value;other.detune.value=osc.detune.value;other.setPeriodicWave(this.wave(s.frames[frame],phase,s.frameCosines?.[frame]));other.connect(frameLevel).connect(stereo);frameLevel.gain.value=0;other.start(time);state.nodes.push(frameLevel);voice.sources.push({oscillator:other,spec});ls.sources.push({osc:other,detune:spec.detune,phase,level:frameLevel,tableFrame:frame,frameTotal:s.frames.length,baseLevel:1/Math.sqrt(count)});
             }
           }
         }
@@ -93,16 +95,18 @@ export class RackAudio {
     const values={velocity:v.velocity/127,key:(v.midi-60)/60,...v.macros};
     for(const m of rack.modulators){const rate=m.sync?tempo/60/m.period:m.rate,clock=m.retrigger==='transport'?time:t,position=((clock*rate)%1+1)%1;
       if(m.type==='envelope')values[m.id]=envLevel(m.envelope,t);else if(m.type==='random')values[m.id]=random(rack.seed^hash(m.id+':'+Math.floor(clock*rate)))()*2-1;
-      else{const p=position*m.curve.length,i=Math.floor(p);values[m.id]=m.curve[i]*(1-p+i)+m.curve[(i+1)%m.curve.length]*(p-i);}v.lfoPhase=position;v.lfoValue=values[m.id];}
+      else{const p=position*m.curve.length,i=Math.floor(p);values[m.id]=m.curve[i]*(1-p+i)+m.curve[(i+1)%m.curve.length]*(p-i);}if(m.depthSource)values[m.id]*=values[m.depthSource]??0;v.lfoPhase=position;v.lfoValue=values[m.id];}
+    if(state.bus.space!==v.macros.space){state.bus.space=v.macros.space;for(const mix of state.bus.mixes){const wet=clamp(mix.mix+((v.macros.space??.3)-.3)*mix.depth);this.smooth(mix.dry,1-wet,time);this.smooth(mix.wet,wet,time);}}
     let expression=0;for(const point of v.expression)if(point.tick<=t*v.tempo/60*PPQ)expression=point.value;else break;
     const bend=(this.engine.bends.get(v.channel)??0)+v.bend+expression,glide=state.rack.play.glide,pitchBase=glide?state.fromMidi+(v.midi-state.fromMidi)*clamp(t/glide):v.midi;
-    for(const ls of state.layers){const l=rack.layers.find(l=>l.id===ls.id)??ls.layer,delta={cutoff:(v.macros.brightness-.45)*3,resonance:0,volume:0,pan:0,pitch:0,position:0,fmIndex:0,drive:0};for(const r of rack.routes)if(r.layer==='*'||r.layer===l.id)delta[r.target]+=(values[r.source]??0)*r.amount;
+    for(const ls of state.layers){const l=rack.layers.find(l=>l.id===ls.id)??ls.layer,delta={cutoff:(v.macros.brightness-.45)*3,resonance:0,volume:0,pan:0,pitch:0,position:0,fmIndex:0,drive:0,spread:0};for(const r of rack.routes)if(r.layer==='*'||r.layer===l.id)delta[r.target]+=(values[r.source]??0)*r.amount;
       const cutoff=clamp(l.filter.cutoff*2**delta.cutoff,30,this.context.sampleRate*.45);this.smooth(ls.filter.frequency,cutoff,time);this.smooth(ls.filter.Q,clamp(l.filter.resonance+delta.resonance*12,.1,18),time);ls.filter.type=l.filter.type;
       this.smooth(ls.volume.gain,l.enabled?clamp(1+delta.volume,0,2)*(ls.layer.gain?l.gain/ls.layer.gain:0):0,time);this.smooth(ls.pan.pan,clamp(l.pan+delta.pan,-1,1),time);
       const drive=clamp(l.drive+delta.drive);if(Math.abs(drive-ls.driveAmount)>.005){ls.drive.curve=distortionCurve(drive);ls.drive.oversample=drive?'4x':'none';ls.driveAmount=drive;}
       const position=clamp((l.synth?.position??0)+delta.position);v.position=position;v.cutoff=cutoff;
       for(const s of ls.sources){const midi=pitchBase+l.tune+bend+delta.pitch*12,detune=l.fine+s.detune;
         if(s.sample){this.smooth(s.osc.playbackRate,s.percussion?1:2**((midi-s.root+detune/100)/12),time);continue;}
+        if(s.stereo)this.smooth(s.stereo.pan,s.spread*clamp(l.synth.spread+delta.spread),time);
         const hz=frequency(midi);this.smooth(s.osc.frequency,hz,time);this.smooth(s.osc.detune,detune,time);
         if(s.fm){this.smooth(s.fm.mod.frequency,Math.min(hz*l.synth.fm.ratio,this.context.sampleRate*.4),time);this.smooth(s.fm.mod.detune,detune,time);const index=Math.min(clamp(l.synth.fm.index+delta.fmIndex*12,0,12),Math.max(0,this.context.sampleRate*.45/hz-l.synth.fm.ratio-1));this.smooth(s.fm.depth.gain,hz*index,time);}
         if(s.tableFrame!==undefined){const weight=Math.max(0,1-Math.abs(position*(s.frameTotal-1)-s.tableFrame));this.smooth(s.level.gain,weight*s.baseLevel,time);}

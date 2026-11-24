@@ -30,3 +30,19 @@ test('wavetable morph schedules fixed frame gains with honest source counts for 
   const c=context(),e=new StudioEngine(c),p=patch(),l=p.rack.layers[0];l.synth.engine='wavetable';l.synth.frames=[[1,0,0,0],[0,1,0,0],[0,0,1,0]];l.synth.unison=2;
   e.noteOn('wave',60,100,'part',p);const v=e.voices.get('wave'),sources=v.rackVoice.layers[0].sources;assert.equal(sources.length,6);assert.equal(v.rackVoice.cost,6);const waves=sources.map(s=>s.osc.wave);p.rack.layers[0].synth.position=1;e.update('part',p,p.macros);e.updateVoice(v,.5);assert.deepEqual(sources.map(s=>s.osc.wave),waves,'Future control changes cannot replace the wave of an already scheduled offline oscillator');assert.equal(last(sources[0].level.gain),0);assert.equal(last(sources[2].level.gain),1/Math.sqrt(2));e.dispose();
 });
+
+
+test('phase-bearing table reaches native wave coefficients and preserves phase under start offset',()=>{
+  const c=context(),e=new StudioEngine(c),p=patch(),s=p.rack.layers[0].synth;s.engine='wavetable';s.frames=[[0,0,0,0]];s.frameCosines=[[1,0,0,0]];
+  e.noteOn('cos',69,100,'part',p);const wave=e.voices.get('cos').rackVoice.layers[0].sources[0].osc.wave;
+  assert.equal(wave.re[1],1);assert.equal(wave.im[1],0);e.silence();s.phase=.25;e.noteOn('shift',69,100,'part',p);
+  const shifted=e.voices.get('shift').rackVoice.layers[0].sources[0].osc.wave;assert.ok(Math.abs(shifted.im[1]+1)<1e-6);e.dispose();
+});
+
+test('held-note Width changes unison stereo spread and Space reuses the shared effect bus',async()=>{
+  const {newEffect}=await import('../src/instrument-rack.mjs');const c=context(),e=new StudioEngine(c),p=patch(),s=p.rack.layers[0].synth;s.unison=3;s.spread=0;
+  p.rack.routes=[{source:'width',layer:'*',target:'spread',amount:1}];const fx=newEffect('delay');fx.mix=.2;fx.spaceDepth=.5;p.rack.effects=[fx];p.macros.width=0;p.macros.space=.3;
+  e.noteOn('held',60,100,'part',p);const v=e.voices.get('held'),bus=v.rackVoice.bus,source=v.rackVoice.layers[0].sources[0];assert.ok(last(source.stereo.pan)===0);assert.equal(last(bus.mixes[0].wet),.2);
+  p.macros.width=1;p.macros.space=1;e.update('part',p,p.macros);e.updateVoice(v,.5);
+  assert.equal(last(source.stereo.pan),-1);assert.ok(Math.abs(last(bus.mixes[0].wet)-.55)<1e-10);assert.equal(e.rackAudio.buses.size,1);assert.equal(v.rackVoice.bus,bus);e.dispose();
+});

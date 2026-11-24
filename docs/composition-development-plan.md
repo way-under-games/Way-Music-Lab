@@ -1,5 +1,7 @@
 # Composition development and listening plan
 
+**Implementation follow-up:** [version 0.11](musicality-update.md) implements a bounded first pass. The remaining proposals below are not all implemented.
+
 November 23, 2026 · Proposed decisions, not implemented capabilities · Original Way design: MIT.
 
 The user identifies generated composition as the principal problem. [Research and code evidence](composition-quality-research.md) explain why. This plan turns that evidence into a bounded musical development program. Preserve the existing instrument tools and keep musical policy/data independent of browser or Unreal adapters.
