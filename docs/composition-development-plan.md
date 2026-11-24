@@ -107,7 +107,7 @@ For the reference library, log the exact recording/version, time span, the featu
 
 ## Acceptance and next build
 
-The recommended next build is a **small composition-study prototype covering P0–P1**, using the user's existing authored material and the current renderer. It should expose a few complete arrangement alternatives for listening, with preserved hooks, rather than another large set of unexplained controls. Expand harmony, sustain and long form as specific listening results require them.
+The recommended next build pairs a **small composition-study prototype covering P0–P1** with the **instrument-character studies** in [the instrument plan](instrument-development-plan.md). The user has clarified that both generated composition and distinctive instrument creation remain unsatisfactory. Composition studies should use existing authored hooks and controlled rendering; instrument studies should use the same simple phrases so the two changes can be judged separately. Expand harmony, sustain, long form and synthesis as the specific listening/design results require them. Neither workstream should be treated as solved by the other's progress.
 
 Code gates remain necessary: unchanged protected source notes, valid timing, bounded density, determinism, overlap/cancellation correctness and live/offline parity. Musical gates are separate: identity, direction, character, groove and longer-session fatigue. Passing schema/unit tests alone is not a completion claim for musical quality.
 
